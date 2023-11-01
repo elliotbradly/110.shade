@@ -174,8 +174,6 @@ export const patchShade = async (cpy: ShadeModel, bal: ShadeBit, ste: State) => 
 export const testShade = async (cpy: ShadeModel, bal:ShadeBit, ste: State) => {
 
 
-  debugger
-
     const { exec } = require('child_process');
 
     exec('quasar dev -m electron', async (err, stdout, stderr) => {
