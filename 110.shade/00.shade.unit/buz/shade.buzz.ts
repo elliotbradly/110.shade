@@ -173,27 +173,29 @@ export const patchShade = async (cpy: ShadeModel, bal: ShadeBit, ste: State) => 
 
 export const testShade = async (cpy: ShadeModel, bal:ShadeBit, ste: State) => {
 
-    
+
+  debugger
+
     const { exec } = require('child_process');
 
-    exec('npm run start', async (err, stdout, stderr) => {
-      
+    exec('quasar dev -m electron', async (err, stdout, stderr) => {
+
         if (bal.slv != null) bal.slv({ shdBit: { idx: "test-shade", dat: {} } });
     });
 
 
   //bit = await ste.hunt( ActCan.ADD_CONTAINER, { idx: 'fce-can-00', dat: bit.fmeBit.dat });
-  //bit = await ste.hunt( ActGph.WRITE_GRAPHIC, { idx: 'gph00', src: 'vsg00' });  
+  //bit = await ste.hunt( ActGph.WRITE_GRAPHIC, { idx: 'gph00', src: 'vsg00' });
   //bit = await ste.hunt( ActCan.ADD_CONTAINER, { idx: 'fce-can-00', dat: bit.gphBit.dat });
   //bit = await ste.hunt( ActGph.WRITE_GRAPHIC, { idx: 'gph01', src: 'vsg00' });
   //bit = await ste.hunt( ActCan.ADD_CONTAINER, { idx: 'fce-can-00', dat: bit.gphBit.dat });
 
   //const response = await fetch("./dat/hexmap/000.json");
   //const jsonData = await response.json();
-  
+
   //bit = await ste.hunt( ActHex.WRITE_HEXAGON, { idx: 'hex00', src: 'vsg00', dat: {map: jsonData }   });
 
-  
+
 
   //bit = await SHADE.hunt(SHADE.ActTxt.WRITE_TEXT, { idx: 'txt00', src: 'vsg00', dat: { txt: "feel the love", y: 100 } });
   //bit = await SHADE.hunt(SHADE.ActCan.ADD_CONTAINER, { idx: 'fce-can-00', dat: bit.txtBit.dat });
@@ -209,19 +211,19 @@ export const testShade = async (cpy: ShadeModel, bal:ShadeBit, ste: State) => {
 
   //bit = await SPACE.hunt(SPACE.ActMap.WRITE_HEXMAP, { idx: 'map00', dat: { gph: 'gph00' } });
   //var hexmap = bit.mapBit.dat;
-  
-  
+
+
   //bit = await SPACE.hunt(SPACE.ActFoc.WRITE_FOCUS, { idx: 'foc00', dat: { gph: 'gph01' } });
   //bit = await ste.hunt( ActFcg.WRITE_FOCIGON, { idx: 'fcg01', src: 'vsg00', dat: {dat:bit.focBit.dat}   });
-  
+
  // if (bal.slv != null) bal.slv({ symBit: { idx: "test-shade", dat: {} } });
 
  return cpy;
  };
 
- 
+
 var patch = (ste, type, bale) => ste.dispatch({ type, bale });
- 
+
 import { ShadeModel } from "../shade.model";
 import ShadeBit from "../fce/shade.bit";
 import State from "../../99.core/state";
