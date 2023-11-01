@@ -176,7 +176,21 @@ export const testShade = async (cpy: ShadeModel, bal:ShadeBit, ste: State) => {
 
     const { exec } = require('child_process');
 
+    setTimeout( async ()=>{
+
+
+      console.log("DONE")
+
+
+      var bit = await ste.bus( ActVsg.MOUNT_VISAGE, { idx: "vsg00", src: "indexCanvas", dat: { } });
+
+
+   }, 31000)
+
+
     exec('quasar dev -m electron', async (err, stdout, stderr) => {
+
+
 
         if (bal.slv != null) bal.slv({ shdBit: { idx: "test-shade", dat: {} } });
     });

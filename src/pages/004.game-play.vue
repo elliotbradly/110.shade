@@ -26,7 +26,7 @@ const SHADE = inject('SHADE')
 
 onMounted(async () => {
 
-  mount('on')
+  //mount('on')
 
   //alert(window.electron.store.get('foo'));
 })
@@ -34,14 +34,14 @@ onMounted(async () => {
 onUpdated(async () => {
   // text content should be the same as current `count.value`
 
-  update('on')
+  //update('on')
 
 
 })
 
 onUnmounted(async () => {
 
-  unmount('on')
+  //unmount('on')
 
 
 })
