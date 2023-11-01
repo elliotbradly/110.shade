@@ -25,7 +25,7 @@ export const updateMenu = async (cpy: MenuModel, bal: MenuBit, ste: State) => {
   bit = await ste.bus(ActTrm.WRITE_TERMINAL, { src: "SHADE PIVOT V0", bit: 'local' })
   bit = await ste.bus(ActTrm.WRITE_TERMINAL, { src: "-----------", bit: "local" })
 
-  var lst = [  ActShd.TEST_SHADE,    ActShd.UPDATE_SHADE, ActShd.OPEN_SHADE, ActShd.RUN_SHADE, ActShd.EDIT_SHADE, ActMnu.CONTAINER_MENU, ActMnu.VISAGE_MENU]
+  var lst = [  ActShd.TEST_SHADE,    ActShd.UPDATE_SHADE, ActShd.OPEN_SHADE, ActShd.RUN_SHADE, ActShd.EDIT_SHADE, ActMnu.CONTAINER_MENU, ActMnu.TEXT_MENU, ActMnu.VISAGE_MENU]
 
   bit = await ste.bus(ActTrm.UPDATE_TERMINAL, { lst })
 
@@ -33,6 +33,10 @@ export const updateMenu = async (cpy: MenuModel, bal: MenuBit, ste: State) => {
   var idx = lst[bit.val];
 
   switch (idx) {
+
+    case ActMnu.TEXT_MENU:
+      bit = await ste.hunt( ActMnu.TEXT_MENU, {})
+      break;
 
     case ActShd.TEST_SHADE:
       bit = await ste.hunt( ActShd.TEST_SHADE, {})
