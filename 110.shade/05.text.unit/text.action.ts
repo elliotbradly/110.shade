@@ -45,9 +45,16 @@ export const DELETE_TEXT = "[Delete action] Delete Text";
  constructor(public bale: TextBit) {}
  }
  
+export const LIST_TEXT = "[List action] List Text";
+ export class ListText implements Action {
+ readonly type = LIST_TEXT;
+ constructor(public bale: TextBit) {}
+ }
+ 
 export type Actions = | InitText | UpdateText 
 | ReadText
 | WriteText
 | CreateText
 | RemoveText
 | DeleteText
+| ListText

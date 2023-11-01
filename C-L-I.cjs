@@ -18,8 +18,10 @@ if (options['separator'] != null) idx = options['separator'];
 const title = idx;
 
 let dev = false
+let pvt = false
 
 if (title == 'development') dev = true
+if (title == 'pivot') pvt = true
 
 
 const aedes = require('aedes')();
@@ -51,12 +53,25 @@ const init = async (prt) => {
     SHADE = require(path.resolve('./dist/110.shade/hunt'));
     SHADE_ACTION = require(path.resolve('./dist/110.shade/00.shade.unit/shade.action'));
 
+    PIVOT = require(path.resolve('./999.pivot/index'));
+    PIVOT_ACTION = require(path.resolve('./999.pivot/00.pivot.unit/pivot.action'));
+
     VURT = require(path.resolve('./999.vurt/hunt'));
     VURT_ACTION = require(path.resolve('./999.vurt/00.vurt.unit/vurt.action'));
 
 
-    await VURT.hunt( VURT_ACTION.INIT_VURT, { dat: MQTT, src: local });
-     await SHADE.hunt( SHADE_ACTION.INIT_SHADE , { val: 1, dat: MQTT, src:  [localBit]  });
+    if ( pvt == false){
+
+      await VURT.hunt( VURT_ACTION.INIT_VURT, { dat: MQTT, src: local });
+      await SHADE.hunt( SHADE_ACTION.INIT_SHADE , { val: 1, dat: MQTT, src:  [localBit]  });
+
+    }
+    else{
+
+      await PIVOT.hunt( PIVOT_ACTION.INIT_PIVOT, { val:1, dat: MQTT, src: local });
+      //await SHADE.hunt( SHADE_ACTION.INIT_SHADE , { val: 1, dat: MQTT, src:  [localBit]  });
+    }
+
 
 };
 

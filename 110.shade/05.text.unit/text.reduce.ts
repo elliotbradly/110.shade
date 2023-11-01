@@ -28,6 +28,9 @@ case Act.REMOVE_TEXT:
 case Act.DELETE_TEXT:
  return Buzz.deleteText(clone(model), act.bale, state);
  
+case Act.LIST_TEXT:
+ return Buzz.listText(clone(model), act.bale, state);
+ 
  default:
  return model;
  }

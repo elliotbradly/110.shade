@@ -5,3 +5,4 @@ export { writeText  } from "./buz/text.buzz";
 export { createText  } from "./buz/text.buzz";
 export { removeText  } from "./buz/text.buzz";
 export { deleteText  } from "./buz/text.buzz";
+export { listText  } from "./buz/text.buzz";

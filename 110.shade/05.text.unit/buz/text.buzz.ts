@@ -1,3 +1,4 @@
+
 import * as ActCol from "../../97.collect.unit/collect.action";
 import * as ActFce from "../../02.surface.unit/surface.action";
 import * as ActCan from "../../03.container.unit/container.action";
@@ -50,7 +51,7 @@ export const writeText = async (cpy: TextModel, bal: TextBit, ste: State) => {
 };
 
 export const removeText = async (cpy: TextModel, bal:TextBit, ste: State) => {
-  
+
   bit = await ste.hunt(ActCol.REMOVE_COLLECT, { idx: bal.idx, src: bal.src, dat: bal.dat, bit: ActTxt.DELETE_TEXT })
   if (bal.slv != null) bal.slv({ vsgBit: { idx: "remove-text", dat: bit.clcBit } });
 
@@ -95,7 +96,7 @@ export const createText = async (cpy: TextModel, bal: TextBit, ste: State) => {
 };
 
 export const deleteText = async (cpy: TextModel, bal:TextBit, ste: State) => {
- 
+
   if (typeof window != "object") return bal.slv({ fceBit: { idx: "error-delete-text", dat: {} } });
 
   bit = await ste.hunt(ActTxt.READ_TEXT, { idx: bal.idx })
@@ -110,7 +111,12 @@ export const deleteText = async (cpy: TextModel, bal:TextBit, ste: State) => {
  return cpy;
  };
 
- 
+ export const listText = (cpy: TextModel, bal:TextBit, ste: State) => {
+  debugger
+  return cpy;
+  };
+
+
 import { SurfaceModel } from "../../02.surface.unit/surface.model";
 import { TextModel } from "../text.model";
 import TextBit from "../fce/text.bit";
