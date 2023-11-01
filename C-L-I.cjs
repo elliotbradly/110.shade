@@ -36,7 +36,7 @@ const init = async (prt) => {
     const local = 'mqtt://localhost:' + prt;
     const localBit = { idx: 'local', src: local };
 
-    PIVOT = require(path.resolve('./999.pivot/index.js'));
+    PIVOT = require(path.resolve('./999.pivot/hunt.js'));
     PIVOT_ACTION = require(path.resolve('./999.pivot/00.pivot.unit/pivot.action.js'));
 
     //TERMINAL = require(path.resolve('../998.terminal/dist/998.terminal/hunt'));
