@@ -34,6 +34,9 @@ case Act.REMOVE_CONTAINER:
 case Act.DELETE_CONTAINER:
  return Buzz.deleteContainer(clone(model), act.bale, state);
  
+case Act.LIST_CONTAINER:
+ return Buzz.listContainer(clone(model), act.bale, state);
+ 
  default:
  return model;
  }

@@ -57,6 +57,12 @@ export const DELETE_CONTAINER = "[Delete action] Delete Container";
  constructor(public bale: ContainerBit) {}
  }
  
+export const LIST_CONTAINER = "[List action] List Container";
+ export class ListContainer implements Action {
+ readonly type = LIST_CONTAINER;
+ constructor(public bale: ContainerBit) {}
+ }
+ 
 export type Actions = | InitContainer | UpdateContainer 
 | ReadContainer
 | WriteContainer
@@ -65,3 +71,4 @@ export type Actions = | InitContainer | UpdateContainer
 | AddContainer
 | RemoveContainer
 | DeleteContainer
+| ListContainer

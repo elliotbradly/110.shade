@@ -7,3 +7,4 @@ export { surfaceContainer  } from "./buz/container.buzz";
 export { addContainer  } from "./buz/container.buzz";
 export { removeContainer  } from "./buz/container.buzz";
 export { deleteContainer  } from "./buz/container.buzz";
+export { listContainer  } from "./buz/container.buzz";

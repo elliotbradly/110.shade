@@ -130,6 +130,10 @@ export const addContainer = async (cpy: ContainerModel, bal: ContainerBit, ste: 
     return cpy;
 };
 
+export const listContainer = (cpy: ContainerModel, bal:ContainerBit, ste: State) => {
+ debugger
+ return cpy;
+ };
 import { ContainerModel } from "../container.model";
 import ContainerBit from "../fce/container.bit";
 import State from "../../99.core/state";
