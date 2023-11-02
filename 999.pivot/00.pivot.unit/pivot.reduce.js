@@ -27,6 +27,8 @@ function reducer(model = new pivot_model_1.PivotModel(), act, state) {
             return Buzz.createPivot(clone(model), act.bale, state);
         case Act.CONTAINS_PIVOT:
             return Buzz.containsPivot(clone(model), act.bale, state);
+        case Act.BUNDLE_PIVOT:
+            return Buzz.bundlePivot(clone(model), act.bale, state);
         default:
             return model;
     }

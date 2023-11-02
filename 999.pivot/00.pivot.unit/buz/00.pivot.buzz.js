@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.patchPivot = exports.containsPivot = exports.listPivot = exports.editPivot = exports.runPivot = exports.openPivot = exports.updatePivot = exports.initPivot = void 0;
+exports.patchPivot = exports.bundlePivot = exports.containsPivot = exports.listPivot = exports.editPivot = exports.runPivot = exports.openPivot = exports.updatePivot = exports.initPivot = void 0;
 const ActMnu = require("../../98.menu.unit/menu.action");
 const ActBus = require("../../99.bus.unit/bus.action");
 const ActPvt = require("../pivot.action");
@@ -159,6 +159,49 @@ const containsPivot = (cpy, bal, ste) => {
     return cpy;
 };
 exports.containsPivot = containsPivot;
+const bundlePivot = async (cpy, bal, ste) => {
+    var exec = require('child_process').exec;
+    if (bal.src == null)
+        bal.src = '999.pivot';
+    var root = '999.pivot';
+    var template = 'node ./data/hand/000.eveiefy -t ' + bal.src;
+    exec(template, async (err, stdout, stderr) => {
+        if (err) {
+            console.error(`exec error: ${err}`);
+        }
+        console.log("bundling " + bal.src);
+        //bit = await ste.bus(ActDsk.WRITE_DISK, { src: './002.bundle-pivot.bat', dat: template })
+        //bit = await ste.bus(ActDsk.BATCH_DISK, { src: '002.bundle-pivot.bat' })
+        if (bal.val == null)
+            bal.val = 3;
+        debugger;
+        setTimeout(() => bal.slv({ pvtBit: { idx: "bundle-pivot" } }), bal.val);
+    });
+    //bit = await FS.ensureDirSync( '../' + bal.src + '/work/')
+    //bit = await ste.bus(ActVrt.LIST_PIVOT_VURT, {})
+    //lst = bit.vrtBit.lst
+    //var output = []
+    //lst.forEach((a) => {
+    //  var idx = '../' + a + '/work/' + bal.src + '.js'
+    //  var flag = FS.existsSync(idx);
+    //  if (flag == false) return
+    //  output.push(idx)
+    //})
+    //if ( output.length == 0 ) {
+    //  bal.slv({ vrtBit: { idx: "bundle-vurt", src:bal.src } })
+    //  return
+    // }
+    //var source =  root + '/bundle/' + bal.src + '.js'
+    //debugger
+    //output.forEach(async (a, b) => {
+    //  bit = await FS.copy(source, a)
+    //  console.log("copying to " + a)
+    //  debugger
+    //  if (b < output.length - 1) return
+    //})
+    return cpy;
+};
+exports.bundlePivot = bundlePivot;
 const patchPivot = (cpy, bal, ste) => {
     debugger;
     return cpy;

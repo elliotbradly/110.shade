@@ -17,7 +17,7 @@ const updateMenu = async (cpy, bal, ste) => {
     bit = await ste.hunt(ActTrm.WRITE_TERMINAL, { src: "-----------", bit: 'local' });
     bit = await ste.hunt(ActTrm.WRITE_TERMINAL, { src: "PIVOT PIVOT V0", bit: 'local' });
     bit = await ste.hunt(ActTrm.WRITE_TERMINAL, { src: "-----------", bit: "local" });
-    var lst = [ActMnu.UNIT_MENU, ActPvt.COUNT_PIVOT, ActPvt.CREATE_PIVOT, ActPvt.UPDATE_PIVOT];
+    var lst = [ActMnu.UNIT_MENU, ActPvt.COUNT_PIVOT, ActPvt.CREATE_PIVOT, ActPvt.UPDATE_PIVOT, ActPvt.BUNDLE_PIVOT];
     bit = await ste.hunt(ActTrm.UPDATE_TERMINAL, { lst });
     bit = bit.trmBit;
     var idx = lst[bit.val];
@@ -59,6 +59,17 @@ const updateMenu = async (cpy, bal, ste) => {
             lst = [ActPvt.PATCH_PIVOT];
             bit = await ste.bus(ActTrm.UPDATE_TERMINAL, { lst });
             bit = await ste.hunt(ActPvt.PATCH_PIVOT, {});
+            break;
+        case ActPvt.BUNDLE_PIVOT:
+            bit = await ste.hunt(ActPvt.BUNDLE_PIVOT, {});
+            bit = await ste.bus(ActTrm.WRITE_TERMINAL, { src: "BUNLDING...", bit: 'local' });
+            bit = await ste.bus(ActTrm.WRITE_TERMINAL, { src: "-----------", bit: "local" });
+            bit = await ste.hunt(ActPvt.LIST_PIVOT);
+            lst = bit.pvtBit.lst;
+            bit = await ste.hunt(ActTrm.UPDATE_TERMINAL, { lst });
+            var val = bit.trmBit.val;
+            var src = lst[val];
+            bit = await ste.hunt(ActPvt.BUNDLE_PIVOT, { src });
             break;
         default:
             bit = await await ste.bus(ActTrm.CLOSE_TERMINAL, {});
