@@ -6,20 +6,44 @@ import * as ActTrm from "../../act/terminal.action";
 
 var bit, lst, dex
 
+var current = 'None'
+
 export const visageMenu = async (cpy: MenuModel, bal: MenuBit, ste: State) => {
 
   bit = await ste.bus(ActTrm.WRITE_TERMINAL, { src: "-----------", bit: 'local' })
 
   bit = await ste.bus(ActTrm.WRITE_TERMINAL, { src: "Visage PIVOT V0", bit: 'local' })
+  bit = await ste.bus(ActTrm.WRITE_TERMINAL, { src: "Current " + current, bit: 'local' })
+
   bit = await ste.bus(ActTrm.WRITE_TERMINAL, { src: "-----------", bit: "local" })
 
-  var lst = [ActVsg.MOUNT_VISAGE, ActVsg.REMOVE_VISAGE, ActMnu.UPDATE_MENU]
+  var lst = [ ActVsg.LIST_VISAGE,  ActVsg.MOUNT_VISAGE, ActVsg.REMOVE_VISAGE, ActMnu.UPDATE_MENU]
   bit = await ste.bus(ActTrm.UPDATE_TERMINAL, { lst })
 
   bit = bit.trmBit;
   var idx = lst[bit.val];
 
   switch (idx) {
+
+
+    case ActVsg.LIST_VISAGE:
+
+      console.log("list visage")
+
+        bit = await ste.bus( ActVsg.LIST_VISAGE, {src:'bus'});
+
+        lst = bit.vsgBit.lst;
+
+        bit = await ste.bus(ActTrm.UPDATE_TERMINAL, { lst })
+
+        bit = bit.trmBit;
+        idx = lst[bit.val];
+        current = idx
+
+        //bit = await ste.bus(ActVsg.MOUNT_VISAGE, { idx: "vsg00", src: "indexCanvas", dat: { height: 720 } }, 'remote')
+        bit = await await ste.hunt(ActMnu.VISAGE_MENU, {})
+        break;
+
 
     case ActVsg.MOUNT_VISAGE:
 
@@ -33,7 +57,7 @@ export const visageMenu = async (cpy: MenuModel, bal: MenuBit, ste: State) => {
 
     case ActVsg.REMOVE_VISAGE:
 
-      bit = await ste.bus(ActVsg.LIST_VISAGE, {}, 'remote')
+      bit = await ste.bus(ActVsg.LIST_VISAGE, {src:'bus'}, 'remote')
       if (bit.vsgBit == null) bit.vsgBit = { lst: [] }
 
       lst = bit.vsgBit.lst;
