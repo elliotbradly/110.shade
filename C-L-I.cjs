@@ -37,7 +37,17 @@ httpServer.listen(wsPort, function () {
 
 server.listen(PORT, async () => {
     console.log('server started and listening on port ', PORT);
-    init(PORT);
+
+    exec('tsc -b 110.shade', async (err, stdout, stderr) => {
+        if (err) {
+            console.error(`exec error: ${err}`);
+        }
+
+        init(PORT);
+
+        })
+
+
 });
 
 
