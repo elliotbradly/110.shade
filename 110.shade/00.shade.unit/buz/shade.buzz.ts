@@ -101,26 +101,26 @@ export const updateShade = async (cpy: ShadeModel, bal: ShadeBit, ste: State) =>
             console.error(`exec error: ${err}`);
         }
 
-        process.chdir("../999.vurt");
+        process.chdir("./999.vurt");
         bit = await ste.bus(ActVrt.BUNDLE_VURT, { src: "110.shade" });
-        process.chdir("../110.shade");
+
+        process.chdir("../../110.shade");
 
         bit = await ste.bus(ActDsk.READ_DISK, { src: './work/110.shade.js' })
         var shade = bit.dskBit.dat;
 
-        bit = await ste.bus(ActDsk.WRITE_DISK, { src: '../gillisse/public/jsx/110.shade.js', dat: shade })
+        bit = await ste.bus(ActDsk.WRITE_DISK, { src: './public/jsx/110.shade.js', dat: shade })
 
-        bit = await ste.bus(ActDsk.READ_DISK, { src: './index.html' })
-        var html = bit.dskBit.dat;
+        //bit = await ste.bus(ActDsk.READ_DISK, { src: './index.html' })
+        //var html = bit.dskBit.dat;
 
-        bit = await ste.bus(ActDsk.READ_DISK, { src: './index.js' })
-        var index = bit.dskBit.dat;
+        //bit = await ste.bus(ActDsk.READ_DISK, { src: './index.js' })
+        //var index = bit.dskBit.dat;
 
-        bit = await ste.bus(ActDsk.WRITE_DISK, { src: '../gillisse/public/jsx/index.js', dat: index })
-        bit = await ste.bus(ActDsk.WRITE_DISK, { src: '../gillisse/index.html', dat: html })
+        //bit = await ste.bus(ActDsk.WRITE_DISK, { src: '../gillisse/public/jsx/index.js', dat: index })
+        //bit = await ste.bus(ActDsk.WRITE_DISK, { src: '../gillisse/index.html', dat: html })
 
-        bit = await ste.bus(ActDsk.COPY_DISK, { src: './vue', idx: '../gillisse/src' })
-
+        //bit = await ste.bus(ActDsk.COPY_DISK, { src: './vue', idx: '../gillisse/src' })
 
         setTimeout(() => {
             if (bal.slv != null) bal.slv({ shdBit: { idx: "update-shade" } });

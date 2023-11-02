@@ -5,7 +5,7 @@ import * as ActCan from "../../03.container.unit/container.action"
 
 import * as ActTrm from "../../act/terminal.action";
 
-var bit, lst, dex,src;
+var bit, lst, dex, src;
 
 export const containerMenu = async (cpy: MenuModel, bal: MenuBit, ste: State) => {
 
@@ -14,7 +14,7 @@ export const containerMenu = async (cpy: MenuModel, bal: MenuBit, ste: State) =>
   bit = await ste.bus(ActTrm.WRITE_TERMINAL, { src: "Container Menu", bit: 'local' })
   bit = await ste.bus(ActTrm.WRITE_TERMINAL, { src: "-----------", bit: "local" })
 
-  var lst = [ActCan.WRITE_CONTAINER, ActCan.ADD_CONTAINER, ActMnu.UPDATE_MENU ]
+  var lst = [ActCan.WRITE_CONTAINER, ActCan.ADD_CONTAINER, ActCan.LIST_CONTAINER, ActMnu.UPDATE_MENU]
   bit = await ste.bus(ActTrm.UPDATE_TERMINAL, { lst })
 
   bit = bit.trmBit;
@@ -24,7 +24,9 @@ export const containerMenu = async (cpy: MenuModel, bal: MenuBit, ste: State) =>
 
     case ActCan.WRITE_CONTAINER:
 
-      bit = await ste.bus(ActVsg.LIST_VISAGE, {}, 'remote')
+
+      bit = await ste.bus(ActVsg.LIST_VISAGE, { src: 'bus' })
+
       if (bit.vsgBit == null) bit.vsgBit = { lst: [] }
 
       lst = bit.vsgBit.lst;
@@ -44,18 +46,30 @@ export const containerMenu = async (cpy: MenuModel, bal: MenuBit, ste: State) =>
 
       bit = await ste.bus(ActTrm.INPUT_TERMINAL, { lst: ["", "identify..."] });
       idx = bit.trmBit.src
+      src
 
       bit = await ste.bus(ActCan.WRITE_CONTAINER, { idx, src })
-  
+
+      bit = await await ste.hunt(ActMnu.CONTAINER_MENU, {})
+      break;
+
+    case ActCan.ADD_CONTAINER:
+
+      bit = await ste.bus(ActVsg.MOUNT_VISAGE, { idx: "vsg00", src: "indexCanvas", dat: { height: 720 } }, 'remote')
       bit = await await ste.hunt(ActMnu.VISAGE_MENU, {})
       break;
 
-      case ActCan.ADD_CONTAINER:
+    case ActCan.LIST_CONTAINER:
 
-        bit = await ste.bus(ActVsg.MOUNT_VISAGE, { idx: "vsg00", src: "indexCanvas", dat: { height: 720 } }, 'remote')
-        bit = await await ste.hunt(ActMnu.VISAGE_MENU, {})
-        break;
 
+
+
+      bit = await ste.bus(ActCan.LIST_CONTAINER, { src: 'bus' })
+
+
+      debugger
+      bit = await await ste.hunt(ActMnu.CONTAINER_MENU, {})
+      break;
 
     default:
       bit = await await ste.hunt(ActMnu.UPDATE_MENU, {})

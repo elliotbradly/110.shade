@@ -33,6 +33,9 @@ export const readContainer = async (cpy: ContainerModel, bal: ContainerBit, ste:
 };
 
 export const writeContainer = async (cpy: ContainerModel, bal: ContainerBit, ste: State) => {
+
+  if (typeof window != "object") return bal.slv({ canBit: { idx: "error-write-container", dat: {} } });
+
     bit = await ste.hunt(ActCol.WRITE_COLLECT, { idx: bal.idx, src: bal.src, dat: bal.dat, bit: ActCan.CREATE_CONTAINER })
     ste.hunt(ActCan.UPDATE_CONTAINER, { idx: bal.idx })
 
@@ -41,7 +44,7 @@ export const writeContainer = async (cpy: ContainerModel, bal: ContainerBit, ste
 };
 
 export const removeContainer = async (cpy: ContainerModel, bal: ContainerBit, ste: State) => {
-    
+
     bit = await ste.hunt(ActCol.REMOVE_COLLECT, { idx: bal.idx, src: bal.src, dat: bal.dat, bit: ActCan.DELETE_CONTAINER })
     if (bal.slv != null) bal.slv({ vsgBit: { idx: "remove-container", dat: bit.clcBit } });
 
@@ -50,8 +53,10 @@ export const removeContainer = async (cpy: ContainerModel, bal: ContainerBit, st
 
 export const createContainer = async (cpy: ContainerModel, bal: ContainerBit, ste: State) => {
 
+  if (typeof window != "object") return bal.slv({ canBit: { idx: "error-create-container", dat: {} } });
+
     //you have a source visage
-    //now you wish to update a bit of the source visage 
+    //now you wish to update a bit of the source visage
     var dat: CanBit = { idx: bal.idx, src: bal.src, typ: SHADE.CONTAINER, x: 0, y: 0 };
 
     for (var key in bal.dat) {
@@ -67,7 +72,7 @@ export const createContainer = async (cpy: ContainerModel, bal: ContainerBit, st
     console.log("nesting " + JSON.stringify(dat.typ))
 
     if (bal.src != null) bit = await ste.hunt(ActVsg.NEST_VISAGE, { src: bal.src, dat })
-    
+
     if (bal.slv != null) return bal.slv({ canBit: { idx: "create-container", dat } });
 
     return cpy;
@@ -83,7 +88,7 @@ export const deleteContainer = async (cpy: ContainerModel, bal: ContainerBit, st
     var container = dat.bit;
     container.destroy()
     dat.bit = null
-    
+
     if (bal.slv != null) return bal.slv({ vsgBit: { idx: "delete-container", dat } });
     return cpy;
 };
@@ -95,7 +100,7 @@ export const surfaceContainer = async (cpy: ContainerModel, bal: ContainerBit, s
     bit = await ste.hunt(ActFce.READ_SURFACE, { idx: bal.src })
     var app = bit.fceBit.dat.bit;
     var stage = app.stage;
-    
+
     bit = await ste.hunt(ActCan.READ_CONTAINER, { idx: bal.idx })
     var can = bit.canBit.dat.bit;
     stage.addChild(can)
@@ -104,7 +109,7 @@ export const surfaceContainer = async (cpy: ContainerModel, bal: ContainerBit, s
     //graphic.lineStyle(3, dat.clr);
     //graphic.drawRect(0, 0, 25, 1080);
     //can.addChild( graphic)
-    
+
     if (bal.slv != null) return bal.slv({ canBit: { idx: "surface-container", dat: bal } });
 
     return cpy;
@@ -118,7 +123,7 @@ export const addContainer = async (cpy: ContainerModel, bal: ContainerBit, ste: 
 
     bit = await ste.hunt(ActCan.READ_CONTAINER, { idx: bal.idx })
     var can = bit.canBit.dat.bit;
-    
+
     can.addChild(content)
 
     //var graphic = new PIXI.Graphics();
@@ -130,10 +135,38 @@ export const addContainer = async (cpy: ContainerModel, bal: ContainerBit, ste: 
     return cpy;
 };
 
-export const listContainer = (cpy: ContainerModel, bal:ContainerBit, ste: State) => {
- debugger
+export const listContainer = async (cpy: ContainerModel, bal:ContainerBit, ste: State) => {
+
+  //if (typeof window != "object") return bal.slv({ canBit: { idx: "error-list-container", dat: {} } });
+
+  debugger
+
+  dat = null
+
+  if ( bal.src == 'bus') bit = await ste.bus(ActCol.FETCH_COLLECT, { val: 0, bit: ActCan.CREATE_CONTAINER })
+  else bit = await ste.hunt(ActCol.FETCH_COLLECT, { val: 0, bit: ActCan.CREATE_CONTAINER })
+
+  if (bit.clcBit.dat == null) lst = []
+  else dat = bit.clcBit.dat;
+
+  if (dat != null) {
+
+      dat.bitList.forEach((a) => {
+          lst = []
+          lst.push((a.idx))
+      })
+
+      lst
+  }
+
+  if (bal.slv != null) bal.slv({ canBit: { idx: 'list-container', lst } });
+
+
  return cpy;
  };
+
+
+
 import { ContainerModel } from "../container.model";
 import ContainerBit from "../fce/container.bit";
 import State from "../../99.core/state";

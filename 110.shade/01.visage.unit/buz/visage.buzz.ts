@@ -328,6 +328,8 @@ export const listVisage = async (cpy: VisageModel, bal: VisageBit, ste: State) =
 
     //if (typeof window != "object") return bal.slv({ fceBit: { idx: "error-create-visage", dat: {} } });
 
+    debugger
+
     dat = null
 
     if ( bal.src == 'bus') bit = await ste.bus(ActCol.FETCH_COLLECT, { val: 0, bit: ActVsg.CREATE_VISAGE })
