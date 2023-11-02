@@ -23,7 +23,9 @@ export const visageMenu = async (cpy: MenuModel, bal: MenuBit, ste: State) => {
 
     case ActVsg.MOUNT_VISAGE:
 
-      bit = await ste.bus(ActVsg.MOUNT_VISAGE, { idx: "vsg00", src: "indexCanvas", dat: { height: 720 } }, 'remote')
+      var bit = await ste.bus( ActVsg.MOUNT_VISAGE, { idx: "vsg00", src: "indexCanvas", dat: { } });
+
+      //bit = await ste.bus(ActVsg.MOUNT_VISAGE, { idx: "vsg00", src: "indexCanvas", dat: { height: 720 } }, 'remote')
       bit = await await ste.hunt(ActMnu.VISAGE_MENU, {})
       break;
 

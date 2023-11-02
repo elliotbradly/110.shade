@@ -174,18 +174,21 @@ export const patchShade = async (cpy: ShadeModel, bal: ShadeBit, ste: State) => 
 export const testShade = async (cpy: ShadeModel, bal:ShadeBit, ste: State) => {
 
 
-    const { exec } = require('child_process');
-
-    setTimeout( async ()=>{
 
 
-      console.log("DONE")
+    //setTimeout( async ()=>{
 
 
-      var bit = await ste.bus( ActVsg.MOUNT_VISAGE, { idx: "vsg00", src: "indexCanvas", dat: { } });
+    //  console.log("DONE")
 
 
-   }, 31000)
+
+
+
+   //}, 31000)
+
+
+   const { exec } = require('child_process');
 
 
     exec('quasar dev -m electron', async (err, stdout, stderr) => {
