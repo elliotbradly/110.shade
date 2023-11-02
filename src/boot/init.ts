@@ -18,7 +18,7 @@ export default boot(async ( dat ) => {
   const local = 'mqtt://localhost:' + prt;
   const localBit = { idx: 'local', src: local };
 
-  var bit = await win.SHADE.hunt( win.SHADE.ActShd.INIT_SHADE, { val: 1, dat: win.MQTT, src: local });
+  var bit = await win.SHADE.hunt( win.SHADE.ActShd.INIT_SHADE, { val: 0, dat: win.MQTT, src: local });
 
 
 

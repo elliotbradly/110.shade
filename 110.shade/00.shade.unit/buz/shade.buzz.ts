@@ -22,7 +22,14 @@ var SPACE = global.SPACE
 
 var bit, val, idx, dex, lst, dat;
 
+var once = false
+
 export const initShade = async (cpy: ShadeModel, bal: ShadeBit, ste: State) => {
+
+  if (once == true) return
+
+  once = true
+
 
     if (bal.dat != null) bit = await ste.hunt(ActBus.INIT_BUS, { idx: cpy.idx, lst: [ActShd, ActVsg, ActSrf, ActCan, ActGph, ActTxt, ActSpr, ActHex, ActVid, ActTun], dat: bal.dat, src: bal.src })
 
@@ -173,27 +180,11 @@ export const patchShade = async (cpy: ShadeModel, bal: ShadeBit, ste: State) => 
 
 export const testShade = async (cpy: ShadeModel, bal:ShadeBit, ste: State) => {
 
-
-
-
-    //setTimeout( async ()=>{
-
-
-    //  console.log("DONE")
-
-
-
-
-
-   //}, 31000)
-
-
    const { exec } = require('child_process');
-
 
     exec('quasar dev -m electron', async (err, stdout, stderr) => {
 
-
+      debugger
 
         if (bal.slv != null) bal.slv({ shdBit: { idx: "test-shade", dat: {} } });
     });

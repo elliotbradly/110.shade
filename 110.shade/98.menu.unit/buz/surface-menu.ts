@@ -12,7 +12,7 @@ export const surfaceMenu = async (cpy: MenuModel, bal: MenuBit, ste: State) => {
 
   bit = await ste.bus(ActTrm.WRITE_TERMINAL, { src: "-----------", bit: 'local' })
 
-  bit = await ste.bus(ActTrm.WRITE_TERMINAL, { src: "Text Menu", bit: 'local' })
+  bit = await ste.bus(ActTrm.WRITE_TERMINAL, { src: "Surface Menu", bit: 'local' })
   bit = await ste.bus(ActTrm.WRITE_TERMINAL, { src: "-----------", bit: "local" })
 
   var lst = [ ActTxt.WRITE_TEXT, ActTxt.READ_TEXT, ActMnu.UPDATE_MENU ]

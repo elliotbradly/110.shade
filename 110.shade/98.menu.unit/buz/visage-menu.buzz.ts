@@ -10,7 +10,7 @@ export const visageMenu = async (cpy: MenuModel, bal: MenuBit, ste: State) => {
 
   bit = await ste.bus(ActTrm.WRITE_TERMINAL, { src: "-----------", bit: 'local' })
 
-  bit = await ste.bus(ActTrm.WRITE_TERMINAL, { src: "SHADE PIVOT V0", bit: 'local' })
+  bit = await ste.bus(ActTrm.WRITE_TERMINAL, { src: "Visage PIVOT V0", bit: 'local' })
   bit = await ste.bus(ActTrm.WRITE_TERMINAL, { src: "-----------", bit: "local" })
 
   var lst = [ActVsg.MOUNT_VISAGE, ActVsg.REMOVE_VISAGE, ActMnu.UPDATE_MENU]
@@ -22,6 +22,8 @@ export const visageMenu = async (cpy: MenuModel, bal: MenuBit, ste: State) => {
   switch (idx) {
 
     case ActVsg.MOUNT_VISAGE:
+
+    console.log("mount visage")
 
       var bit = await ste.bus( ActVsg.MOUNT_VISAGE, { idx: "vsg00", src: "indexCanvas", dat: { } });
 

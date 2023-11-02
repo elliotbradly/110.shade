@@ -23,7 +23,6 @@ let pvt = false
 if (title == 'development') dev = true
 if (title == 'pivot') pvt = true
 
-
 const aedes = require('aedes')();
 const server = require('net').createServer(aedes.handle);
 
@@ -49,7 +48,6 @@ const init = async (prt) => {
     const local = 'mqtt://localhost:' + prt;
     const localBit = { idx: 'local', src: local };
 
-
     SHADE = require(path.resolve('./dist/110.shade/hunt'));
     SHADE_ACTION = require(path.resolve('./dist/110.shade/00.shade.unit/shade.action'));
 
@@ -58,7 +56,6 @@ const init = async (prt) => {
 
     VURT = require(path.resolve('./999.vurt/hunt'));
     VURT_ACTION = require(path.resolve('./999.vurt/00.vurt.unit/vurt.action'));
-
 
     if ( pvt == false){
 
