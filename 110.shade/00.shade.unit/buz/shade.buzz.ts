@@ -14,6 +14,7 @@ import * as ActVid from "../../11.video.unit/video.action";
 import * as ActTun from "../../10.toon.unit/toon.action";
 import * as ActSpc from "../../act/space.action"
 
+import * as ActPvt from "../../act/pivot.action";
 import * as ActVrt from "../../act/vurt.action";
 import * as ActDsk from "../../act/disk.action";
 
@@ -101,10 +102,10 @@ export const updateShade = async (cpy: ShadeModel, bal: ShadeBit, ste: State) =>
             console.error(`exec error: ${err}`);
         }
 
-        process.chdir("./999.vurt");
-        bit = await ste.bus(ActVrt.BUNDLE_VURT, { src: "110.shade" });
+        //process.chdir("./999.vurt");
+        bit = await ste.bus(ActPvt.BUNDLE_PIVOT, { src: "110.shade" });
 
-        process.chdir("../../110.shade");
+        //process.chdir("../../110.shade");
 
         bit = await ste.bus(ActDsk.READ_DISK, { src: './work/110.shade.js' })
         var shade = bit.dskBit.dat;
@@ -184,7 +185,7 @@ export const testShade = async (cpy: ShadeModel, bal:ShadeBit, ste: State) => {
 
     exec('quasar dev -m electron', async (err, stdout, stderr) => {
 
-      debugger
+
 
         if (bal.slv != null) bal.slv({ shdBit: { idx: "test-shade", dat: {} } });
     });

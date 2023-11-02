@@ -174,7 +174,6 @@ const bundlePivot = async (cpy, bal, ste) => {
         //bit = await ste.bus(ActDsk.BATCH_DISK, { src: '002.bundle-pivot.bat' })
         if (bal.val == null)
             bal.val = 3;
-        debugger;
         setTimeout(() => bal.slv({ pvtBit: { idx: "bundle-pivot" } }), bal.val);
     });
     //bit = await FS.ensureDirSync( '../' + bal.src + '/work/')

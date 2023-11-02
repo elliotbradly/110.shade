@@ -72,6 +72,7 @@ const init = async (prt) => {
     if ( pvt == false){
 
       await VURT.hunt( VURT_ACTION.INIT_VURT, { dat: MQTT, src: local });
+      await PIVOT.hunt( PIVOT_ACTION.INIT_PIVOT, {  dat: MQTT, src: local });
       await SHADE.hunt( SHADE_ACTION.INIT_SHADE , { val: 1, dat: MQTT, src:  [localBit]  });
 
     }
