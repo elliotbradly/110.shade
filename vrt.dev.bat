@@ -1,1 +1,1 @@
-quasar dev -m electron
+ node C-L-I.cjs -t development

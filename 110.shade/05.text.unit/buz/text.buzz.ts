@@ -24,6 +24,11 @@ export const updateText = async (cpy: TextModel, bal: TextBit, ste: State) => {
   text.x = dat.x;
   text.y = dat.y;
 
+  bit = await ste.hunt(ActCan.READ_CONTAINER, { idx: bal.src })
+  var container: PIXI.Container = dat.bit
+
+  container.addChild( text)
+
   if (bal.slv != null) return bal.slv({ txtBit: { idx: "update-text", dat: dat } });
 
   return cpy;

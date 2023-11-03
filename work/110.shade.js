@@ -616,7 +616,7 @@ const clearVisage = async (cpy, bal, ste) => {
 exports.clearVisage = clearVisage;
 //get a list of all the visages here
 const listVisage = async (cpy, bal, ste) => {
-    //if (typeof window != "object") return bal.slv({ fceBit: { idx: "error-create-visage", dat: {} } });
+    //if (typeof window != "object") return bal.slv({ vsgBit: { idx: "error-create-visage",  lst:['none', 'none']} });
     dat = null;
     if (bal.src == 'bus')
         bit = await ste.bus(ActCol.FETCH_COLLECT, { val: 0, bit: ActVsg.CREATE_VISAGE });
@@ -626,6 +626,7 @@ const listVisage = async (cpy, bal, ste) => {
         lst = [];
     else
         dat = bit.clcBit.dat;
+    debugger;
     if (dat != null) {
         dat.bitList.forEach((a) => {
             lst = [];
@@ -1826,6 +1827,7 @@ exports.default = GraphicUnit;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.listText = exports.deleteText = exports.createText = exports.removeText = exports.writeText = exports.readText = exports.updateText = exports.initText = void 0;
 const ActCol = require("../../97.collect.unit/collect.action");
+const ActCan = require("../../03.container.unit/container.action");
 const ActTxt = require("../../05.text.unit/text.action");
 const ActVsg = require("../../01.visage.unit/visage.action");
 var bit, val, idx, dex, lst, dat;
@@ -1840,6 +1842,9 @@ const updateText = async (cpy, bal, ste) => {
     text.text = dat.txt;
     text.x = dat.x;
     text.y = dat.y;
+    bit = await ste.hunt(ActCan.READ_CONTAINER, { idx: bal.src });
+    var container = dat.bit;
+    container.addChild(text);
     if (bal.slv != null)
         return bal.slv({ txtBit: { idx: "update-text", dat: dat } });
     return cpy;
@@ -1933,7 +1938,7 @@ exports.listText = listText;
 const PIXI = require("pixi.js-legacy");
 const SHADE = require("../../val/shade");
 
-},{"../../01.visage.unit/visage.action":9,"../../05.text.unit/text.action":33,"../../97.collect.unit/collect.action":81,"../../val/shade":110,"pixi.js-legacy":681}],33:[function(require,module,exports){
+},{"../../01.visage.unit/visage.action":9,"../../03.container.unit/container.action":21,"../../05.text.unit/text.action":33,"../../97.collect.unit/collect.action":81,"../../val/shade":110,"pixi.js-legacy":681}],33:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ListText = exports.LIST_TEXT = exports.DeleteText = exports.DELETE_TEXT = exports.RemoveText = exports.REMOVE_TEXT = exports.CreateText = exports.CREATE_TEXT = exports.WriteText = exports.WRITE_TEXT = exports.ReadText = exports.READ_TEXT = exports.UpdateText = exports.UPDATE_TEXT = exports.InitText = exports.INIT_TEXT = void 0;
@@ -3838,7 +3843,7 @@ const updateMenu = async (cpy, bal, ste) => {
     bit = await ste.bus(ActTrm.WRITE_TERMINAL, { src: "-----------", bit: 'local' });
     bit = await ste.bus(ActTrm.WRITE_TERMINAL, { src: "SHADE PIVOT V1.1", bit: 'local' });
     bit = await ste.bus(ActTrm.WRITE_TERMINAL, { src: "-----------", bit: "local" });
-    var lst = [ActShd.TEST_SHADE, ActShd.UPDATE_SHADE, ActShd.OPEN_SHADE,
+    var lst = [ActShd.UPDATE_SHADE, ActShd.TEST_SHADE, ActShd.OPEN_SHADE,
         ActShd.RUN_SHADE, ActShd.EDIT_SHADE, ActMnu.CONTAINER_MENU,
         ActMnu.TEXT_MENU, ActMnu.VISAGE_MENU];
     bit = await ste.bus(ActTrm.UPDATE_TERMINAL, { lst });
@@ -3944,7 +3949,9 @@ const containerMenu = async (cpy, bal, ste) => {
     var idx = lst[bit.val];
     switch (idx) {
         case ActCan.WRITE_CONTAINER:
+            debugger;
             bit = await ste.bus(ActVsg.LIST_VISAGE, { src: 'bus' });
+            debugger;
             if (bit.vsgBit == null)
                 bit.vsgBit = { lst: [] };
             lst = bit.vsgBit.lst;
@@ -4042,7 +4049,9 @@ const visageMenu = async (cpy, bal, ste) => {
     switch (idx) {
         case ActVsg.LIST_VISAGE:
             console.log("list visage");
+            debugger;
             bit = await ste.bus(ActVsg.LIST_VISAGE, { src: 'bus' });
+            debugger;
             lst = bit.vsgBit.lst;
             bit = await ste.bus(ActTrm.UPDATE_TERMINAL, { lst });
             bit = bit.trmBit;

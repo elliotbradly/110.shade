@@ -35,7 +35,7 @@ export const update = async (value: HelloWorld) => {
   bit = await SHADE['hunt']( ActCan.WRITE_CONTAINER, { idx: "can00", src: 'vsg00' })
   bit = await SHADE['hunt']( ActCan.SURFACE_CONTAINER, { idx: 'fce-can-00', src: "vsg00" });
 
-  bit = await SHADE['hunt']( ActTxt.WRITE_TEXT, { idx:'txt00', src:'vsg00', can: 'can00', txt: "vsg00" });
+  bit = await SHADE['hunt']( ActTxt.WRITE_TEXT, { idx:'txt00',  can: 'fce-can-00', txt: "vsg00 mount up" });
 
   return value
 }

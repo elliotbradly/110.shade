@@ -326,7 +326,8 @@ export const clearVisage = async (cpy: VisageModel, bal: VisageBit, ste: State) 
 //get a list of all the visages here
 export const listVisage = async (cpy: VisageModel, bal: VisageBit, ste: State) => {
 
-    //if (typeof window != "object") return bal.slv({ fceBit: { idx: "error-create-visage", dat: {} } });
+
+    //if (typeof window != "object") return bal.slv({ vsgBit: { idx: "error-create-visage",  lst:['none', 'none']} });
 
     dat = null
 
@@ -335,6 +336,10 @@ export const listVisage = async (cpy: VisageModel, bal: VisageBit, ste: State) =
 
     if (bit.clcBit.dat == null) lst = []
     else dat = bit.clcBit.dat;
+
+
+    debugger
+
 
     if (dat != null) {
 

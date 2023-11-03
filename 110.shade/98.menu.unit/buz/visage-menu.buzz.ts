@@ -30,7 +30,11 @@ export const visageMenu = async (cpy: MenuModel, bal: MenuBit, ste: State) => {
 
       console.log("list visage")
 
+      debugger
+
       bit = await ste.bus(ActVsg.LIST_VISAGE, { src: 'bus' });
+
+      debugger
 
       lst = bit.vsgBit.lst;
 

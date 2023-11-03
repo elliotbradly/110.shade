@@ -25,7 +25,12 @@ export const containerMenu = async (cpy: MenuModel, bal: MenuBit, ste: State) =>
     case ActCan.WRITE_CONTAINER:
 
 
+    debugger
+
       bit = await ste.bus(ActVsg.LIST_VISAGE, { src: 'bus' })
+
+
+      debugger
 
       if (bit.vsgBit == null) bit.vsgBit = { lst: [] }
 
