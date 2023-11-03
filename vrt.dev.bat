@@ -1,1 +1,1 @@
- node C-L-I.cjs -t development
+ node run.cjs -t development
