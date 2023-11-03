@@ -5,6 +5,7 @@ import * as ActCan from '../110.shade/03.container.unit/container.action'
 import * as ActTxt from '../110.shade/05.text.unit/text.action'
 import * as ActGph from '../110.shade/04.graphic.unit/graphic.action'
 import * as ActSpr from '../110.shade/06.sprite.unit/sprite.action'
+import * as ActHex from '../110.shade/07.hexagon.unit/hexagon.action'
 
 
 export type HelloWorld = string | number
@@ -57,6 +58,12 @@ export const update = async (value: HelloWorld) => {
 
   bit = await SHADE['hunt']( ActGph.WRITE_GRAPHIC, { idx:'gph00', dat: { h:100, w:40, x:40, y:40 }  })
   bit = await SHADE['hunt']( ActCan.ADD_CONTAINER, { idx: "can00",  dat:{bit:bit.gphBit.dat.bit }})
+
+  bit = await SHADE['hunt']( ActHex.WRITE_HEXAGON, { idx:'hex00', dat: { src:'gph00' }  })
+  //bit = await SHADE['hunt']( ActCan.ADD_CONTAINER, { idx: "can00",  dat:{bit:bit.gphBit.dat.bit }})
+
+
+
 
 
   return value
