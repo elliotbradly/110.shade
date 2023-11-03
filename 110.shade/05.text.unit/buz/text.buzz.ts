@@ -24,10 +24,9 @@ export const updateText = async (cpy: TextModel, bal: TextBit, ste: State) => {
   text.x = dat.x;
   text.y = dat.y;
 
-  bit = await ste.hunt(ActCan.READ_CONTAINER, { idx: bal.src })
-  var container: PIXI.Container = dat.bit
-
-  container.addChild( text)
+  //bit = await ste.hunt(ActCan.READ_CONTAINER, { idx: bal.src })
+  //var container: PIXI.Container = dat.bit
+  //container.addChild( text)
 
   if (bal.slv != null) return bal.slv({ txtBit: { idx: "update-text", dat: dat } });
 
@@ -51,7 +50,9 @@ export const writeText = async (cpy: TextModel, bal: TextBit, ste: State) => {
   bit = await ste.hunt(ActCol.WRITE_COLLECT, { idx: bal.idx, src:bal.src, dat: bal.dat, bit: ActTxt.CREATE_TEXT })
   ste.hunt(ActTxt.UPDATE_TEXT, { idx: bal.idx })
 
-  if (bal.slv != null) bal.slv({ txtBit: { idx: "write-text", dat: bit.clcBit.dat } });
+  var output = bit.clcBit.dat
+
+  if (bal.slv != null) bal.slv({ txtBit: { idx: "write-text", dat: output  } });
   return cpy;
 };
 

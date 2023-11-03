@@ -1827,7 +1827,6 @@ exports.default = GraphicUnit;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.listText = exports.deleteText = exports.createText = exports.removeText = exports.writeText = exports.readText = exports.updateText = exports.initText = void 0;
 const ActCol = require("../../97.collect.unit/collect.action");
-const ActCan = require("../../03.container.unit/container.action");
 const ActTxt = require("../../05.text.unit/text.action");
 const ActVsg = require("../../01.visage.unit/visage.action");
 var bit, val, idx, dex, lst, dat;
@@ -1842,9 +1841,9 @@ const updateText = async (cpy, bal, ste) => {
     text.text = dat.txt;
     text.x = dat.x;
     text.y = dat.y;
-    bit = await ste.hunt(ActCan.READ_CONTAINER, { idx: bal.src });
-    var container = dat.bit;
-    container.addChild(text);
+    //bit = await ste.hunt(ActCan.READ_CONTAINER, { idx: bal.src })
+    //var container: PIXI.Container = dat.bit
+    //container.addChild( text)
     if (bal.slv != null)
         return bal.slv({ txtBit: { idx: "update-text", dat: dat } });
     return cpy;
@@ -1865,8 +1864,9 @@ const writeText = async (cpy, bal, ste) => {
         bal.idx = "txt00";
     bit = await ste.hunt(ActCol.WRITE_COLLECT, { idx: bal.idx, src: bal.src, dat: bal.dat, bit: ActTxt.CREATE_TEXT });
     ste.hunt(ActTxt.UPDATE_TEXT, { idx: bal.idx });
+    var output = bit.clcBit.dat;
     if (bal.slv != null)
-        bal.slv({ txtBit: { idx: "write-text", dat: bit.clcBit.dat } });
+        bal.slv({ txtBit: { idx: "write-text", dat: output } });
     return cpy;
 };
 exports.writeText = writeText;
@@ -1938,7 +1938,7 @@ exports.listText = listText;
 const PIXI = require("pixi.js-legacy");
 const SHADE = require("../../val/shade");
 
-},{"../../01.visage.unit/visage.action":9,"../../03.container.unit/container.action":21,"../../05.text.unit/text.action":33,"../../97.collect.unit/collect.action":81,"../../val/shade":110,"pixi.js-legacy":681}],33:[function(require,module,exports){
+},{"../../01.visage.unit/visage.action":9,"../../05.text.unit/text.action":33,"../../97.collect.unit/collect.action":81,"../../val/shade":110,"pixi.js-legacy":681}],33:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ListText = exports.LIST_TEXT = exports.DeleteText = exports.DELETE_TEXT = exports.RemoveText = exports.REMOVE_TEXT = exports.CreateText = exports.CREATE_TEXT = exports.WriteText = exports.WRITE_TEXT = exports.ReadText = exports.READ_TEXT = exports.UpdateText = exports.UPDATE_TEXT = exports.InitText = exports.INIT_TEXT = void 0;
