@@ -3,6 +3,7 @@ import { ref, onMounted, onUnmounted, onUpdated, inject, getCurrentInstance } fr
 import * as ActVsg from '../110.shade/01.visage.unit/visage.action'
 import * as ActCan from '../110.shade/03.container.unit/container.action'
 import * as ActTxt from '../110.shade/05.text.unit/text.action'
+import * as ActGph from '../110.shade/04.graphic.unit/graphic.action'
 
 
 
@@ -50,6 +51,9 @@ export const update = async (value: HelloWorld) => {
 
   bit = await SHADE['hunt']( ActTxt.WRITE_TEXT, { idx:'txt03', dat: {  txt: "text 03", y:45 }  })
   bit = await SHADE['hunt']( ActCan.ADD_CONTAINER, { idx: "can00",  dat:{bit:bit.txtBit.dat.bit }})
+
+  bit = await SHADE['hunt']( ActGph.WRITE_GRAPHIC, { idx:'gph00', dat: { h:100, w:40, x:40, y:40 }  })
+  bit = await SHADE['hunt']( ActCan.ADD_CONTAINER, { idx: "can00",  dat:{bit:bit.gphBit.dat.bit }})
 
 
   return value
