@@ -2348,14 +2348,15 @@ const updateHexagon = async (cpy, bal, ste) => {
     var dat = bit.hexBit.dat;
     var map = dat.map;
     if (map != null)
-        switch (dat.frm) {
-            case HEXAGON.FOCUS:
-                ste.hunt(ActHex.FOCUS_HEXAGON, { dat, bit: bal.dat });
-                break;
-            case HEXAGON.HEXMAP:
-                ste.hunt(ActHex.HEXMAP_HEXAGON, { dat, bit: bal.dat });
-                break;
-        }
+        dat.frm;
+    switch (dat.frm) {
+        case HEXAGON.FOCUS:
+            ste.hunt(ActHex.FOCUS_HEXAGON, { dat, bit: bal.dat });
+            break;
+        case HEXAGON.HEXMAP:
+            ste.hunt(ActHex.HEXMAP_HEXAGON, { dat, bit: bal.dat });
+            break;
+    }
     bal.slv({ hexBit: { idx: "update-hexagon", dat: dat } });
     return cpy;
 };
@@ -2367,17 +2368,18 @@ exports.focusHexagon = focusHexagon;
 const hexmapHexagon = async (cpy, bal, ste) => {
     bit = await ste.hunt(ActGph.READ_GRAPHIC, { src: bal.src });
     var graphic = bit.gphBit.dat.bit;
-    var hexmap = bal.bit;
+    var hexmap = bal.dat.bit;
     graphic.clear();
     const Hex = Honeycomb.extendHex({
         size: Number(33),
         orientation: 'pointy', // default: 'pointy'
     });
     const Grid = Honeycomb.defineGrid(Hex);
-    const grid = Grid(hexmap.dat);
+    const grid = Grid(hexmap);
     var pct = .333;
     var scl = 3;
     graphic.lineStyle(3, 0x0000000, 1);
+    grid;
     grid.forEach((hex) => {
         const point = hex.toPoint();
         const corners = hex.corners().map((corner) => corner.add(point));

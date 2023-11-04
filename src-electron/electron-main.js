@@ -22,9 +22,11 @@ const ActMap = require('../002.space/03.hexmap.unit/hexmap.action')
 
 const local = 'mqtt://localhost:' + PORT;
 
-var bit = await SPACE.hunt(ActSpc.INIT_SPACE, { val: 0, dat: MQTT, src: local })
-console.log(JSON.stringify(bit))
+var bit;
 
+SPACE.hunt(ActSpc.INIT_SPACE, { val: 0, dat: MQTT, src: local })
+
+console.log(JSON.stringify(bit))
 
 async function handleFileOpen() {
   const { canceled, filePaths } = await dialog.showOpenDialog({})

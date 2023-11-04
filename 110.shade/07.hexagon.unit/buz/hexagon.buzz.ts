@@ -16,11 +16,14 @@ export const initHexagon = (cpy: HexagonModel, bal: HexagonBit, ste: State) => {
 
 export const updateHexagon = async (cpy: HexagonModel, bal: HexagonBit, ste: State) => {
 
+
   bit = await ste.hunt(ActHex.READ_HEXAGON, { idx: bal.idx })
   var dat: HexBit = bit.hexBit.dat
   var map = dat.map
 
   if ( map != null )
+
+  dat.frm
 
   switch (dat.frm) {
 
@@ -49,7 +52,7 @@ export const hexmapHexagon = async (cpy: HexagonModel, bal: HexagonBit, ste: Sta
   bit = await ste.hunt(ActGph.READ_GRAPHIC, { src: bal.src })
   var graphic: PIXI.Graphics = bit.gphBit.dat.bit
 
-  var hexmap = bal.bit
+  var hexmap = bal.dat.bit
 
   graphic.clear()
 
@@ -60,12 +63,15 @@ export const hexmapHexagon = async (cpy: HexagonModel, bal: HexagonBit, ste: Sta
 
 
   const Grid: Honeycomb.GridFactory<any> = Honeycomb.defineGrid(Hex);
-  const grid: Honeycomb.Grid = Grid(hexmap.dat);
+  const grid: Honeycomb.Grid = Grid(hexmap);
 
   var pct = .333;
   var scl = 3;
 
   graphic.lineStyle(3, 0x0000000, 1);
+
+  grid
+
 
   grid.forEach((hex) => {
     const point = hex.toPoint();
