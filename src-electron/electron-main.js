@@ -9,22 +9,21 @@ const platform = process.platform || os.platform()
 let mainWindow
 
 const MQTT = require('async-mqtt');
-const port = 9011;
-
+const PORT = 1001;
 //const PLAY = require('../000.play/index.js')
 //const ActPly = require('../000.play/00.play.unit/play.action')
 
 //const STORE = require('../001.store/index.js')
 //const ActStr = require('../001.store/00.store.unit/store.action')
 
-//const SPACE = require('../002.space/index.js')
-//const ActSpc = require('../002.space/00.space.unit/space.action')
-//const ActMap = require('../002.space/03.hexmap.unit/hexmap.action')
+const SPACE = require('../002.space/index.js')
+const ActSpc = require('../002.space/00.space.unit/space.action')
+const ActMap = require('../002.space/03.hexmap.unit/hexmap.action')
 
-//const local = 'mqtt://localhost:' + port;
+const local = 'mqtt://localhost:' + PORT;
 
-//var bit = await SPACE.hunt(ActSpc.INIT_SPACE, { val: 0, dat: MQTT, src: local })
-//console.log(JSON.stringify(bit))
+var bit = await SPACE.hunt(ActSpc.INIT_SPACE, { val: 0, dat: MQTT, src: local })
+console.log(JSON.stringify(bit))
 
 
 async function handleFileOpen() {
@@ -69,7 +68,7 @@ async function createWindow() {
   mainWindow.setPosition(-950, 250);
 
   //mainWindow.setPosition(950, 250);
-  mainWindow.maximize();
+  //mainWindow.maximize();
 
   console.log("in the beginning...")
 
