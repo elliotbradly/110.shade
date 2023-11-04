@@ -4,6 +4,7 @@ const { contextBridge, ipcRenderer } = require('electron');
 contextBridge.exposeInMainWorld('electronAPI', {
   openFile: () => ipcRenderer.invoke('dialog:openFile'),
   openGame: ()=> ipcRenderer.invoke('game:openGame'),
+  shapeHexmap: ()=> ipcRenderer.invoke('space:shapeHexmap'),
 })
 
 contextBridge.exposeInMainWorld('electron', {

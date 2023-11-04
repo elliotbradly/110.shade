@@ -8,6 +8,25 @@ const platform = process.platform || os.platform()
 
 let mainWindow
 
+const MQTT = require('async-mqtt');
+const port = 9011;
+
+//const PLAY = require('../000.play/index.js')
+//const ActPly = require('../000.play/00.play.unit/play.action')
+
+//const STORE = require('../001.store/index.js')
+//const ActStr = require('../001.store/00.store.unit/store.action')
+
+const SPACE = require('../002.space/index.js')
+const ActSpc = require('../002.space/00.space.unit/space.action')
+const ActMap = require('../002.space/03.hexmap.unit/hexmap.action')
+
+const local = 'mqtt://localhost:' + port;
+
+var bit = await SPACE.hunt(ActSpc.INIT_SPACE, { val: 0, dat: MQTT, src: local })
+console.log(JSON.stringify(bit))
+
+
 async function handleFileOpen() {
   const { canceled, filePaths } = await dialog.showOpenDialog({})
   if (!canceled) {
@@ -21,10 +40,16 @@ async function openGame() {
   return {}
 }
 
+async function shapeHexmap() {
+  bit = await SPACE.hunt(ActMap.SHAPE_HEXMAP, { idx: 'hex00', dat: { frm: 'rectangle' } })
+  return bit
+}
+
 async function createWindow() {
 
   ipcMain.handle('dialog:openFile', handleFileOpen)
   ipcMain.handle('game:openGame', openGame)
+  ipcMain.handle('space:shapeHexmap', shapeHexmap)
 
   /**
    * Initial window options
