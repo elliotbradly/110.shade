@@ -26,6 +26,8 @@ export const mount = async (value: HelloWorld) => {
 export const update = async (value: HelloWorld) => {
   console.log('sampleFunc:: ', value)
 
+
+
   const instance = getCurrentInstance();
   const SHADE = inject('SHADE')
 
@@ -59,9 +61,14 @@ export const update = async (value: HelloWorld) => {
   bit = await SHADE['hunt']( ActGph.WRITE_GRAPHIC, { idx:'gph00', dat: { h:100, w:40, x:40, y:40 }  })
   bit = await SHADE['hunt']( ActCan.ADD_CONTAINER, { idx: "can00",  dat:{bit:bit.gphBit.dat.bit }})
 
+  var bit = await window['electronAPI'].openGame()
+  console.log(JSON.stringify(bit))
+
   var bit = await window['electronAPI'].shapeHexmap()
   var map = bit.mapBit.dat.dat.bit
   console.log(JSON.stringify(map))
+
+
 
   bit = await SHADE['hunt']( ActHex.WRITE_HEXAGON, { idx:'hex00', dat: { src:'gph00', frm:'hexmap', bit:map }  })
   //bit = await SHADE['hunt']( ActCan.ADD_CONTAINER, { idx: "can00",  dat:{bit:bit.gphBit.dat.bit }})

@@ -2,7 +2,6 @@ import { app, ipcMain, dialog, BrowserWindow } from 'electron'
 import path from 'path'
 import os from 'os'
 
-
 // needed in case process is undefined under Linux
 const platform = process.platform || os.platform()
 
@@ -19,6 +18,7 @@ const PORT = 1001;
 const SPACE = require('../002.space/index.js')
 const ActSpc = require('../002.space/00.space.unit/space.action')
 const ActMap = require('../002.space/03.hexmap.unit/hexmap.action')
+const ActFoc = require('../002.space/01.focus.unit/focus.action')
 
 const local = 'mqtt://localhost:' + PORT;
 
@@ -37,8 +37,11 @@ async function handleFileOpen() {
 
 async function openGame() {
 
+  bit = await SPACE.hunt(ActFoc.WRITE_FOCUS, { foc: 'foc00' })
+  bit = await SPACE.hunt(ActFoc.WRITE_FOCUS, { foc: 'foc00' })
+
   //var bit = await PLAY.hunt(ActPly.OPEN_PLAY, { val: 0 })
-  return {}
+  return {intBit:{idx:'game-opened'}}
 }
 
 async function shapeHexmap() {
@@ -46,11 +49,18 @@ async function shapeHexmap() {
   return bit
 }
 
+
+
 async function createWindow() {
 
   ipcMain.handle('dialog:openFile', handleFileOpen)
   ipcMain.handle('game:openGame', openGame)
   ipcMain.handle('space:shapeHexmap', shapeHexmap)
+  ipcMain.handle('space:readFocus', async () => {
+    bit = await SPACE.hunt(ActFoc.READ_FOCUS, { idx: 'foc00' })
+    return bit
+  })
+
 
   /**
    * Initial window options
