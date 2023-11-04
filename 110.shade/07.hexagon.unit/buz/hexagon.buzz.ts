@@ -113,8 +113,6 @@ export const removeHexagon = async (cpy: HexagonModel, bal: HexagonBit, ste: Sta
 
 export const createHexagon = async (cpy: HexagonModel, bal: HexagonBit, ste: State) => {
 
-  debugger
-
   var dat: HexBit = { idx: bal.idx, src: bal.src };
 
   for (var key in bal.dat) {

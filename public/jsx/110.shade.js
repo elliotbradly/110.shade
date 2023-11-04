@@ -2417,7 +2417,6 @@ const removeHexagon = async (cpy, bal, ste) => {
 };
 exports.removeHexagon = removeHexagon;
 const createHexagon = async (cpy, bal, ste) => {
-    debugger;
     var dat = { idx: bal.idx, src: bal.src };
     for (var key in bal.dat) {
         if (key == 'dat')
