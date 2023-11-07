@@ -6,6 +6,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   openGame: ()=> ipcRenderer.invoke('game:openGame'),
   shapeHexmap: ()=> ipcRenderer.invoke('space:shapeHexmap'),
   readFocus: ()=> ipcRenderer.invoke('space:readFocus'),
+  readHexmap: ()=> ipcRenderer.invoke('space:readHexmap'),
 })
 
 contextBridge.exposeInMainWorld('electron', {

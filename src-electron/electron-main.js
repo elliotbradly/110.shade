@@ -62,8 +62,14 @@ async function createWindow() {
   ipcMain.handle('dialog:openFile', handleFileOpen)
   ipcMain.handle('game:openGame', openGame)
   ipcMain.handle('space:shapeHexmap', shapeHexmap)
+
   ipcMain.handle('space:readFocus', async () => {
     bit = await SPACE.hunt(ActFoc.READ_FOCUS, { idx: 'foc00' })
+    return bit
+  })
+
+  ipcMain.handle('space:hexmapFocus', async ( idx) => {
+    bit = await SPACE.hunt(ActMap.READ_HEXMAP, { idx })
     return bit
   })
 
