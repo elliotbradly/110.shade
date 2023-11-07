@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.createMenu = exports.closeMenu = exports.testMenu = exports.updateMenu = exports.initMenu = void 0;
 const ActMnu = require("../menu.action");
 const ActSpc = require("../../00.space.unit/space.action");
-const ActFoc = require("../../01.focus.unit/focus.action");
 const ActPvt = require("../../96.pivot.unit/pivot.action");
+const ActMap = require("../../03.hexmap.unit/hexmap.action");
 const ActTrm = require("../../act/terminal.action");
 const ActChc = require("../../act/choice.action");
 const ActGrd = require("../../act/grid.action");
@@ -26,8 +26,8 @@ const initMenu = async (cpy, bal, ste) => {
 };
 exports.initMenu = initMenu;
 const updateMenu = async (cpy, bal, ste) => {
-    //lst = [ActPvt.CLOUD_PIVOT, ActPvt.UPDATE_PIVOT, ActPvt.OPEN_PIVOT, ActPvt.EDIT_PIVOT, ActSpc.MERGE_SPACE, ActMnu.FOCUS_MENU, ActMnu.HEXMAP_MENU, ActMnu.YIELD_MENU, ActMnu.RENDER_MENU]
-    lst = [ActMnu.HEXMAP_MENU, ActMnu.FOCUS_MENU];
+    //lst = [ActPvt.CLOUD_PIVOT, ActPvt.UPDATE_PIVOT, ActPvt.OPEN_PIVOT, ActPvt.EDIT_PIVOT, ActSpc.MERGE_SPACE, ActMnu.FOCUS_MENU, ActMnu.HEXMAP_MENU, , ActMnu.RENDER_MENU]
+    lst = [ActMnu.HEXMAP_MENU, ActMnu.FOCUS_MENU, ActMnu.YIELD_MENU];
     bit = await ste.bus(ActGrd.UPDATE_GRID, { x: 0, y: 4, xSpan: 3, ySpan: 12 });
     bit = await ste.bus(ActChc.OPEN_CHOICE, { dat: { clr0: Color.BLACK, clr1: Color.YELLOW }, src: Align.VERTICAL, lst, net: bit.grdBit.dat });
     src = bit.chcBit.src;
@@ -35,34 +35,46 @@ const updateMenu = async (cpy, bal, ste) => {
         case ActMnu.HEXMAP_MENU:
             bit = await ste.hunt(ActMnu.HEXMAP_MENU, {});
             break;
-        case ActPvt.CLOUD_PIVOT:
-            bit = await ste.hunt(ActPvt.CLOUD_PIVOT, {});
-            break;
-        case ActMnu.YIELD_MENU:
-            bit = await ste.hunt(ActMnu.YIELD_MENU, {});
-            break;
-        case ActFoc.MODEL_FOCUS:
-            bit = await ste.bus(ActTrm.WRITE_TERMINAL, { src: "MODEL FOCUS...", bit: 'local' });
-            bit = await ste.bus(ActTrm.WRITE_TERMINAL, { src: "-----------", bit: "local" });
-            bit = await ste.hunt(ActFoc.MODEL_FOCUS, {});
-            break;
         case ActMnu.FOCUS_MENU:
             bit = await ste.hunt(ActMnu.FOCUS_MENU, {});
             break;
-        case ActPvt.EDIT_PIVOT:
-            bit = await ste.hunt(ActPvt.EDIT_PIVOT, {});
-            bit = await ste.bus(ActTrm.WRITE_TERMINAL, { src: "PATCHING...", bit: 'local' });
-            bit = await ste.bus(ActTrm.WRITE_TERMINAL, { src: "-----------", bit: "local" });
-            lst = [ActSpc.PATCH_SPACE];
-            bit = await ste.bus(ActTrm.UPDATE_TERMINAL, { lst });
-            bit = await ste.hunt(ActPvt.PATCH_PIVOT, {});
+        case ActMnu.YIELD_MENU:
+            bit = await ste.hunt(ActMap.SHAPE_HEXMAP, { idx, dat: { frm: SHAPE.RECTANGLE, w: 2, H: 2 } });
+            var grid = bit.mapBit.dat.dat.bit;
+            bit = await ste.hunt(ActMap.WRITE_HEXMAP, { idx: "hexmap00", dat: { bit: { grid } } });
+            bit = await ste.bus(ActCns.UPDATE_CONSOLE, { idx: 'cns00', src: JSON.stringify(bit.mapBit) });
+            bit = await ste.hunt(ActMap.SHAPE_HEXMAP, { idx, dat: { frm: SHAPE.RECTANGLE, w: 3, H: 3 } });
+            var grid = bit.mapBit.dat.dat.bit;
+            bit = await ste.hunt(ActMap.WRITE_HEXMAP, { idx: "hexmap01", dat: { bit: { grid } } });
+            bit = await ste.bus(ActCns.UPDATE_CONSOLE, { idx: 'cns00', src: JSON.stringify(bit.mapBit) });
+            bit = await ste.hunt(ActMap.SHAPE_HEXMAP, { idx, dat: { frm: SHAPE.RECTANGLE, w: 4, H: 4 } });
+            var grid = bit.mapBit.dat.dat.bit;
+            bit = await ste.hunt(ActMap.WRITE_HEXMAP, { idx: "hexmap02", dat: { bit: { grid } } });
+            bit = await ste.bus(ActCns.UPDATE_CONSOLE, { idx: 'cns00', src: JSON.stringify(bit.mapBit) });
+            bit = await ste.hunt(ActMap.SHAPE_HEXMAP, { idx, dat: { frm: SHAPE.RECTANGLE, w: 5, H: 5 } });
+            var grid = bit.mapBit.dat.dat.bit;
+            bit = await ste.hunt(ActMap.WRITE_HEXMAP, { idx: "hexmap03", dat: { bit: { grid } } });
+            bit = await ste.bus(ActCns.UPDATE_CONSOLE, { idx: 'cns00', src: JSON.stringify(bit.mapBit) });
             break;
-        case ActMnu.RENDER_MENU:
-            bit = await ste.hunt(ActSpc.READY_SPACE, { src: ActMnu.RENDER_MENU });
-            const open = require('open');
-            var loc = './vrt.vew.bat';
-            bit = await open(loc);
-            break;
+        //   case ActPvt.CLOUD_PIVOT:
+        //     bit = await ste.hunt(ActPvt.CLOUD_PIVOT, {})
+        //     break;
+        //  case ActMnu.YIELD_MENU:
+        //    bit = await ste.hunt(ActMnu.YIELD_MENU, {})
+        //    break;
+        //  case ActFoc.MODEL_FOCUS:
+        //    bit = await ste.bus(ActTrm.WRITE_TERMINAL, { src: "MODEL FOCUS...", bit: 'local' })
+        //    bit = await ste.bus(ActTrm.WRITE_TERMINAL, { src: "-----------", bit: "local" })
+        //   bit = await ste.hunt(ActFoc.MODEL_FOCUS, {})
+        //   break;
+        // case ActPvt.EDIT_PIVOT:
+        //   bit = await ste.hunt(ActPvt.EDIT_PIVOT, {})
+        //   bit = await ste.bus(ActTrm.WRITE_TERMINAL, { src: "PATCHING...", bit: 'local' })
+        //   bit = await ste.bus(ActTrm.WRITE_TERMINAL, { src: "-----------", bit: "local" })
+        //   lst = [ActSpc.PATCH_SPACE]
+        //   bit = await ste.bus(ActTrm.UPDATE_TERMINAL, { lst })
+        //   bit = await ste.hunt(ActPvt.PATCH_PIVOT, {})
+        //   break;
         case ActPvt.UPDATE_PIVOT:
             bit = await ste.hunt(ActPvt.UPDATE_PIVOT, {});
             break;
@@ -109,4 +121,5 @@ exports.createMenu = createMenu;
 var patch = (ste, type, bale) => ste.dispatch({ type, bale });
 const Align = require("../../val/align");
 const Color = require("../../val/console-color");
+const SHAPE = require("../../val/shape");
 //# sourceMappingURL=00.menu.buzz.js.map

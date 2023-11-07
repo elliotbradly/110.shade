@@ -131,11 +131,12 @@ const listHexmap = async (cpy, bal, ste) => {
     else
         dat = bit.clcBit.dat;
     if (dat != null) {
+        lst = [];
         dat.bitList.forEach((a) => {
-            lst = [];
             lst.push((a.idx));
         });
     }
+    lst;
     //process.chdir("../002.space")
     //src = cpy.hexmapLoc
     //bit = await ste.bus(ActDsk.LIST_DISK, { idx: null, src })

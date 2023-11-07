@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.createFocus = void 0;
 var bit, val, idx, dex, lst, dat;
 const createFocus = async (cpy, bal, ste) => {
-    var dat = { idx: bal.idx, src: bal.src, typ: SPACE.FOCUS };
+    var dat = { idx: bal.idx, src: bal.src, typ: FOCUS.AMBT };
     for (var key in bal.dat) {
         dat[key] = bal.dat[key];
     }
@@ -43,5 +43,5 @@ const createFocus = async (cpy, bal, ste) => {
 };
 exports.createFocus = createFocus;
 const SHAPE = require("../../val/shape");
-const SPACE = require("../../val/space");
+const FOCUS = require("../../val/focus");
 //# sourceMappingURL=create-focus.buzz.js.map

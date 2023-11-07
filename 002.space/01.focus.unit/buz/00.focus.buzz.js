@@ -44,6 +44,8 @@ const deleteFocus = (cpy, bal, ste) => {
 };
 exports.deleteFocus = deleteFocus;
 const listFocus = async (cpy, bal, ste) => {
+    if (bal.src == null)
+        bal.src = FOCUS.AMBT;
     dat = null;
     bit = await ste.hunt(ActCol.FETCH_COLLECT, { val: 0, bit: ActFoc.CREATE_FOCUS });
     if (bit.clcBit.dat == null)
@@ -51,8 +53,10 @@ const listFocus = async (cpy, bal, ste) => {
     else
         dat = bit.clcBit.dat;
     if (dat != null) {
+        lst = [];
         dat.bitList.forEach((a) => {
-            lst = [];
+            if (bal.src != a.typ)
+                return;
             lst.push((a.idx));
         });
     }
@@ -155,4 +159,5 @@ const modelFocus = async (cpy, bal, ste) => {
     return cpy;
 };
 exports.modelFocus = modelFocus;
+const FOCUS = require("../../val/focus");
 //# sourceMappingURL=00.focus.buzz.js.map

@@ -32,15 +32,16 @@ const hexmapMenu = async (cpy, bal, ste) => {
     if (select != null) {
         nowIdx = select.idx;
     }
-    bit = await ste.bus(ActCns.UPDATE_CONSOLE, { idx: 'cns00', src: "Now---" + cpy.mapNomNow });
-    bit = await ste.bus(ActCns.UPDATE_CONSOLE, { idx: 'cns00', src: "Width---" + nowW });
-    bit = await ste.bus(ActCns.UPDATE_CONSOLE, { idx: 'cns00', src: "-----------" });
+    //bit = await ste.bus(ActCns.UPDATE_CONSOLE, { idx: 'cns00', src: "Now---" + cpy.mapNomNow })
+    //bit = await ste.bus(ActCns.UPDATE_CONSOLE, { idx: 'cns00', src: "Width---" + nowW })
+    //bit = await ste.bus(ActCns.UPDATE_CONSOLE, { idx: 'cns00', src: "-----------" })
     //bit = await ste.bus(ActTrm.WRITE_TERMINAL, { val: 3, src: "Now---" + cpy.mapNomNow })
     //bit = await ste.bus(ActTrm.WRITE_TERMINAL, { val: 3, src: "Width---" + nowW })
     //bit = await ste.bus(ActTrm.WRITE_TERMINAL, { val: 3, src: "Height---" + nowH })
     //bit = await ste.bus(ActTrm.WRITE_TERMINAL, { val: 3, src: "Form---" + nowForm })
     //bit = await ste.bus(ActTrm.WRITE_TERMINAL, { src: "GEOJSON:" + JSON.stringify(cpy.geoJsonNow) })
     lst = [ActMap.WRITE_HEXMAP,
+        ActMap.LIST_HEXMAP,
         //ActMap.SHAPE_HEXMAP,
         //ActMap.OPEN_HEXMAP,
         //ActMap.ADD_HEXMAP,
@@ -54,33 +55,54 @@ const hexmapMenu = async (cpy, bal, ste) => {
     bit = await ste.bus(ActChc.OPEN_CHOICE, { dat: { clr0: Color.BLACK, clr1: Color.YELLOW }, src: Align.VERTICAL, lst, net: bit.grdBit.dat });
     src = bit.chcBit.src;
     switch (src) {
+        case ActMap.LIST_HEXMAP:
+            bit = await ste.hunt(ActMap.LIST_HEXMAP, {});
+            lst = bit.mapBit.lst;
+            bit = await ste.bus(ActGrd.UPDATE_GRID, { x: 0, y: 4, xSpan: 3, ySpan: 12 });
+            bit = await ste.bus(ActChc.OPEN_CHOICE, { dat: { clr0: Color.BLACK, clr1: Color.YELLOW }, src: Align.VERTICAL, lst, net: bit.grdBit.dat });
+            src = bit.chcBit.src;
+            break;
         case ActMap.WRITE_HEXMAP:
             bit = await ste.bus(ActGrd.UPDATE_GRID, { x: 0, y: 4, xSpan: 3, ySpan: 6 });
-            bit = await ste.bus(ActPut.OPEN_INPUT, { dat: { clr0: Color.BLACK, clr1: Color.YELLOW }, src: Align.VERTICAL, lst, net: bit.grdBit.dat });
+            bit = await ste.bus(ActPut.OPEN_INPUT, { dat: { clr0: Color.BLACK, clr1: Color.YELLOW }, src: Align.VERTICAL, lst, txt: 'input hexmap name', net: bit.grdBit.dat });
             idx = bit.putBit.src;
+            bit = await ste.bus(ActCns.UPDATE_CONSOLE, { idx: 'cns00', src: "hexmap named " + idx });
             bit = await ste.bus(ActGrd.UPDATE_GRID, { x: 0, y: 4, xSpan: 3, ySpan: 6 });
-            bit = await ste.bus(ActPut.OPEN_INPUT, { dat: { clr0: Color.BLACK, clr1: Color.YELLOW }, src: Align.VERTICAL, lst, net: bit.grdBit.dat });
+            bit = await ste.bus(ActPut.OPEN_INPUT, { dat: { clr0: Color.BLACK, clr1: Color.YELLOW }, src: Align.VERTICAL, lst, txt: 'input hexmap width', net: bit.grdBit.dat });
             var w = Number(bit.putBit.src);
+            bit = await ste.bus(ActCns.UPDATE_CONSOLE, { idx: 'cns00', src: "hexmap width " + w });
             bit = await ste.bus(ActGrd.UPDATE_GRID, { x: 0, y: 4, xSpan: 3, ySpan: 6 });
-            bit = await ste.bus(ActPut.OPEN_INPUT, { dat: { clr0: Color.BLACK, clr1: Color.YELLOW }, src: Align.VERTICAL, lst, net: bit.grdBit.dat });
+            bit = await ste.bus(ActPut.OPEN_INPUT, { dat: { clr0: Color.BLACK, clr1: Color.YELLOW }, src: Align.VERTICAL, lst, txt: 'input hexmap height', net: bit.grdBit.dat });
             var h = Number(bit.putBit.src);
+            bit = await ste.bus(ActCns.UPDATE_CONSOLE, { idx: 'cns00', src: "hexmap height " + h });
             var shapeList = [];
             for (var key in SHAPE) {
-                shapeList.push(SHAPE[key]);
+                if (key === SHAPE.RECTANGLE) {
+                }
+                else
+                    shapeList.push(SHAPE[key]);
             }
+            shapeList.unshift(SHAPE.RECTANGLE);
             shapeList;
             bit = await ste.bus(ActGrd.UPDATE_GRID, { x: 0, y: 4, xSpan: 3, ySpan: 12 });
             bit = await ste.bus(ActChc.OPEN_CHOICE, { dat: { clr0: Color.BLACK, clr1: Color.YELLOW }, src: Align.VERTICAL, lst: shapeList, net: bit.grdBit.dat });
             //bit = await ste.bus(ActTrm.UPDATE_TERMINAL, { lst: shapeList })
-            bit = bit.trmBit;
-            src = shapeList[bit.val];
+            src = bit.chcBit.src;
             var frm = src;
+            bit = await ste.bus(ActCns.UPDATE_CONSOLE, { idx: 'cns00', src: "hexmap shape " + frm });
             //now the type
             bit = await ste.hunt(ActMap.SHAPE_HEXMAP, { idx, dat: { frm, w, h } });
-            mapMod.select = bit.mapBit.dat;
-            cpy.mapNomNow = mapMod.select.idx;
-            bit = await ste.bus(ActTrm.WRITE_TERMINAL, { src: JSON.stringify(bit) });
-            bit = await ste.hunt(ActMap.SELECT_HEXMAP, { idx });
+            //mapMod.select = bit.mapBit.dat
+            var grid = bit.mapBit.dat.dat.bit;
+            bit = await ste.bus(ActCns.UPDATE_CONSOLE, { idx: 'cns00', src: "processing " + grid.length });
+            bit = await ste.hunt(ActMap.WRITE_HEXMAP, { idx, dat: { bit: { grid } } });
+            dat = bit.mapBit;
+            bit = await ste.hunt(ActMap.READ_HEXMAP, { idx });
+            dat = bit.mapBit.dat;
+            bit = await ste.bus(ActCns.UPDATE_CONSOLE, { idx: 'cns00', src: "---> " });
+            bit = await ste.bus(ActCns.UPDATE_CONSOLE, { idx: 'cns00', src: "---> " });
+            bit = await ste.bus(ActCns.UPDATE_CONSOLE, { idx: 'cns00', src: "---> " });
+            bit = await ste.bus(ActCns.UPDATE_CONSOLE, { idx: 'cns00', src: "pocessed " + idx });
             bit = await ste.hunt(ActMnu.HEXMAP_MENU);
             break;
         case ActMap.SHAPE_HEXMAP:

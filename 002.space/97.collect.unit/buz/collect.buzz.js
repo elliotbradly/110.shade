@@ -19,10 +19,13 @@ const fetchCollect = (cpy, bal, ste) => {
         bal.slv({ clcBit: { idx: "fetch-collect-err", src: 'no-bit' } });
     var type = bal.bit.split(' ').slice(-1).pop().toLowerCase();
     var cabBit = cpy.caboodleBitList[cpy.caboodleBits[type]];
+    //if ( type != 'bus') debugger  //11.07.23 issue with listing 
     if (bal.val == 1)
         bit = cabBit.bitList[0];
     else
         bit = cabBit;
+    cabBit;
+    //if ( type != 'bus') debugger  //11.07.23 issue with listing 
     if (bal.slv != null)
         bal.slv({ clcBit: { idx: "fetch-collect", dat: bit } });
     return cpy;
