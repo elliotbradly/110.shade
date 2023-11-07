@@ -17,10 +17,10 @@ const updateFocus = async (cpy, bal, ste) => {
     if (spot.awake == true) {
         bit = await ste.hunt(ActFoc.VISION_FOCUS, { idx: bal.idx });
         viewList = bit.focBit.lst;
-        bit = await ste.hunt(ActFoc.WRITE_FOCUS, { idx: bal.idx, val: 1, dat: { viewList } });
+        // bit = await ste.hunt(ActFoc.WRITE_FOCUS, { idx: bal.idx, val: 1, dat: { viewList } })
     }
     else {
-        bit = await ste.hunt(ActFoc.WRITE_FOCUS, { idx: bal.idx, val: 1, dat: { viewList } });
+        // bit = await ste.hunt(ActFoc.WRITE_FOCUS, { idx: bal.idx, val: 1, dat: { viewList } })
     }
     if (bal.slv != null)
         bal.slv({ focBit: { idx: "update-focus" } });

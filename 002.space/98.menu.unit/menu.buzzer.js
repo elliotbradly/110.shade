@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.renderMenu = exports.createHexmapMenu = exports.hexmapMenu = exports.yieldMenu = exports.createMenu = exports.focusPlayMenu = exports.focusMenu = exports.closeMenu = exports.testMenu = exports.updateMenu = exports.initMenu = void 0;
+exports.renderMenu = exports.createHexmapMenu = exports.hexmapMenu = exports.yieldMenu = exports.createMenu = exports.updateFocusPlayMenu = exports.focusPlayMenu = exports.focusMenu = exports.closeMenu = exports.testMenu = exports.updateMenu = exports.initMenu = void 0;
 var _00_menu_buzz_1 = require("./buz/00.menu.buzz");
 Object.defineProperty(exports, "initMenu", { enumerable: true, get: function () { return _00_menu_buzz_1.initMenu; } });
 var _00_menu_buzz_2 = require("./buz/00.menu.buzz");
@@ -13,6 +13,8 @@ var _02_focus_menu_buzz_1 = require("./buz/02.focus-menu.buzz");
 Object.defineProperty(exports, "focusMenu", { enumerable: true, get: function () { return _02_focus_menu_buzz_1.focusMenu; } });
 var _03_play_menu_buzz_1 = require("./buz/03.play-menu.buzz");
 Object.defineProperty(exports, "focusPlayMenu", { enumerable: true, get: function () { return _03_play_menu_buzz_1.focusPlayMenu; } });
+var _03_play_menu_buzz_2 = require("./buz/03.play-menu.buzz");
+Object.defineProperty(exports, "updateFocusPlayMenu", { enumerable: true, get: function () { return _03_play_menu_buzz_2.updateFocusPlayMenu; } });
 var _00_menu_buzz_5 = require("./buz/00.menu.buzz");
 Object.defineProperty(exports, "createMenu", { enumerable: true, get: function () { return _00_menu_buzz_5.createMenu; } });
 var yield_menu_buzz_1 = require("./buz/yield-menu.buzz");

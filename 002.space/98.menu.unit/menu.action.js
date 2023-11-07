@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.YieldMenu = exports.YIELD_MENU = exports.RenderMenu = exports.RENDER_MENU = exports.CreateHexmapMenu = exports.CREATE_HEXMAP_MENU = exports.HexmapMenu = exports.HEXMAP_MENU = exports.CreateMenu = exports.CREATE_MENU = exports.FocusPlayMenu = exports.FOCUS_PLAY_MENU = exports.FocusMenu = exports.FOCUS_MENU = exports.TimeMenu = exports.TIME_MENU = exports.CloseMenu = exports.CLOSE_MENU = exports.TestMenu = exports.TEST_MENU = exports.UpdateMenu = exports.UPDATE_MENU = exports.InitMenu = exports.INIT_MENU = void 0;
+exports.YieldMenu = exports.YIELD_MENU = exports.RenderMenu = exports.RENDER_MENU = exports.CreateHexmapMenu = exports.CREATE_HEXMAP_MENU = exports.HexmapMenu = exports.HEXMAP_MENU = exports.CreateMenu = exports.CREATE_MENU = exports.UpdateFocusPlayMenu = exports.UPDATE_FOCUS_PLAY_MENU = exports.FocusPlayMenu = exports.FOCUS_PLAY_MENU = exports.FocusMenu = exports.FOCUS_MENU = exports.TimeMenu = exports.TIME_MENU = exports.CloseMenu = exports.CLOSE_MENU = exports.TestMenu = exports.TEST_MENU = exports.UpdateMenu = exports.UPDATE_MENU = exports.InitMenu = exports.INIT_MENU = void 0;
 exports.INIT_MENU = "[Menu action] Init Menu";
 class InitMenu {
     constructor(bale) {
@@ -57,6 +57,14 @@ class FocusPlayMenu {
     }
 }
 exports.FocusPlayMenu = FocusPlayMenu;
+exports.UPDATE_FOCUS_PLAY_MENU = "[Focus action] Update Focus Play Menu";
+class UpdateFocusPlayMenu {
+    constructor(bale) {
+        this.bale = bale;
+        this.type = exports.UPDATE_FOCUS_PLAY_MENU;
+    }
+}
+exports.UpdateFocusPlayMenu = UpdateFocusPlayMenu;
 exports.CREATE_MENU = "[Create action] Create Menu";
 class CreateMenu {
     constructor(bale) {

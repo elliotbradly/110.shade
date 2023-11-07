@@ -29,6 +29,8 @@ function reducer(model = new menu_model_1.MenuModel(), act, state) {
             return Buzz.yieldMenu(clone(model), act.bale, state);
         case Act.FOCUS_PLAY_MENU:
             return Buzz.focusPlayMenu(clone(model), act.bale, state);
+        case Act.UPDATE_FOCUS_PLAY_MENU:
+            return Buzz.updateFocusPlayMenu(clone(model), act.bale, state);
         default:
             return model;
     }

@@ -22,7 +22,8 @@ const createHexmap = async (cpy, bal, ste) => {
         size -= 1;
         var itm = dat.grid[size];
         var hex = itm.hex;
-        bit = await ste.bus(ActFoc.WRITE_FOCUS, { idx: hex, src: bal.idx, dat: { x: itm.x, y: itm.y, } });
+        //11.07.23 this had been set to use the bus and it cause big trouble
+        bit = await ste.hunt(ActFoc.WRITE_FOCUS, { idx: hex, src: dat.idx, dat: { x: itm.x, y: itm.y, } });
         if (size == 0) {
             if (bal.slv != null)
                 bal.slv({ mapBit: { idx: "create-hexmap", dat } });

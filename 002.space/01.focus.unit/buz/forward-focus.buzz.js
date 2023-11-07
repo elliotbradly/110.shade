@@ -13,22 +13,28 @@ const forwardFocus = async (cpy, bal, ste) => {
     var bonds = spot.bonds;
     if (bonds == null) {
         //nothing happens
+        bit = await ste.hunt(ActFoc.BOND_FOCUS, { idx: bal.idx, src: face });
+        var bonds = bit.focBit.dat;
+        spot.bonds = bonds;
+        debugger;
     }
     else {
         const now = bonds[face];
         x = now.x;
         y = now.y;
+        debugger;
     }
     bit = await ste.hunt(ActFoc.BOND_FOCUS, { idx: bal.idx, src: face });
     var bonds = bit.focBit.dat;
     spot.bonds = bonds;
     spot;
-    bit = await ste.hunt(ActFoc.WRITE_FOCUS, { idx: bal.idx, dat: { x, y, bonds, face } });
-    bit = await ste.hunt(ActFoc.BOND_FOCUS, { idx: bal.idx, src: face });
-    var bonds = bit.focBit.dat;
-    spot.bonds = bonds;
-    spot;
-    bit = await ste.hunt(ActFoc.WRITE_FOCUS, { idx: bal.idx, dat: { x, y, bonds, face } });
+    bit = await ste.hunt(ActFoc.WRITE_FOCUS, { idx: spot.idx, src: spot.src, dat: { x, y, bonds, face } });
+    //debugger
+    //bit = await ste.hunt(ActFoc.BOND_FOCUS, { idx: bal.idx, src:face })
+    //var bonds = bit.focBit.dat
+    //spot.bonds = bonds
+    //spot
+    //bit = await ste.hunt(ActFoc.WRITE_FOCUS, { idx: bal.idx, dat: { x, y, bonds, face } })
     if (bal.slv != null)
         bal.slv({ focBit: { idx: "forward-focus", dat } });
 };

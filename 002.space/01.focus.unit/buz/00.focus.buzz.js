@@ -22,14 +22,17 @@ const readFocus = async (cpy, bal, ste) => {
 };
 exports.readFocus = readFocus;
 const writeFocus = async (cpy, bal, ste) => {
+    //debugger
     if (bal.idx == null)
         bal.idx = "foc00";
     if (bal.val != 1)
         ste.hunt(ActFoc.UPDATE_FOCUS, { idx: bal.idx });
     bit = await ste.hunt(ActCol.WRITE_COLLECT, { idx: bal.idx, src: bal.src, dat: bal.dat, bit: ActFoc.CREATE_FOCUS });
     var spot = bit.clcBit.dat;
+    //debugger
+    //debugger
     if (bal.slv != null)
-        bal.slv({ focBit: { idx: "write-focus", dat: bit.clcBit.dat } });
+        bal.slv({ focBit: { idx: "write-focus", dat: spot } });
     return cpy;
 };
 exports.writeFocus = writeFocus;
