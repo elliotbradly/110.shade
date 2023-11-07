@@ -9,6 +9,8 @@ let mainWindow
 
 const MQTT = require('async-mqtt');
 const PORT = 1001;
+
+const GAME =  require('./game')
 //const PLAY = require('../000.play/index.js')
 //const ActPly = require('../000.play/00.play.unit/play.action')
 
@@ -37,8 +39,12 @@ async function handleFileOpen() {
 
 async function openGame() {
 
-  bit = await SPACE.hunt(ActFoc.WRITE_FOCUS, { foc: 'foc00' })
-  bit = await SPACE.hunt(ActFoc.WRITE_FOCUS, { foc: 'foc00' })
+  GAME.open( SPACE );
+
+
+
+  //bit = await SPACE.hunt(ActFoc.WRITE_FOCUS, { foc: 'foc00' })
+  //bit = await SPACE.hunt(ActFoc.WRITE_FOCUS, { foc: 'foc00' })
 
   //var bit = await PLAY.hunt(ActPly.OPEN_PLAY, { val: 0 })
   return {intBit:{idx:'game-opened'}}
@@ -80,7 +86,7 @@ async function createWindow() {
   mainWindow.setPosition(-950, 250);
 
   //mainWindow.setPosition(950, 250);
-  //mainWindow.maximize();
+  mainWindow.maximize();
 
   console.log("in the beginning...")
 
