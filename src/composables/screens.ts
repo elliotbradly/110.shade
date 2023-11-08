@@ -64,6 +64,9 @@ export const update = async (value: HelloWorld) => {
   var bit = await window['electronAPI'].openGame()
   console.log(JSON.stringify(bit))
 
+  var bit = await window['electronAPI'].readHexmap('map00')
+  console.log(JSON.stringify(bit))
+
 
   //var bit = await window['electronAPI'].shapeHexmap()
   //var map = bit.mapBit.dat.dat.bit

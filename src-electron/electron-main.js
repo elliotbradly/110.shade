@@ -68,7 +68,15 @@ async function createWindow() {
     return bit
   })
 
+  ipcMain.handle('space:readHexmap', async ( event, idx ) => {
+
+    bit = await SPACE.hunt(ActMap.READ_HEXMAP, { idx })
+    return JSON.stringify(bit)
+
+  })
+
   ipcMain.handle('space:hexmapFocus', async ( idx) => {
+
     bit = await SPACE.hunt(ActMap.READ_HEXMAP, { idx })
     return bit
   })
@@ -92,7 +100,7 @@ async function createWindow() {
   mainWindow.setPosition(-950, 250);
 
   //mainWindow.setPosition(950, 250);
-  mainWindow.maximize();
+  //mainWindow.maximize();
 
   console.log("in the beginning...")
 
