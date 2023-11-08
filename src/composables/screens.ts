@@ -65,19 +65,17 @@ export const update = async (value: HelloWorld) => {
   console.log(JSON.stringify(bit))
 
   var bit = await window['electronAPI'].readHexmap('map00')
-  console.log(JSON.stringify(bit))
 
+  var puff = JSON.parse(bit)
+
+  var map = puff.mapBit.dat.grid
+  bit = await SHADE['hunt']( ActHex.WRITE_HEXAGON, { idx:'hex00', dat: { src:'gph00', frm:'hexmap', sze:111, bit:map }  })
 
   //var bit = await window['electronAPI'].shapeHexmap()
   //var map = bit.mapBit.dat.dat.bit
   //console.log(JSON.stringify(map))
 
-  //bit = await SHADE['hunt']( ActHex.WRITE_HEXAGON, { idx:'hex00', dat: { src:'gph00', frm:'hexmap', bit:map }  })
   //bit = await SHADE['hunt']( ActCan.ADD_CONTAINER, { idx: "can00",  dat:{bit:bit.gphBit.dat.bit }})
-
-
-
-
 
   return value
 }

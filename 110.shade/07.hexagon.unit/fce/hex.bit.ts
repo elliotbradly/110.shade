@@ -8,6 +8,7 @@ export default interface HexBit {
     gph?:string;
     ico?:string;
     can?:string;
+    sze?:number;
     dat?:any;
     map?:any;
     bit?:PIXI.Sprite;

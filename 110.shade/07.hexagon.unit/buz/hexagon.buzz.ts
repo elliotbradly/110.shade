@@ -16,7 +16,6 @@ export const initHexagon = (cpy: HexagonModel, bal: HexagonBit, ste: State) => {
 
 export const updateHexagon = async (cpy: HexagonModel, bal: HexagonBit, ste: State) => {
 
-
   bit = await ste.hunt(ActHex.READ_HEXAGON, { idx: bal.idx })
   var dat: HexBit = bit.hexBit.dat
   var map = dat.map
@@ -66,12 +65,12 @@ export const hexmapHexagon = async (cpy: HexagonModel, bal: HexagonBit, ste: Sta
   const grid: Honeycomb.Grid = Grid(hexmap);
 
   var pct = .333;
-  var scl = 3;
+  var scl = bal.dat.sze;
+
 
   graphic.lineStyle(3, 0x0000000, 1);
 
   grid
-
 
   grid.forEach((hex) => {
     const point = hex.toPoint();
@@ -137,6 +136,7 @@ export const createHexagon = async (cpy: HexagonModel, bal: HexagonBit, ste: Sta
   if (dat.wpe == null) dat.wpe = true;
   if (dat.a == null) dat.a = 1;
   if (dat.pct == null) dat.pct = 1;
+  if (dat.sze == null) dat.sze = 3;
 
   if (dat.frm == null) dat.frm = HEXAGON.HEXMAP;
 

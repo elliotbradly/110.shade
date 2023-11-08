@@ -2377,7 +2377,7 @@ const hexmapHexagon = async (cpy, bal, ste) => {
     const Grid = Honeycomb.defineGrid(Hex);
     const grid = Grid(hexmap);
     var pct = .333;
-    var scl = 3;
+    var scl = bal.dat.sze;
     graphic.lineStyle(3, 0x0000000, 1);
     grid;
     grid.forEach((hex) => {
@@ -2440,6 +2440,8 @@ const createHexagon = async (cpy, bal, ste) => {
         dat.a = 1;
     if (dat.pct == null)
         dat.pct = 1;
+    if (dat.sze == null)
+        dat.sze = 3;
     if (dat.frm == null)
         dat.frm = HEXAGON.HEXMAP;
     if (bal.src != null)
