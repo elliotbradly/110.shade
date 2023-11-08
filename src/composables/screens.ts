@@ -6,6 +6,7 @@ import * as ActTxt from '../110.shade/05.text.unit/text.action'
 import * as ActGph from '../110.shade/04.graphic.unit/graphic.action'
 import * as ActSpr from '../110.shade/06.sprite.unit/sprite.action'
 import * as ActHex from '../110.shade/07.hexagon.unit/hexagon.action'
+import * as ActFcg from '../110.shade/08.focigon.unit/focigon.action'
 
 
 export type HelloWorld = string | number
@@ -61,15 +62,32 @@ export const update = async (value: HelloWorld) => {
   bit = await SHADE['hunt']( ActGph.WRITE_GRAPHIC, { idx:'gph00', dat: { h:100, w:40, x:40, y:40 }  })
   bit = await SHADE['hunt']( ActCan.ADD_CONTAINER, { idx: "can00",  dat:{bit:bit.gphBit.dat.bit }})
 
+  bit = await SHADE['hunt']( ActGph.WRITE_GRAPHIC, { idx:'gph01', dat: { h:100, w:40, x:40, y:40 }  })
+  bit = await SHADE['hunt']( ActCan.ADD_CONTAINER, { idx: "can00",  dat:{bit:bit.gphBit.dat.bit }})
+
   var bit = await window['electronAPI'].openGame()
   console.log(JSON.stringify(bit))
 
   var bit = await window['electronAPI'].readHexmap('map00')
-
   var puff = JSON.parse(bit)
 
   var map = puff.mapBit.dat.grid
   bit = await SHADE['hunt']( ActHex.WRITE_HEXAGON, { idx:'hex00', dat: { src:'gph00', frm:'hexmap', sze:111, bit:map }  })
+
+  var bit = await window['electronAPI'].readFocus('foc00')
+  var toot = JSON.parse(bit)
+
+  var focus = toot.focBit.dat
+  focus.src = 'gph01'
+
+  bit = await SHADE['hunt']( ActFcg.WRITE_FOCIGON, { idx:'foc00', dat:{dat: focus} })
+
+  //var scute = JSON.parse(bit)
+  //debugger
+
+
+
+
 
   //var bit = await window['electronAPI'].shapeHexmap()
   //var map = bit.mapBit.dat.dat.bit

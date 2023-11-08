@@ -2642,8 +2642,10 @@ exports.initFocigon = initFocigon;
 const updateFocigon = async (cpy, bal, ste) => {
     bit = await ste.hunt(ActFcg.READ_FOCIGON, { idx: bal.idx });
     var dat = bit.fcgBit.dat;
+    debugger;
     bit = await ste.hunt(ActGph.READ_GRAPHIC, { idx: dat.gph });
     var graphic = bit.gphBit.dat.bit;
+    debugger;
     if (graphic == null)
         return console.log("no graphic to draw map upon");
     if (dat.wpe == true)
@@ -2652,6 +2654,8 @@ const updateFocigon = async (cpy, bal, ste) => {
     graphic.beginFill(dat.clr);
     var scl = 3;
     var pct = .33;
+    dat.crns;
+    debugger;
     const [firstCorner, ...otherCorners] = dat.crns;
     graphic.moveTo(firstCorner.x * scl, firstCorner.y * scl * pct);
     otherCorners.forEach(({ x, y }) => graphic.lineTo(x * scl, y * scl * pct));
@@ -2713,6 +2717,7 @@ const readFocigon = async (cpy, bal, ste) => {
 };
 exports.readFocigon = readFocigon;
 const writeFocigon = async (cpy, bal, ste) => {
+    debugger;
     bit = await ste.hunt(ActCol.WRITE_COLLECT, { idx: bal.idx, src: bal.src, dat: bal.dat, bit: ActFcg.CREATE_FOCIGON });
     ste.hunt(ActFcg.UPDATE_FOCIGON, { idx: bal.idx, dat: bal.dat.dat });
     if (bal.slv != null)
@@ -2728,6 +2733,7 @@ const removeFocigon = async (cpy, bal, ste) => {
 };
 exports.removeFocigon = removeFocigon;
 const createFocigon = async (cpy, bal, ste) => {
+    debugger;
     var dat = { idx: bal.idx, src: bal.src };
     for (var key in bal.dat) {
         if (key == 'dat')
@@ -2740,6 +2746,7 @@ const createFocigon = async (cpy, bal, ste) => {
     dat.gph = focus.gph;
     dat.crns = focus.corners;
     //there is the issue no corners
+    debugger;
     if (dat.clr == null)
         dat.clr = 0x0000000;
     if (dat.lne == null)

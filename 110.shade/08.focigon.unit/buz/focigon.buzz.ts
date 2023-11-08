@@ -17,14 +17,20 @@ export const initFocigon = (cpy: FocigonModel, bal: FocigonBit, ste: State) => {
 
 export const updateFocigon = async (cpy: FocigonModel, bal: FocigonBit, ste: State) => {
 
+
   bit = await ste.hunt(ActFcg.READ_FOCIGON, { idx: bal.idx })
   var dat: FocBit = bit.fcgBit.dat
 
 
-  
+  debugger
+
+
   bit = await ste.hunt(ActGph.READ_GRAPHIC, { idx: dat.gph })
- 
+
   var graphic = bit.gphBit.dat.bit
+
+  debugger
+
 
   if (graphic == null) return console.log("no graphic to draw map upon");
 
@@ -35,6 +41,9 @@ export const updateFocigon = async (cpy: FocigonModel, bal: FocigonBit, ste: Sta
 
   var scl = 3;
   var pct =.33;
+
+  dat.crns
+  debugger
 
   const [firstCorner, ...otherCorners] = dat.crns;
   graphic.moveTo(firstCorner.x * scl, firstCorner.y * scl * pct);
@@ -113,7 +122,9 @@ export const readFocigon = async (cpy: FocigonModel, bal: FocigonBit, ste: State
 };
 export const writeFocigon = async (cpy: FocigonModel, bal: FocigonBit, ste: State) => {
 
-  
+  debugger
+
+
   bit = await ste.hunt(ActCol.WRITE_COLLECT, { idx: bal.idx, src: bal.src, dat: bal.dat, bit: ActFcg.CREATE_FOCIGON });
   ste.hunt(ActFcg.UPDATE_FOCIGON, { idx: bal.idx, dat: bal.dat.dat });
   if (bal.slv != null) bal.slv({ fcgBit: { idx: "write-focigon", dat: bit.clcBit.dat } });
@@ -130,6 +141,8 @@ export const removeFocigon = async (cpy: FocigonModel, bal: FocigonBit, ste: Sta
 };
 export const createFocigon = async (cpy: FocigonModel, bal: FocigonBit, ste: State) => {
 
+  debugger
+
   var dat: FocBit = { idx: bal.idx, src: bal.src };
 
   for (var key in bal.dat) {
@@ -143,7 +156,9 @@ export const createFocigon = async (cpy: FocigonModel, bal: FocigonBit, ste: Sta
   dat.gph = focus.gph;
   dat.crns = focus.corners;
   //there is the issue no corners
-  
+
+  debugger
+
 
   if (dat.clr == null) dat.clr = 0x0000000;
   if (dat.lne == null) dat.lne = 2;
@@ -160,7 +175,7 @@ export const createFocigon = async (cpy: FocigonModel, bal: FocigonBit, ste: Sta
   return cpy;
 
 
-  
+
 };
 export const deleteFocigon = (cpy: FocigonModel, bal: FocigonBit, ste: State) => {
   debugger
