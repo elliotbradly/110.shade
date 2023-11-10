@@ -13,15 +13,15 @@ export type HelloWorld = string | number
 
 
 export const mount = async (value: HelloWorld) => {
-    console.log('sampleFunc:: ', value)
+  console.log('sampleFunc:: ', value)
 
-    const instance = getCurrentInstance();
-    const SHADE = inject('SHADE')
+  const instance = getCurrentInstance();
+  const SHADE = inject('SHADE')
 
-    var bit = await SHADE['hunt']( ActVsg.MOUNT_VISAGE, { idx: "vsg00", src: "indexCanvas", dat: { } });
-    instance?.proxy?.$forceUpdate();
+  var bit = await SHADE['hunt'](ActVsg.MOUNT_VISAGE, { idx: "vsg00", src: "indexCanvas", dat: {} });
+  instance?.proxy?.$forceUpdate();
 
-    return value
+  return value
 }
 
 export const update = async (value: HelloWorld) => {
@@ -32,17 +32,17 @@ export const update = async (value: HelloWorld) => {
   const instance = getCurrentInstance();
   const SHADE = inject('SHADE')
 
-  var bit = await SHADE['hunt']( ActVsg.REMOVE_VISAGE, { idx: "vsg00" })
-  bit = await SHADE['hunt']( ActVsg.MOUNT_VISAGE, { idx: "vsg00", src: "indexCanvas", dat: { } })
+  var bit = await SHADE['hunt'](ActVsg.REMOVE_VISAGE, { idx: "vsg00" })
+  bit = await SHADE['hunt'](ActVsg.MOUNT_VISAGE, { idx: "vsg00", src: "indexCanvas", dat: {} })
 
-  bit = await SHADE['hunt']( ActVsg.READ_VISAGE, { idx: "vsg00" })
+  bit = await SHADE['hunt'](ActVsg.READ_VISAGE, { idx: "vsg00" })
 
-  bit = await SHADE['hunt']( ActCan.WRITE_CONTAINER, { idx: "can00", src: 'vsg00' })
+  bit = await SHADE['hunt'](ActCan.WRITE_CONTAINER, { idx: "can00", src: 'vsg00' })
   var container = bit.canBit.dat.bit
 
-  bit = await SHADE['hunt']( ActCan.SURFACE_CONTAINER, { idx: 'fce-can-00', src: "vsg00" });
+  bit = await SHADE['hunt'](ActCan.SURFACE_CONTAINER, { idx: 'fce-can-00', src: "vsg00" });
 
-  bit = await SHADE['hunt']( ActCan.ADD_CONTAINER, { idx: "fce-can-00",  dat:{bit:container }})
+  bit = await SHADE['hunt'](ActCan.ADD_CONTAINER, { idx: "fce-can-00", dat: { bit: container } })
 
   //bit = await SHADE['hunt']( ActTxt.WRITE_TEXT, { idx:'txt00', dat: {  txt: "text 00" }  })
   //bit = await SHADE['hunt']( ActCan.ADD_CONTAINER, { idx: "can00",  dat:{bit:bit.txtBit.dat.bit }})
@@ -59,11 +59,11 @@ export const update = async (value: HelloWorld) => {
   //bit = await SHADE['hunt']( ActSpr.WRITE_SPRITE, { idx:'spr00', dat: { src:'./img/000.png',  x:40, y:80 }  })
   //bit = await SHADE['hunt']( ActCan.ADD_CONTAINER, { idx: "can00",  dat:{bit:bit.sprBit.dat.bit }})
 
-  bit = await SHADE['hunt']( ActGph.WRITE_GRAPHIC, { idx:'gph00', dat: { h:100, w:40, x:40, y:40 }  })
-  bit = await SHADE['hunt']( ActCan.ADD_CONTAINER, { idx: "can00",  dat:{bit:bit.gphBit.dat.bit }})
+  bit = await SHADE['hunt'](ActGph.WRITE_GRAPHIC, { idx: 'gph00', dat: { h: 100, w: 40, x: 40, y: 40 } })
+  bit = await SHADE['hunt'](ActCan.ADD_CONTAINER, { idx: "can00", dat: { bit: bit.gphBit.dat.bit } })
 
-  bit = await SHADE['hunt']( ActGph.WRITE_GRAPHIC, { idx:'gph01', dat: { h:100, w:40, x:40, y:40 }  })
-  bit = await SHADE['hunt']( ActCan.ADD_CONTAINER, { idx: "can00",  dat:{bit:bit.gphBit.dat.bit }})
+  bit = await SHADE['hunt'](ActGph.WRITE_GRAPHIC, { idx: 'gph01', dat: { h: 100, w: 40, x: 40, y: 40 } })
+  bit = await SHADE['hunt'](ActCan.ADD_CONTAINER, { idx: "can00", dat: { bit: bit.gphBit.dat.bit } })
 
   var bit = await window['electronAPI'].openGame()
   console.log(JSON.stringify(bit))
@@ -72,14 +72,27 @@ export const update = async (value: HelloWorld) => {
   var puff = JSON.parse(bit)
 
   var map = puff.mapBit.dat.grid
-  bit = await SHADE['hunt']( ActHex.WRITE_HEXAGON, { idx:'hex00', dat: { src:'gph00', frm:'hexmap', sze:111, bit:map }  })
+  bit = await SHADE['hunt'](ActHex.WRITE_HEXAGON, { idx: 'hex00', dat: { src: 'gph00', frm: 'hexmap', sze: 111, bit: map } })
 
   var bit = await window['electronAPI'].readFocus('foc00')
   var toot = JSON.parse(bit)
 
   toot.focBit.dat.gph = 'gph01'
 
-  bit = await SHADE['hunt']( ActFcg.WRITE_FOCIGON, { idx:'foc00', dat: {sze:111, bit: toot.focBit.dat }  })
+  bit = await SHADE['hunt'](ActFcg.WRITE_FOCIGON, { idx: 'foc00', dat: { sze: 111, bit: toot.focBit.dat } })
+
+  setInterval(async () => {
+
+
+    console.log("spinnning...")
+
+    var bit = await window['electronAPI'].spinRightFocus('foc00')
+    var toot = JSON.parse(bit)
+
+    bit = await SHADE['hunt'](ActFcg.WRITE_FOCIGON, { idx: 'foc00', dat: { sze: 111, fce:toot.focBit.dat.face, bit: toot.focBit.dat } })
+
+  }, 33)
+
 
 
 
@@ -110,13 +123,13 @@ export const unmount = async (value: HelloWorld) => {
   const instance = getCurrentInstance();
   const SHADE = inject('SHADE')
 
-   console.log("unmounted..")
-  var bit = await SHADE['hunt']( ActVsg.REMOVE_VISAGE, { idx: "vsg00" })
+  console.log("unmounted..")
+  var bit = await SHADE['hunt'](ActVsg.REMOVE_VISAGE, { idx: "vsg00" })
 
   return value
 }
 
-export type Shade <Type> = {
+export type Shade<Type> = {
   hunt: Function;
 } & Type
 

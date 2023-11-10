@@ -69,14 +69,21 @@ async function createWindow() {
   })
 
   ipcMain.handle('space:readHexmap', async ( event, idx ) => {
-
     bit = await SPACE.hunt(ActMap.READ_HEXMAP, { idx })
     return JSON.stringify(bit)
+  })
 
+  ipcMain.handle('space:spinRightFocus', async ( event, idx) => {
+    bit = await SPACE.hunt(ActFoc.SPIN_RIGHT_FOCUS, { idx })
+    return JSON.stringify(bit)
+  })
+
+  ipcMain.handle('space:spinLeftFocus', async ( event, idx ) => {
+    bit = await SPACE.hunt(ActFoc.SPIN_LEFT_FOCUS, { idx })
+    return JSON.stringify(bit)
   })
 
   ipcMain.handle('space:hexmapFocus', async ( idx) => {
-
     bit = await SPACE.hunt(ActMap.READ_HEXMAP, { idx })
     return bit
   })

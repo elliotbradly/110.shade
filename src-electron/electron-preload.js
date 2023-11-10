@@ -7,6 +7,10 @@ contextBridge.exposeInMainWorld('electronAPI', {
   shapeHexmap: ()=> ipcRenderer.invoke('space:shapeHexmap'),
   readFocus: ()=> ipcRenderer.invoke('space:readFocus'),
   readHexmap: (idx)=> ipcRenderer.invoke('space:readHexmap', idx),
+  spinRightFocus: (idx)=> ipcRenderer.invoke('space:spinRightFocus', idx),
+  spinLeftFocus: (idx)=> ipcRenderer.invoke('space:spinLeftFocus', idx),
+
+
 })
 
 contextBridge.exposeInMainWorld('electron', {

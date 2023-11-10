@@ -20,6 +20,8 @@ export const updateFocigon = async (cpy: FocigonModel, bal: FocigonBit, ste: Sta
   bit = await ste.hunt(ActFcg.READ_FOCIGON, { idx: bal.idx })
   var dat: FocBit = bit.fcgBit.dat
 
+
+
   bit = await ste.hunt(ActGph.READ_GRAPHIC, { idx: dat.gph })
 
   var graphic = bit.gphBit.dat.bit
