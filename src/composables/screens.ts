@@ -77,10 +77,16 @@ export const update = async (value: HelloWorld) => {
   var bit = await window['electronAPI'].readFocus('foc00')
   var toot = JSON.parse(bit)
 
-  var focus = toot.focBit.dat
-  focus.src = 'gph01'
+  toot.focBit.dat.gph = 'gph01'
 
-  bit = await SHADE['hunt']( ActFcg.WRITE_FOCIGON, { idx:'foc00', dat:{dat: focus} })
+  bit = await SHADE['hunt']( ActFcg.WRITE_FOCIGON, { idx:'foc00', dat: {sze:111, bit: toot.focBit.dat }  })
+
+
+
+  //var focus = toot.focBit.dat
+  //focus.src = 'gph01'
+
+
 
   //var scute = JSON.parse(bit)
   //debugger

@@ -55,6 +55,8 @@ export const hexmapHexagon = async (cpy: HexagonModel, bal: HexagonBit, ste: Sta
 
   graphic.clear()
 
+  if (bal.slv != null) bal.slv({ hexBit: { idx: "hexmap-hexagon", dat: hexmap } });
+
   const Hex: Honeycomb.HexFactory = Honeycomb.extendHex({
     size: Number(33), // default: 1
     orientation: 'pointy', // default: 'pointy'
@@ -81,7 +83,7 @@ export const hexmapHexagon = async (cpy: HexagonModel, bal: HexagonBit, ste: Sta
     graphic.lineTo(firstCorner.x * scl, firstCorner.y * scl * pct);
   });
 
-  if (bal.slv != null) bal.slv({ hexBit: { idx: "hexmap-hexagon", dat: hexmap } });
+
 
   return cpy;
 };

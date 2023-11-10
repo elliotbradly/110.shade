@@ -55,11 +55,9 @@ var init = async ( space ) => {
   var grid = bit.mapBit.dat.dat.bit;
   bit = await space.hunt(ActMap.WRITE_HEXMAP, { idx:"map03", dat: { bit: { grid } } })
 
-  bit = await space.hunt(ActFoc.WRITE_FOCUS, { idx: 'foc00', src:'hexmap03', dat: { typ: FOCUS.AVAS } })
+  bit = await space.hunt(ActFoc.WRITE_FOCUS, { idx: 'foc00', src:'map00', dat: { typ: FOCUS.AVAS } })
   var avas = bit.focBit.dat
 
-  bit = await space.hunt(ActFoc.WRITE_FOCUS, { idx: 'foc01', src:'hexmap03', dat: { typ: FOCUS.AVAS } })
-  var avas = bit.focBit.dat
 
 };
 

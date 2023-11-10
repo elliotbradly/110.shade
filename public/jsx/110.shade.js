@@ -2370,6 +2370,8 @@ const hexmapHexagon = async (cpy, bal, ste) => {
     var graphic = bit.gphBit.dat.bit;
     var hexmap = bal.dat.bit;
     graphic.clear();
+    if (bal.slv != null)
+        bal.slv({ hexBit: { idx: "hexmap-hexagon", dat: hexmap } });
     const Hex = Honeycomb.extendHex({
         size: Number(33),
         orientation: 'pointy', // default: 'pointy'
@@ -2388,8 +2390,6 @@ const hexmapHexagon = async (cpy, bal, ste) => {
         otherCorners.forEach(({ x, y }) => graphic.lineTo(x * scl, y * scl * pct));
         graphic.lineTo(firstCorner.x * scl, firstCorner.y * scl * pct);
     });
-    if (bal.slv != null)
-        bal.slv({ hexBit: { idx: "hexmap-hexagon", dat: hexmap } });
     return cpy;
 };
 exports.hexmapHexagon = hexmapHexagon;
@@ -2642,20 +2642,19 @@ exports.initFocigon = initFocigon;
 const updateFocigon = async (cpy, bal, ste) => {
     bit = await ste.hunt(ActFcg.READ_FOCIGON, { idx: bal.idx });
     var dat = bit.fcgBit.dat;
-    debugger;
     bit = await ste.hunt(ActGph.READ_GRAPHIC, { idx: dat.gph });
     var graphic = bit.gphBit.dat.bit;
-    debugger;
+    graphic.clear();
     if (graphic == null)
         return console.log("no graphic to draw map upon");
     if (dat.wpe == true)
         graphic.clear();
     graphic.lineStyle(dat.lne, dat.clr, 1);
     graphic.beginFill(dat.clr);
-    var scl = 3;
     var pct = .33;
+    var scl = bal.dat.sze;
+    graphic.lineStyle(7, 0x00FF00, 33);
     dat.crns;
-    debugger;
     const [firstCorner, ...otherCorners] = dat.crns;
     graphic.moveTo(firstCorner.x * scl, firstCorner.y * scl * pct);
     otherCorners.forEach(({ x, y }) => graphic.lineTo(x * scl, y * scl * pct));
@@ -2717,7 +2716,6 @@ const readFocigon = async (cpy, bal, ste) => {
 };
 exports.readFocigon = readFocigon;
 const writeFocigon = async (cpy, bal, ste) => {
-    debugger;
     bit = await ste.hunt(ActCol.WRITE_COLLECT, { idx: bal.idx, src: bal.src, dat: bal.dat, bit: ActFcg.CREATE_FOCIGON });
     ste.hunt(ActFcg.UPDATE_FOCIGON, { idx: bal.idx, dat: bal.dat.dat });
     if (bal.slv != null)
@@ -2733,20 +2731,18 @@ const removeFocigon = async (cpy, bal, ste) => {
 };
 exports.removeFocigon = removeFocigon;
 const createFocigon = async (cpy, bal, ste) => {
-    debugger;
     var dat = { idx: bal.idx, src: bal.src };
     for (var key in bal.dat) {
-        if (key == 'dat')
+        if (key == 'bit')
             continue;
         dat[key] = bal.dat[key];
     }
-    var focus = bal.dat.dat;
+    var focus = bal.dat.bit;
+    debugger;
     dat.fce = focus.face;
     dat.frm = focus.typ;
     dat.gph = focus.gph;
     dat.crns = focus.corners;
-    //there is the issue no corners
-    debugger;
     if (dat.clr == null)
         dat.clr = 0x0000000;
     if (dat.lne == null)

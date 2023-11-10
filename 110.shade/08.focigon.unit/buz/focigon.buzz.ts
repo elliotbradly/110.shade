@@ -20,14 +20,13 @@ export const updateFocigon = async (cpy: FocigonModel, bal: FocigonBit, ste: Sta
   bit = await ste.hunt(ActFcg.READ_FOCIGON, { idx: bal.idx })
   var dat: FocBit = bit.fcgBit.dat
 
-  debugger
-
-
   bit = await ste.hunt(ActGph.READ_GRAPHIC, { idx: dat.gph })
+
 
   var graphic = bit.gphBit.dat.bit
 
-  debugger
+  graphic.clear()
+
 
 
   if (graphic == null) return console.log("no graphic to draw map upon");
@@ -37,11 +36,14 @@ export const updateFocigon = async (cpy: FocigonModel, bal: FocigonBit, ste: Sta
   graphic.lineStyle(dat.lne, dat.clr, 1);
   graphic.beginFill(dat.clr);
 
-  var scl = 3;
+
   var pct =.33;
+  var scl = bal.dat.sze;
+
+
+  graphic.lineStyle(7, 0x00FF00, 33);
 
   dat.crns
-  debugger
 
   const [firstCorner, ...otherCorners] = dat.crns;
   graphic.moveTo(firstCorner.x * scl, firstCorner.y * scl * pct);
@@ -120,7 +122,7 @@ export const readFocigon = async (cpy: FocigonModel, bal: FocigonBit, ste: State
 };
 export const writeFocigon = async (cpy: FocigonModel, bal: FocigonBit, ste: State) => {
 
-  debugger
+
 
 
   bit = await ste.hunt(ActCol.WRITE_COLLECT, { idx: bal.idx, src: bal.src, dat: bal.dat, bit: ActFcg.CREATE_FOCIGON });
@@ -137,25 +139,24 @@ export const removeFocigon = async (cpy: FocigonModel, bal: FocigonBit, ste: Sta
 
   return cpy;
 };
-export const createFocigon = async (cpy: FocigonModel, bal: FocigonBit, ste: State) => {
 
-  debugger
+export const createFocigon = async (cpy: FocigonModel, bal: FocigonBit, ste: State) => {
 
   var dat: FocBit = { idx: bal.idx, src: bal.src };
 
   for (var key in bal.dat) {
-    if (key == 'dat') continue
+    if (key == 'bit') continue
     dat[key] = bal.dat[key]
   }
 
-  var focus = bal.dat.dat;
+  var focus = bal.dat.bit;
+  debugger
+
   dat.fce = focus.face;
   dat.frm = focus.typ;
   dat.gph = focus.gph;
   dat.crns = focus.corners;
-  //there is the issue no corners
 
-  debugger
 
 
   if (dat.clr == null) dat.clr = 0x0000000;
