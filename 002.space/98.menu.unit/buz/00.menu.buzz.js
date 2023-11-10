@@ -58,7 +58,6 @@ const updateMenu = async (cpy, bal, ste) => {
             bit = await ste.bus(ActCns.UPDATE_CONSOLE, { idx: 'cns00', src: JSON.stringify(bit.mapBit.dat) });
             bit = await ste.hunt(ActFoc.WRITE_FOCUS, { idx: 'foc00', src: 'hexmap00', dat: { typ: FOCUS.AVAS } });
             var avas = bit.focBit.dat;
-            debugger;
             bit = await ste.bus(ActCns.UPDATE_CONSOLE, { idx: 'cns00', src: JSON.stringify(avas) });
             //debugger
             //    bit = await ste.hunt(ActFoc.WRITE_FOCUS, { idx: 'foc01', src:'hexmap00', dat: { typ: FOCUS.AVAS } })

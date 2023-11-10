@@ -47,7 +47,7 @@ const bondFocus = async (cpy, bal, ste) => {
     //});
     //console.log("vis " + spot.vision.length);
     bonds;
-    console.log("bonds::: " + JSON.stringify(bonds));
+    //console.log("bonds::: " + JSON.stringify(bonds))
     if (bal.slv != null)
         bal.slv({ focBit: { idx: "orbit-focus", dat: bonds } });
     return cpy;

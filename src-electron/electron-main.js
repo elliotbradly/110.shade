@@ -83,6 +83,12 @@ async function createWindow() {
     return JSON.stringify(bit)
   })
 
+  ipcMain.handle('space:forwardFocus', async ( event, idx ) => {
+    bit = await SPACE.hunt(ActFoc.FORWARD_FOCUS, { idx })
+    return JSON.stringify(bit)
+  })
+
+
   ipcMain.handle('space:hexmapFocus', async ( idx) => {
     bit = await SPACE.hunt(ActMap.READ_HEXMAP, { idx })
     return bit

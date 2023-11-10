@@ -9,6 +9,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   readHexmap: (idx)=> ipcRenderer.invoke('space:readHexmap', idx),
   spinRightFocus: (idx)=> ipcRenderer.invoke('space:spinRightFocus', idx),
   spinLeftFocus: (idx)=> ipcRenderer.invoke('space:spinLeftFocus', idx),
+  forwardFocus: (idx)=> ipcRenderer.invoke('space:forwardFocus', idx),
 
 
 })

@@ -86,12 +86,13 @@ export const update = async (value: HelloWorld) => {
 
     console.log("spinnning...")
 
+    var bit = await window['electronAPI'].forwardFocus('foc00')
     var bit = await window['electronAPI'].spinRightFocus('foc00')
     var toot = JSON.parse(bit)
 
     bit = await SHADE['hunt'](ActFcg.WRITE_FOCIGON, { idx: 'foc00', dat: { sze: 111, fce:toot.focBit.dat.face, bit: toot.focBit.dat } })
 
-  }, 33)
+  }, 3344)
 
 
 

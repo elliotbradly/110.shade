@@ -34,7 +34,7 @@ const backwardFocus = async (cpy, bal, ste) => {
     //locateHex(ste, foci);
     bit = await ste.hunt(ActFoc.WRITE_FOCUS, { idx: bal.idx, dat: { x, y, bonds, face } });
     if (bal.slv != null)
-        bal.slv({ focBit: { idx: "backward-focus", dat } });
+        bal.slv({ focBit: { idx: "backward-focus", dat: spot } });
 };
 exports.backwardFocus = backwardFocus;
 const DIRECTION = require("../../val/direction");
