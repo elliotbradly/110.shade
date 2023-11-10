@@ -22,12 +22,9 @@ export const updateFocigon = async (cpy: FocigonModel, bal: FocigonBit, ste: Sta
 
   bit = await ste.hunt(ActGph.READ_GRAPHIC, { idx: dat.gph })
 
-
   var graphic = bit.gphBit.dat.bit
 
   graphic.clear()
-
-
 
   if (graphic == null) return console.log("no graphic to draw map upon");
 
@@ -38,7 +35,7 @@ export const updateFocigon = async (cpy: FocigonModel, bal: FocigonBit, ste: Sta
 
 
   var pct =.33;
-  var scl = bal.dat.sze;
+  var scl = dat.sze;
 
 
   graphic.lineStyle(7, 0x00FF00, 33);
@@ -52,6 +49,9 @@ export const updateFocigon = async (cpy: FocigonModel, bal: FocigonBit, ste: Sta
 
   graphic.alpha = dat.a;
   graphic.endFill();
+
+  dat.fce
+
 
   if (dat.fce != null) {
     var corners = dat.crns;
@@ -93,7 +93,7 @@ export const updateFocigon = async (cpy: FocigonModel, bal: FocigonBit, ste: Sta
         break;
     }
 
-    var faceClr = 0x00ff00;
+    var faceClr = 0x0000ff;
 
     //if (bal.bonds[bal.face] == null) faceClr = 0xff0000;
 
@@ -101,6 +101,7 @@ export const updateFocigon = async (cpy: FocigonModel, bal: FocigonBit, ste: Sta
 
     graphic.moveTo(dat.crn0.x * scl, dat.crn0.y *  scl * pct);
     graphic.lineTo(dat.crn1.x * scl, dat.crn1.y * scl * pct);
+
   }
 
   //cpy.hexBale = bal;
@@ -122,9 +123,6 @@ export const readFocigon = async (cpy: FocigonModel, bal: FocigonBit, ste: State
 };
 export const writeFocigon = async (cpy: FocigonModel, bal: FocigonBit, ste: State) => {
 
-
-
-
   bit = await ste.hunt(ActCol.WRITE_COLLECT, { idx: bal.idx, src: bal.src, dat: bal.dat, bit: ActFcg.CREATE_FOCIGON });
   ste.hunt(ActFcg.UPDATE_FOCIGON, { idx: bal.idx, dat: bal.dat.dat });
   if (bal.slv != null) bal.slv({ fcgBit: { idx: "write-focigon", dat: bit.clcBit.dat } });
@@ -144,19 +142,20 @@ export const createFocigon = async (cpy: FocigonModel, bal: FocigonBit, ste: Sta
 
   var dat: FocBit = { idx: bal.idx, src: bal.src };
 
+  bal.dat;
+
   for (var key in bal.dat) {
     if (key == 'bit') continue
     dat[key] = bal.dat[key]
   }
 
   var focus = bal.dat.bit;
-  debugger
+
 
   dat.fce = focus.face;
   dat.frm = focus.typ;
   dat.gph = focus.gph;
   dat.crns = focus.corners;
-
 
 
   if (dat.clr == null) dat.clr = 0x0000000;
@@ -167,6 +166,7 @@ export const createFocigon = async (cpy: FocigonModel, bal: FocigonBit, ste: Sta
 
   if (dat.frm == null) dat.frm = 'f';
   if (dat.fce == null) dat.fce = 'E';
+  if (dat.sze == null) dat.sze = 111;
 
   if (bal.src != null) bit = await ste.hunt(ActVsg.NEST_VISAGE, { src: bal.src, dat })
 

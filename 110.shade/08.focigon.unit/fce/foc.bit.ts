@@ -25,4 +25,5 @@ export default interface FocBit {
     crns?:any;
     crn0?:any;
     crn1?:any;
+    sze?:number
 }

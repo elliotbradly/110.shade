@@ -2652,7 +2652,7 @@ const updateFocigon = async (cpy, bal, ste) => {
     graphic.lineStyle(dat.lne, dat.clr, 1);
     graphic.beginFill(dat.clr);
     var pct = .33;
-    var scl = bal.dat.sze;
+    var scl = dat.sze;
     graphic.lineStyle(7, 0x00FF00, 33);
     dat.crns;
     const [firstCorner, ...otherCorners] = dat.crns;
@@ -2661,6 +2661,7 @@ const updateFocigon = async (cpy, bal, ste) => {
     graphic.lineTo(firstCorner.x * scl, firstCorner.y * scl * pct);
     graphic.alpha = dat.a;
     graphic.endFill();
+    dat.fce;
     if (dat.fce != null) {
         var corners = dat.crns;
         switch (dat.fce) {
@@ -2693,7 +2694,7 @@ const updateFocigon = async (cpy, bal, ste) => {
                 dat.crn1 = corners[5];
                 break;
         }
-        var faceClr = 0x00ff00;
+        var faceClr = 0x0000ff;
         //if (bal.bonds[bal.face] == null) faceClr = 0xff0000;
         graphic.lineStyle(5, faceClr, 1);
         graphic.moveTo(dat.crn0.x * scl, dat.crn0.y * scl * pct);
@@ -2732,13 +2733,13 @@ const removeFocigon = async (cpy, bal, ste) => {
 exports.removeFocigon = removeFocigon;
 const createFocigon = async (cpy, bal, ste) => {
     var dat = { idx: bal.idx, src: bal.src };
+    bal.dat;
     for (var key in bal.dat) {
         if (key == 'bit')
             continue;
         dat[key] = bal.dat[key];
     }
     var focus = bal.dat.bit;
-    debugger;
     dat.fce = focus.face;
     dat.frm = focus.typ;
     dat.gph = focus.gph;
@@ -2757,6 +2758,8 @@ const createFocigon = async (cpy, bal, ste) => {
         dat.frm = 'f';
     if (dat.fce == null)
         dat.fce = 'E';
+    if (dat.sze == null)
+        dat.sze = 111;
     if (bal.src != null)
         bit = await ste.hunt(ActVsg.NEST_VISAGE, { src: bal.src, dat });
     bal.slv({ fcgBit: { idx: "create-focigon", dat: dat } });
