@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createHexmap = void 0;
-const ActFoc = require("../../01.focus.unit/focus.action");
 var bit, idx, lst, dat, val, src;
 const createHexmap = async (cpy, bal, ste) => {
     var clone = require("clone-deep");
@@ -15,28 +14,32 @@ const createHexmap = async (cpy, bal, ste) => {
         orientation: "pointy",
     });
     const Grid = Honeycomb.defineGrid(Hex);
+    dat.bit;
+    if (dat.bit == null)
+        bal.slv({ mapBit: { idx: "create-hexmap-error", src: "no bit present" } });
     var copied = clone(dat.bit.grid);
     dat.grid = Grid(copied);
     var size = dat.grid.length;
-    var next = async () => {
-        size -= 1;
-        var itm = dat.grid[size];
-        var hex = itm.hex;
-        //11.07.23 this had been set to use the bus and it cause big trouble
-        bit = await ste.hunt(ActFoc.WRITE_FOCUS, { idx: hex, src: dat.idx, dat: { x: itm.x, y: itm.y, } });
-        if (size == 0) {
-            if (bal.slv != null)
-                bal.slv({ mapBit: { idx: "create-hexmap", dat } });
-            return;
-        }
-        await next();
-    };
-    next();
     if (dat.bit == null) {
         if (bal.slv != null)
             bal.slv({ mapBit: { idx: "create-hexmap-error", src: "no bit present" } });
         return;
     }
+    if (bal.slv != null)
+        bal.slv({ mapBit: { idx: "create-hexmap", dat } });
+    //var next = async ()=>{
+    //  size -= 1;
+    //  var itm = dat.grid[ size ]
+    //  var hex = itm.hex;
+    //11.07.23 this had been set to use the bus and it cause big trouble
+    //  bit = await ste.hunt( ActFoc.WRITE_FOCUS, { idx:hex, src: dat.idx, dat:{  x: itm.x, y: itm.y, } })
+    //  if ( size == 0 )
+    //  {
+    //    return
+    //  }
+    //   await next()
+    // }
+    // next()
     return cpy;
 };
 exports.createHexmap = createHexmap;

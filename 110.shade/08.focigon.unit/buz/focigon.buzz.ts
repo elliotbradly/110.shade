@@ -17,10 +17,8 @@ export const initFocigon = (cpy: FocigonModel, bal: FocigonBit, ste: State) => {
 
 export const updateFocigon = async (cpy: FocigonModel, bal: FocigonBit, ste: State) => {
 
-
   bit = await ste.hunt(ActFcg.READ_FOCIGON, { idx: bal.idx })
   var dat: FocBit = bit.fcgBit.dat
-
 
   debugger
 

@@ -56,12 +56,14 @@ const updateMenu = async (cpy, bal, ste) => {
             var grid = bit.mapBit.dat.dat.bit;
             bit = await ste.hunt(ActMap.WRITE_HEXMAP, { idx: "hexmap03", dat: { bit: { grid } } });
             bit = await ste.bus(ActCns.UPDATE_CONSOLE, { idx: 'cns00', src: JSON.stringify(bit.mapBit.dat) });
-            bit = await ste.hunt(ActFoc.WRITE_FOCUS, { idx: 'foc00', src: 'hexmap03', dat: { typ: FOCUS.AVAS } });
+            bit = await ste.hunt(ActFoc.WRITE_FOCUS, { idx: 'foc00', src: 'hexmap00', dat: { typ: FOCUS.AVAS } });
             var avas = bit.focBit.dat;
+            debugger;
             bit = await ste.bus(ActCns.UPDATE_CONSOLE, { idx: 'cns00', src: JSON.stringify(avas) });
-            bit = await ste.hunt(ActFoc.WRITE_FOCUS, { idx: 'foc01', src: 'hexmap03', dat: { typ: FOCUS.AVAS } });
-            var avas = bit.focBit.dat;
-            bit = await ste.bus(ActCns.UPDATE_CONSOLE, { idx: 'cns00', src: JSON.stringify(avas) });
+            //debugger
+            //    bit = await ste.hunt(ActFoc.WRITE_FOCUS, { idx: 'foc01', src:'hexmap00', dat: { typ: FOCUS.AVAS } })
+            //  var avas = bit.focBit.dat
+            //  bit = await ste.bus(ActCns.UPDATE_CONSOLE, { idx: 'cns00', src: JSON.stringify( avas ) })
             break;
         //   case ActPvt.CLOUD_PIVOT:
         //     bit = await ste.hunt(ActPvt.CLOUD_PIVOT, {})

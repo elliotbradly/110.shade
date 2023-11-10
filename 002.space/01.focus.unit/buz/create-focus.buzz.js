@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createFocus = void 0;
+const ActFoc = require("../focus.action");
 var bit, val, idx, dex, lst, dat;
 const createFocus = async (cpy, bal, ste) => {
     var dat = { idx: bal.idx, src: bal.src, typ: FOCUS.AMBT };
@@ -36,8 +37,8 @@ const createFocus = async (cpy, bal, ste) => {
         dat.turnSpeed = 11;
     if (dat.spin == null)
         dat.spin = true;
-    //bit = await ste.hunt(ActFoc.CORNER_FOCUS, { idx: dat.src, dat })
-    // dat.corners = bit.focBit.lst;
+    bit = await ste.hunt(ActFoc.CORNER_FOCUS, { idx: dat.src, dat });
+    dat.corners = bit.focBit.lst;
     bal.slv({ focBit: { idx: "create-focus", dat: dat } });
     return cpy;
 };

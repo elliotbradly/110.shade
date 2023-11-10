@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.modelFocus = exports.openFocus = exports.selectFocus = exports.locateFocus = exports.centerFocus = exports.cornerFocus = exports.listFocus = exports.deleteFocus = exports.removeFocus = exports.writeFocus = exports.readFocus = exports.initFocus = void 0;
+exports.modelFocus = exports.openFocus = exports.selectFocus = exports.locateFocus = exports.centerFocus = exports.listFocus = exports.deleteFocus = exports.removeFocus = exports.writeFocus = exports.readFocus = exports.initFocus = void 0;
 const ActFoc = require("../focus.action");
 const ActMap = require("../../03.hexmap.unit/hexmap.action");
 const ActCol = require("../../97.collect.unit/collect.action");
@@ -68,20 +68,6 @@ const listFocus = async (cpy, bal, ste) => {
     return cpy;
 };
 exports.listFocus = listFocus;
-const cornerFocus = async (cpy, bal, ste) => {
-    var spot = bal.dat;
-    var grid;
-    bit = await ste.hunt(ActMap.READ_HEXMAP, { idx: bal.idx });
-    grid = bit.mapBit.dat.grid;
-    var hex = grid.get({ x: spot.x, y: spot.y });
-    const point = hex.toPoint();
-    lst = hex.corners().map((corner) => corner.add(point));
-    spot.corners = lst;
-    if (bal.slv != null)
-        bal.slv({ focBit: { idx: "corner-focus", lst, dat: spot } });
-    return cpy;
-};
-exports.cornerFocus = cornerFocus;
 const centerFocus = async (cpy, bal, ste) => {
     if (bal.slv != null)
         bal.slv({ focBit: { idx: "center-focus", dat } });
