@@ -2642,7 +2642,10 @@ exports.initFocigon = initFocigon;
 const updateFocigon = async (cpy, bal, ste) => {
     bit = await ste.hunt(ActFcg.READ_FOCIGON, { idx: bal.idx });
     var dat = bit.fcgBit.dat;
-    bit = await ste.hunt(ActGph.READ_GRAPHIC, { idx: dat.gph });
+    dat.x = bal.dat.bit.x;
+    dat.y = bal.dat.bit.y;
+    dat.crns = bal.dat.bit.corners;
+    bit = await ste.hunt(ActGph.READ_GRAPHIC, { idx: bal.src });
     var graphic = bit.gphBit.dat.bit;
     graphic.clear();
     if (graphic == null)
@@ -2718,7 +2721,7 @@ const readFocigon = async (cpy, bal, ste) => {
 exports.readFocigon = readFocigon;
 const writeFocigon = async (cpy, bal, ste) => {
     bit = await ste.hunt(ActCol.WRITE_COLLECT, { idx: bal.idx, src: bal.src, dat: bal.dat, bit: ActFcg.CREATE_FOCIGON });
-    ste.hunt(ActFcg.UPDATE_FOCIGON, { idx: bal.idx, dat: bal.dat.dat });
+    ste.hunt(ActFcg.UPDATE_FOCIGON, { idx: bal.idx, dat: bal.dat });
     if (bal.slv != null)
         bal.slv({ fcgBit: { idx: "write-focigon", dat: bit.clcBit.dat } });
     return cpy;

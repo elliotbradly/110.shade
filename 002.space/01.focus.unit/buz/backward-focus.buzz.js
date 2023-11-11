@@ -12,7 +12,7 @@ const backwardFocus = async (cpy, bal, ste) => {
     var bonds;
     //bit = await ste.hunt(ActFoc.CENTER_FOCUS, {idx:spot.idx, dat: spot } )
     if (spot.face == DIRECTION.WEST) {
-        bit = await ste.hunt(ActFoc.BOND_FOCUS, { idx: spot.idx });
+        bit = await ste.hunt(ActFoc.BOND_FOCUS, { idx: spot.idx, dat: spot });
         bonds = bit.focBit.dat;
         var bond = bonds[DIRECTION.WEST];
         if (bond != null) {

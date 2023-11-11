@@ -20,9 +20,12 @@ export const updateFocigon = async (cpy: FocigonModel, bal: FocigonBit, ste: Sta
   bit = await ste.hunt(ActFcg.READ_FOCIGON, { idx: bal.idx })
   var dat: FocBit = bit.fcgBit.dat
 
+  dat.x = bal.dat.bit.x
+  dat.y = bal.dat.bit.y
 
+  dat.crns = bal.dat.bit.corners
 
-  bit = await ste.hunt(ActGph.READ_GRAPHIC, { idx: dat.gph })
+  bit = await ste.hunt(ActGph.READ_GRAPHIC, { idx: bal.src })
 
   var graphic = bit.gphBit.dat.bit
 
@@ -38,6 +41,7 @@ export const updateFocigon = async (cpy: FocigonModel, bal: FocigonBit, ste: Sta
 
   var pct =.33;
   var scl = dat.sze;
+
 
 
   graphic.lineStyle(7, 0x00FF00, 33);
@@ -126,7 +130,7 @@ export const readFocigon = async (cpy: FocigonModel, bal: FocigonBit, ste: State
 export const writeFocigon = async (cpy: FocigonModel, bal: FocigonBit, ste: State) => {
 
   bit = await ste.hunt(ActCol.WRITE_COLLECT, { idx: bal.idx, src: bal.src, dat: bal.dat, bit: ActFcg.CREATE_FOCIGON });
-  ste.hunt(ActFcg.UPDATE_FOCIGON, { idx: bal.idx, dat: bal.dat.dat });
+  ste.hunt(ActFcg.UPDATE_FOCIGON, { idx: bal.idx, dat: bal.dat });
   if (bal.slv != null) bal.slv({ fcgBit: { idx: "write-focigon", dat: bit.clcBit.dat } });
 
   return cpy;

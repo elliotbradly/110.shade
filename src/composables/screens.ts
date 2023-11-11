@@ -79,18 +79,19 @@ export const update = async (value: HelloWorld) => {
 
   toot.focBit.dat.gph = 'gph01'
 
-  bit = await SHADE['hunt'](ActFcg.WRITE_FOCIGON, { idx: 'foc00', dat: { sze: 111, bit: toot.focBit.dat } })
+  //bit = await SHADE['hunt'](ActFcg.WRITE_FOCIGON, { idx: 'foc00', dat: { sze: 111, bit: toot.focBit.dat } })
 
   setInterval(async () => {
 
 
-    console.log("spinnning...")
-
     var bit = await window['electronAPI'].forwardFocus('foc00')
-    var bit = await window['electronAPI'].spinRightFocus('foc00')
+    var bit = await window['electronAPI'].readFocus('foc00')
     var toot = JSON.parse(bit)
+    var focus = toot.focBit.dat
 
-    bit = await SHADE['hunt'](ActFcg.WRITE_FOCIGON, { idx: 'foc00', dat: { sze: 111, fce:toot.focBit.dat.face, bit: toot.focBit.dat } })
+    console.log("focus " + focus.x + ' ::: ' + focus.y )
+
+    bit = await SHADE['hunt'](ActFcg.WRITE_FOCIGON, { idx: 'foc00', dat: { src:'gph01', sze: 111, fce:focus.face, bit: focus } })
 
   }, 3344)
 

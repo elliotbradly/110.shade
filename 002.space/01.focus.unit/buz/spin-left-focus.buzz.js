@@ -29,7 +29,7 @@ const spinLeftFocus = async (cpy, bal, ste) => {
     }
     dat.move = "";
     dat.face = face;
-    bit = await ste.hunt(ActFoc.BOND_FOCUS, { idx: dat.idx, src: dat.face });
+    bit = await ste.hunt(ActFoc.BOND_FOCUS, { idx: dat.idx, src: dat.face, dat });
     var bonds = bit.focBit.dat;
     dat.bonds = bonds;
     bit = await ste.hunt(ActFoc.WRITE_FOCUS, { idx: dat.idx, dat });

@@ -40,21 +40,8 @@ const updateMenu = async (cpy, bal, ste) => {
             bit = await ste.hunt(ActMnu.FOCUS_MENU, {});
             break;
         case ActMnu.YIELD_MENU:
-            bit = await ste.hunt(ActMap.SHAPE_HEXMAP, { idx, dat: { frm: SHAPE.RECTANGLE, w: 2, H: 2 } });
-            var grid = bit.mapBit.dat.dat.bit;
-            bit = await ste.hunt(ActMap.WRITE_HEXMAP, { idx: "hexmap00", dat: { bit: { grid } } });
-            bit = await ste.bus(ActCns.UPDATE_CONSOLE, { idx: 'cns00', src: JSON.stringify(bit.mapBit.dat) });
-            bit = await ste.hunt(ActMap.SHAPE_HEXMAP, { idx, dat: { frm: SHAPE.RECTANGLE, w: 3, H: 3 } });
-            var grid = bit.mapBit.dat.dat.bit;
-            bit = await ste.hunt(ActMap.WRITE_HEXMAP, { idx: "hexmap01", dat: { bit: { grid } } });
-            bit = await ste.bus(ActCns.UPDATE_CONSOLE, { idx: 'cns00', src: JSON.stringify(bit.mapBit.dat) });
-            bit = await ste.hunt(ActMap.SHAPE_HEXMAP, { idx, dat: { frm: SHAPE.RECTANGLE, w: 4, H: 4 } });
-            var grid = bit.mapBit.dat.dat.bit;
-            bit = await ste.hunt(ActMap.WRITE_HEXMAP, { idx: "hexmap02", dat: { bit: { grid } } });
-            bit = await ste.bus(ActCns.UPDATE_CONSOLE, { idx: 'cns00', src: JSON.stringify(bit.mapBit.dat) });
             bit = await ste.hunt(ActMap.SHAPE_HEXMAP, { idx, dat: { frm: SHAPE.RECTANGLE, w: 5, H: 5 } });
-            var grid = bit.mapBit.dat.dat.bit;
-            bit = await ste.hunt(ActMap.WRITE_HEXMAP, { idx: "hexmap03", dat: { bit: { grid } } });
+            bit = await ste.hunt(ActMap.WRITE_HEXMAP, { idx: "hexmap00", dat: { bit: { grid: bit.mapBit.dat.dat.bit } } });
             bit = await ste.bus(ActCns.UPDATE_CONSOLE, { idx: 'cns00', src: JSON.stringify(bit.mapBit.dat) });
             bit = await ste.hunt(ActFoc.WRITE_FOCUS, { idx: 'foc00', src: 'hexmap00', dat: { typ: FOCUS.AVAS } });
             var avas = bit.focBit.dat;

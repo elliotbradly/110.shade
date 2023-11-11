@@ -38,11 +38,20 @@ var init = async ( space ) => {
 
   var idx = 'shape'
 
-  bit = await space.hunt(ActMap.SHAPE_HEXMAP, { idx, dat: { frm: SHAPE.RECTANGLE, w: 2, H: 2 } })
+  bit = await space.hunt(ActMap.SHAPE_HEXMAP, { idx, dat: { frm: SHAPE.RECTANGLE, w: 12, w: 12 } })
   var grid = bit.mapBit.dat.dat.bit;
   bit = await space.hunt(ActMap.WRITE_HEXMAP, { idx:"map00", dat: { bit: { grid } } })
 
   bit = await space.hunt(ActFoc.WRITE_FOCUS, { idx: 'foc00', src:'map00', dat: { typ: FOCUS.AVAS } })
+  var avas = bit.focBit.dat
+
+  bit = await space.hunt(ActFoc.FORWARD_FOCUS, { idx: 'foc00' })
+  var avas = bit.focBit.dat
+
+  bit = await space.hunt(ActFoc.FORWARD_FOCUS, { idx: 'foc00' })
+  var avas = bit.focBit.dat
+
+  bit = await space.hunt(ActFoc.FORWARD_FOCUS, { idx: 'foc00' })
   var avas = bit.focBit.dat
 
 

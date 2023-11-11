@@ -1,12 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.bondFocus = void 0;
-const ActFoc = require("../focus.action");
 const ActMap = require("../../03.hexmap.unit/hexmap.action");
 var bit, val, idx, dex, lst, dat;
 const bondFocus = async (cpy, bal, ste) => {
-    bit = await ste.hunt(ActFoc.READ_FOCUS, { idx: bal.idx });
-    var spot = bit.focBit.dat;
+    //bit = await ste.hunt(ActFoc.READ_FOCUS, { idx: bal.idx })
+    var spot = bal.dat;
     bit = await ste.hunt(ActMap.READ_HEXMAP, { idx: spot.src });
     var map = bit.mapBit.dat;
     var grid = map.grid;

@@ -39,6 +39,9 @@ const createFocus = async (cpy, bal, ste) => {
         dat.spin = true;
     bit = await ste.hunt(ActFoc.CORNER_FOCUS, { idx: dat.src, dat });
     dat.corners = bit.focBit.lst;
+    bit = await ste.hunt(ActFoc.BOND_FOCUS, { idx: bal.idx, src: dat.face, dat });
+    var bonds = bit.focBit.dat;
+    dat.bonds = bonds;
     bal.slv({ focBit: { idx: "create-focus", dat: dat } });
     return cpy;
 };
