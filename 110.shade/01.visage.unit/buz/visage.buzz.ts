@@ -15,277 +15,286 @@ var bit, val, idx, dex, lst, dat;
 
 export const initVisage = (cpy: VisageModel, bal: VisageBit, ste: State) => {
 
-    return cpy;
+  return cpy;
 };
 
 export const updateVisage = async (cpy: VisageModel, bal: VisageBit, ste: State) => {
 
-    bit = await ste.hunt(ActVsg.READ_VISAGE, { idx: bal.idx })
-    var dat: FrameBit = bit.vsgBit.dat
+  bit = await ste.hunt(ActVsg.READ_VISAGE, { idx: bal.idx })
+  var dat: FrameBit = bit.vsgBit.dat
 
-    var fceBit = await ste.hunt(ActFce.WRITE_SURFACE, { idx: dat.idx, dat: { src: dat.src, width: dat.width, height: dat.height } })
+  var fceBit = await ste.hunt(ActFce.WRITE_SURFACE, { idx: dat.idx, dat: { src: dat.src, width: dat.width, height: dat.height } })
 
-    if (bal.slv != null) bal.slv({ vsgBit: { idx: "update-visage", dat } });
+  if (bal.slv != null) bal.slv({ vsgBit: { idx: "update-visage", dat } });
 
-    return cpy;
+  return cpy;
 };
 
 export const mountVisage = async (cpy: VisageModel, bal: VisageBit, ste: State) => {
 
-    if (typeof window != "object") return bal.slv({ fceBit: { idx: "error-size-visage", dat: {} } });
+  if (typeof window != "object") return bal.slv({ fceBit: { idx: "error-size-visage", dat: {} } });
 
-    if (bal.dat != null) bal.dat = { width: bal.dat.width, height: bal.dat.height }
-    else bal.dat = { width: null, height: null }
+  if (bal.dat.h != null) bal.dat.height = bal.dat.h;
+  if (bal.dat.w != null) bal.dat.width = bal.dat.h;
 
-    bal.dat.typ = VISAGE.MOUNT_FULL;
+  if (bal.dat != null) bal.dat = { width: bal.dat.width, height: bal.dat.height }
+  else bal.dat = { width: null, height: null }
 
-    if (bal.dat.height != null) bal.dat.typ = VISAGE.MOUNT_HEIGHT
-    if (bal.dat.width != null) bal.dat.typ = VISAGE.MOUNT_WIDTH
-    if ((bal.dat.height != null) && (bal.dat.width != null)) bal.dat.typ = VISAGE.MOUNT_PART
+  bal.dat.typ = VISAGE.MOUNT_FULL;
 
-    bal.dat.typ
+  bal.dat
 
-    bit = await ste.hunt(ActVsg.WRITE_VISAGE, { idx: bal.idx, src: bal.src, dat: bal.dat })
+  if (bal.dat.height != null) bal.dat.typ = VISAGE.MOUNT_HEIGHT
+  if (bal.dat.width != null) bal.dat.typ = VISAGE.MOUNT_WIDTH
+  if ((bal.dat.height != null) && (bal.dat.width != null)) bal.dat.typ = VISAGE.MOUNT_PART
 
-    if (bal.slv != null) bal.slv({ vsgBit: { idx: "mount-visage", dat: bit.vsgBit.dat } });
-    return cpy;
+  bal.dat.typ
+
+  bit = await ste.hunt(ActVsg.WRITE_VISAGE, { idx: bal.idx, src: bal.src, dat: bal.dat })
+
+  if (bal.slv != null) bal.slv({ vsgBit: { idx: "mount-visage", dat: bit.vsgBit.dat } });
+  return cpy;
 };
 
 
 export const screenVisage = async (cpy: VisageModel, bal: VisageBit, ste: State) => {
 
-    bit = await ste.hunt(ActVsg.WRITE_VISAGE, { idx: bal.idx, dat: { typ: VISAGE.SCREEN } })
+  bit = await ste.hunt(ActVsg.WRITE_VISAGE, { idx: bal.idx, dat: { typ: VISAGE.SCREEN } })
 
 
-    if (bal.slv != null) bal.slv({ vsgBit: { idx: "sreen-visage", dat: bit.vsgBit.dat } });
+  if (bal.slv != null) bal.slv({ vsgBit: { idx: "sreen-visage", dat: bit.vsgBit.dat } });
 
-    return cpy;
+  return cpy;
 };
 
 
 export const readVisage = async (cpy: VisageModel, bal: VisageBit, ste: State) => {
 
-    var slv = bal.slv;
-    if (bal.idx == null) bal.idx = 'vsg00';
-    bit = await ste.hunt(ActCol.READ_COLLECT, { idx: bal.idx, src: bal.src, bit: ActVsg.CREATE_VISAGE })
-    if (slv != null) slv({ vsgBit: { idx: "read-visage", dat: bit.clcBit.dat } });
-    return cpy;
+  var slv = bal.slv;
+  if (bal.idx == null) bal.idx = 'vsg00';
+  bit = await ste.hunt(ActCol.READ_COLLECT, { idx: bal.idx, src: bal.src, bit: ActVsg.CREATE_VISAGE })
+  if (slv != null) slv({ vsgBit: { idx: "read-visage", dat: bit.clcBit.dat } });
+  return cpy;
 
 };
 
 export const writeVisage = async (cpy: VisageModel, bal: VisageBit, ste: State) => {
 
-    //gotcha-- making sure that the src is present on the collect bale once caused a tremendous issue
-    bit = await ste.hunt(ActCol.WRITE_COLLECT, { idx: bal.idx, src: bal.src, dat: bal.dat, bit: ActVsg.CREATE_VISAGE })
+  //gotcha-- making sure that the src is present on the collect bale once caused a tremendous issue
 
-    ste.hunt(ActVsg.UPDATE_VISAGE, { idx: bal.idx })
 
-    if (bal.slv != null) bal.slv({ vsgBit: { idx: "write-visage", dat: bit.clcBit.dat } });
 
-    return cpy;
+  bit = await ste.hunt(ActCol.WRITE_COLLECT, { idx: bal.idx, src: bal.src, dat: bal.dat, bit: ActVsg.CREATE_VISAGE })
+
+  ste.hunt(ActVsg.UPDATE_VISAGE, { idx: bal.idx })
+
+  if (bal.slv != null) bal.slv({ vsgBit: { idx: "write-visage", dat: bit.clcBit.dat } });
+
+  return cpy;
 };
 
 export const removeVisage = async (cpy: VisageModel, bal: VisageBit, ste: State) => {
 
-    if (typeof window != "object") return bal.slv({ fceBit: { idx: "error-create-visage", dat: {} } });
+  if (typeof window != "object") return bal.slv({ fceBit: { idx: "error-create-visage", dat: {} } });
 
-    bit = await ste.hunt(ActCol.REMOVE_COLLECT, { idx: bal.idx, src: bal.src, dat: bal.dat, bit: ActVsg.DELETE_VISAGE })
-    if (bal.slv != null) bal.slv({ vsgBit: { idx: "remove-visage", dat: bit.clcBit } });
-    return cpy;
+  bit = await ste.hunt(ActCol.REMOVE_COLLECT, { idx: bal.idx, src: bal.src, dat: bal.dat, bit: ActVsg.DELETE_VISAGE })
+  if (bal.slv != null) bal.slv({ vsgBit: { idx: "remove-visage", dat: bit.clcBit } });
+  return cpy;
 };
 
 
 
 export const createVisage = async (cpy: VisageModel, bal: VisageBit, ste: State) => {
 
-    if (typeof window != "object") return bal.slv({ fceBit: { idx: "error-create-visage", dat: {} } });
 
-    var dat: FrameBit = { idx: bal.idx, src: bal.src, typ: bal.dat.typ };
+  if (typeof window != "object") return bal.slv({ fceBit: { idx: "error-create-visage", dat: {} } });
 
-    var canvas: HTMLElement = document.getElementById(dat.src) as HTMLElement;
+  var dat: FrameBit = { idx: bal.idx, src: bal.src, typ: bal.dat.typ };
 
-    if (canvas == null) {
-        canvas = document.createElement("canvas");
-        canvas.id = dat.src;
-        var body = document.body;
-        if (body != null) body.appendChild(canvas);
-    }
+  var canvas: HTMLElement = document.getElementById(dat.src) as HTMLElement;
 
-    dat.bit = canvas as HTMLCanvasElement
-    dat.parent = dat.bit.parentElement;
-    dat.height = bal.dat.height;
-    dat.width = bal.dat.width;
+  if (canvas == null) {
+    canvas = document.createElement("canvas");
+    canvas.id = dat.src;
+    var body = document.body;
+    if (body != null) body.appendChild(canvas);
+  }
 
-    dat.canLst = [];
-    dat.gphLst = [];
-    dat.txtLst = [];
-    dat.sprLst = [];
-    dat.hexLst = [];
-    dat.vidLst = [];
-    dat.lopLst = [];
-    dat.tonLst = []
+  dat.bit = canvas as HTMLCanvasElement
+  dat.parent = dat.bit.parentElement;
+  dat.height = bal.dat.height;
+  dat.width = bal.dat.width;
 
-    bit = await ste.hunt(ActVsg.SIZE_VISAGE, { dat })
-    dat
+  dat.canLst = [];
+  dat.gphLst = [];
+  dat.txtLst = [];
+  dat.sprLst = [];
+  dat.hexLst = [];
+  dat.vidLst = [];
+  dat.lopLst = [];
+  dat.tonLst = []
 
-    if (bal.slv != null) return bal.slv({ vsgBit: { idx: "create-visage", dat } });
-    return cpy;
+  bit = await ste.hunt(ActVsg.SIZE_VISAGE, { dat })
+  dat
+
+  if (bal.slv != null) return bal.slv({ vsgBit: { idx: "create-visage", dat } });
+  return cpy;
 };
 
 export const deleteVisage = async (cpy: VisageModel, bal: VisageBit, ste: State) => {
 
-    if (typeof window != "object") return bal.slv({ fceBit: { idx: "error-size-visage", dat: {} } });
+  if (typeof window != "object") return bal.slv({ fceBit: { idx: "error-size-visage", dat: {} } });
 
-    bit = await ste.hunt(ActVsg.READ_VISAGE, { idx: bal.idx })
-    var dat: FrameBit = bit.vsgBit.dat
+  bit = await ste.hunt(ActVsg.READ_VISAGE, { idx: bal.idx })
+  var dat: FrameBit = bit.vsgBit.dat
 
-    //remove each type inside a visage
-    dat.canLst.forEach(async (a) => ste.hunt(ActCan.REMOVE_CONTAINER, { idx: a }))
-    dat.gphLst.forEach(async (a) => ste.hunt(ActGph.REMOVE_GRAPHIC, { idx: a }))
-    dat.txtLst.forEach(async (a) => ste.hunt(ActTxt.REMOVE_TEXT, { idx: a }))
-    dat.sprLst.forEach(async (a) => ste.hunt(ActSpr.REMOVE_SPRITE, { idx: a }))
-    dat.hexLst.forEach(async (a) => ste.hunt(ActHex.REMOVE_HEXAGON, { idx: a }))
-    dat.vidLst.forEach(async (a) => ste.hunt(ActVid.REMOVE_VIDEO, { idx: a }))
-    dat.lopLst.forEach(async (a) => ste.hunt(ActLop.REMOVE_LOOP, { idx: a }))
+  //remove each type inside a visage
+  dat.canLst.forEach(async (a) => ste.hunt(ActCan.REMOVE_CONTAINER, { idx: a }))
+  dat.gphLst.forEach(async (a) => ste.hunt(ActGph.REMOVE_GRAPHIC, { idx: a }))
+  dat.txtLst.forEach(async (a) => ste.hunt(ActTxt.REMOVE_TEXT, { idx: a }))
+  dat.sprLst.forEach(async (a) => ste.hunt(ActSpr.REMOVE_SPRITE, { idx: a }))
+  dat.hexLst.forEach(async (a) => ste.hunt(ActHex.REMOVE_HEXAGON, { idx: a }))
+  dat.vidLst.forEach(async (a) => ste.hunt(ActVid.REMOVE_VIDEO, { idx: a }))
+  dat.lopLst.forEach(async (a) => ste.hunt(ActLop.REMOVE_LOOP, { idx: a }))
 
-    var fceBit = await ste.hunt(ActFce.REMOVE_SURFACE, { idx: dat.idx, dat: { src: dat.src } })
+  var fceBit = await ste.hunt(ActFce.REMOVE_SURFACE, { idx: dat.idx, dat: { src: dat.src } })
 
-    const canvas = dat.bit
-    if (canvas == null) return bal.slv({ fceBit: { idx: "error-delete-visage", dat: {} } });
-    const context = canvas.getContext('2d');
-    if (context == null) return bal.slv({ fceBit: { idx: "error-delete-visage", dat: {} } });
+  const canvas = dat.bit
+  if (canvas == null) return bal.slv({ fceBit: { idx: "error-delete-visage", dat: {} } });
+  const context = canvas.getContext('2d');
+  if (context == null) return bal.slv({ fceBit: { idx: "error-delete-visage", dat: {} } });
 
 
-    context.clearRect(0, 0, canvas.width, canvas.height);
+  context.clearRect(0, 0, canvas.width, canvas.height);
 
-    context.fillStyle = "white";
-    context.fillRect(0, 0, canvas.width, canvas.height);
+  context.fillStyle = "white";
+  context.fillRect(0, 0, canvas.width, canvas.height);
 
-    if (bal.slv != null) return bal.slv({ vsgBit: { idx: "delete-visage", dat } });
+  if (bal.slv != null) return bal.slv({ vsgBit: { idx: "delete-visage", dat } });
 
-    return cpy;
+  return cpy;
 };
 
 
 export const sizeVisage = async (cpy: VisageModel, bal: VisageBit, ste: State) => {
 
-    var dat: FrameBit = bal.dat;
+  var dat: FrameBit = bal.dat;
 
-    var w, h;
+  var w, h;
 
-    dat.typ
+  dat.typ
 
-    switch (dat.typ) {
+  switch (dat.typ) {
 
-        case VISAGE.MOUNT_FULL:
+    case VISAGE.MOUNT_FULL:
 
-            var body = document.body,
-                html = document.documentElement;
+      var body = document.body,
+        html = document.documentElement;
 
-            var height = Math.max(body.scrollHeight, body.offsetHeight,
-                html.clientHeight, html.scrollHeight, html.offsetHeight);
+      var height = Math.max(body.scrollHeight, body.offsetHeight,
+        html.clientHeight, html.scrollHeight, html.offsetHeight);
 
-            var calcHeight = 0
+      var calcHeight = 0
 
-            bit = await ste.hunt(ActCol.FETCH_COLLECT, { val: 0, bit: ActVsg.CREATE_VISAGE })
-            var clcLst = bit.clcBit.dat.bitList
+      bit = await ste.hunt(ActCol.FETCH_COLLECT, { val: 0, bit: ActVsg.CREATE_VISAGE })
+      var clcLst = bit.clcBit.dat.bitList
 
-            clcLst.forEach((a) => {
-                if (a.typ != VISAGE.MOUNT_HEIGHT) return
-                calcHeight += a.height
-            })
+      clcLst.forEach((a) => {
+        if (a.typ != VISAGE.MOUNT_HEIGHT) return
+        calcHeight += a.height
+      })
 
-            h = height - calcHeight - 5;
-            w = dat.parent.clientWidth;
-            break
+      h = height - calcHeight - 5;
+      w = dat.parent.clientWidth;
+      break
 
-        case VISAGE.MOUNT_PART:
-            w = dat.width;
-            h = dat.height
-            break
+    case VISAGE.MOUNT_PART:
+      w = dat.width;
+      h = dat.height
+      break
 
-        case VISAGE.MOUNT_HEIGHT:
-            w = dat.parent.clientWidth;
-            h = dat.height
-            break
+    case VISAGE.MOUNT_HEIGHT:
+      w = dat.parent.clientWidth;
+      h = dat.height
+      break
 
-        case VISAGE.MOUNT_WIDTH:
-            w = dat.width;
-            h = dat.parent.clientHeight;
-            break
-    }
+    case VISAGE.MOUNT_WIDTH:
+      w = dat.width;
+      h = dat.parent.clientHeight;
+      break
+  }
 
-    const vw = Math.max(w || 0)
-    const vh = Math.max(h || 0)
+  const vw = Math.max(w || 0)
+  const vh = Math.max(h || 0)
 
-    dat.width = vw
-    dat.height = vh
+  dat.width = vw
+  dat.height = vh
 
-    console.log("width " + vw + ' :: height ' + vh)
+  console.log("width " + vw + ' :: height ' + vh)
 
-    if (bal.slv != null) return bal.slv({ vsgBit: { idx: "size-visage", dat } });
+  if (bal.slv != null) return bal.slv({ vsgBit: { idx: "size-visage", dat } });
 
 };
 
 export const renderVisage = (cpy: VisageModel, bal: VisageBit, ste: State) => {
 
-    var canvas = document.getElementById(bal.idx)
-    var pngUrl = canvas['toDataURL']("image/png")
-    var dat = pngUrl
+  var canvas = document.getElementById(bal.idx)
+  var pngUrl = canvas['toDataURL']("image/png")
+  var dat = pngUrl
 
-    var base64Data = dat.replace(/^data:image\/png;base64,/, "");
+  var base64Data = dat.replace(/^data:image\/png;base64,/, "");
 
-    var FS = require('fs-extra');
+  var FS = require('fs-extra');
 
-    FS.ensureDirSync('./frame/')
+  FS.ensureDirSync('./frame/')
 
-    dex = FS.readdirSync('./frame').length;
-    idx = String(dex).padStart(6, '0');
+  dex = FS.readdirSync('./frame').length;
+  idx = String(dex).padStart(6, '0');
 
-    var fin = './frame/' + idx + '.png'
+  var fin = './frame/' + idx + '.png'
 
-    FS.writeFile(fin, base64Data, 'base64', function (err) {
-        console.log('writing ' + fin);
-        if (bal.slv != null) bal.slv({ vsgBit: { idx: "render-visage", dat } });
-    });
+  FS.writeFile(fin, base64Data, 'base64', function (err) {
+    console.log('writing ' + fin);
+    if (bal.slv != null) bal.slv({ vsgBit: { idx: "render-visage", dat } });
+  });
 
-    return cpy;
+  return cpy;
 };
 
 export const dimensionVisage = async (cpy: VisageModel, bal: VisageBit, ste: State) => {
 
-    if (typeof window != "object") return bal.slv({ fceBit: { idx: "error-size-visage", dat: {} } });
+  if (typeof window != "object") return bal.slv({ fceBit: { idx: "error-size-visage", dat: {} } });
 
-    bit = await ste.hunt(ActCol.FETCH_COLLECT, { val: 0, bit: ActVsg.CREATE_VISAGE })
-    var clcLst = bit.clcBit.dat.bitList
+  bit = await ste.hunt(ActCol.FETCH_COLLECT, { val: 0, bit: ActVsg.CREATE_VISAGE })
+  var clcLst = bit.clcBit.dat.bitList
 
-    clcLst.forEach((a) => {
-        sizeVisage(cpy, { idx: a.idx, typ: a.typ, dat: a }, ste)
-        var height = a.height;
-        var width = a.width;
-        ste.hunt(ActVsg.WRITE_VISAGE, { idx: a.idx, dat: { width, height } })
-    })
+  clcLst.forEach((a) => {
+    sizeVisage(cpy, { idx: a.idx, typ: a.typ, dat: a }, ste)
+    var height = a.height;
+    var width = a.width;
+    ste.hunt(ActVsg.WRITE_VISAGE, { idx: a.idx, dat: { width, height } })
+  })
 
-    return cpy;
+  return cpy;
 };
 
 export const fullscreenVisage = async (cpy: VisageModel, bal: VisageBit, ste: State) => {
-    //if (bal.src == null) bal.src = VISAGE.FULL_SCREEN
+  //if (bal.src == null) bal.src = VISAGE.FULL_SCREEN
 
-    //you might need this
-    //canvas {
-    //    position: absolute;
-    //   top: 0;
-    //   left: 0;
-    //   margin: 0;
-    //   padding: 0;
-    //   display: block;
-    // }
+  //you might need this
+  //canvas {
+  //    position: absolute;
+  //   top: 0;
+  //   left: 0;
+  //   margin: 0;
+  //   padding: 0;
+  //   display: block;
+  // }
 
-    bit = await ste.hunt(ActVsg.WRITE_VISAGE, { idx: bal.idx, src: bal.src })
-    if (bal.slv != null) bal.slv({ stgBit: { idx: bal.idx } });
+  bit = await ste.hunt(ActVsg.WRITE_VISAGE, { idx: bal.idx, src: bal.src })
+  if (bal.slv != null) bal.slv({ stgBit: { idx: bal.idx } });
 
-    return cpy;
+  return cpy;
 };
 
 
@@ -293,32 +302,32 @@ export const fullscreenVisage = async (cpy: VisageModel, bal: VisageBit, ste: St
 export const mainVisage = (cpy: VisageModel, bal: VisageBit, ste: State) => {
 
 
-    if (typeof window != "object") return bal.slv({ fceBit: { idx: "error-size-visage", dat: {} } });
+  if (typeof window != "object") return bal.slv({ fceBit: { idx: "error-size-visage", dat: {} } });
 
 
-    const { ipcRenderer } = require('electron');
-    ipcRenderer.on('update-resize', (_event, value) => {
+  const { ipcRenderer } = require('electron');
+  ipcRenderer.on('update-resize', (_event, value) => {
 
-        setTimeout(() => {
+    setTimeout(() => {
 
-            if (bal.slv != null) bal.slv({ vsgBit: { idx: "size-visage" } });
+      if (bal.slv != null) bal.slv({ vsgBit: { idx: "size-visage" } });
 
-        }, 33)
+    }, 33)
 
-    })
+  })
 
-    ipcRenderer.send('resize-me-please', bal.dat.w, bal.dat.h)
-    //bit = await ste.hunt(ActVsg.FULLSCREEN_VISAGE, { src: VISAGE.FULL_SCREEN })
-    return cpy;
+  ipcRenderer.send('resize-me-please', bal.dat.w, bal.dat.h)
+  //bit = await ste.hunt(ActVsg.FULLSCREEN_VISAGE, { src: VISAGE.FULL_SCREEN })
+  return cpy;
 
 };
 
 export const clearVisage = async (cpy: VisageModel, bal: VisageBit, ste: State) => {
 
-    bit = await ste.hunt(ActVsg.READ_VISAGE, { idx: bal.idx })
-    var dat: FrameBit = bit.vsgBit.dat
+  bit = await ste.hunt(ActVsg.READ_VISAGE, { idx: bal.idx })
+  var dat: FrameBit = bit.vsgBit.dat
 
-    return cpy;
+  return cpy;
 };
 
 
@@ -327,77 +336,77 @@ export const clearVisage = async (cpy: VisageModel, bal: VisageBit, ste: State) 
 export const listVisage = async (cpy: VisageModel, bal: VisageBit, ste: State) => {
 
 
-    //if (typeof window != "object") return bal.slv({ vsgBit: { idx: "error-create-visage",  lst:['none', 'none']} });
+  //if (typeof window != "object") return bal.slv({ vsgBit: { idx: "error-create-visage",  lst:['none', 'none']} });
 
-    dat = null
+  dat = null
 
-    if ( bal.src == 'bus') bit = await ste.bus(ActCol.FETCH_COLLECT, { val: 0, bit: ActVsg.CREATE_VISAGE })
-    else bit = await ste.hunt(ActCol.FETCH_COLLECT, { val: 0, bit: ActVsg.CREATE_VISAGE })
+  if (bal.src == 'bus') bit = await ste.bus(ActCol.FETCH_COLLECT, { val: 0, bit: ActVsg.CREATE_VISAGE })
+  else bit = await ste.hunt(ActCol.FETCH_COLLECT, { val: 0, bit: ActVsg.CREATE_VISAGE })
 
-    if (bit.clcBit.dat == null) lst = []
-    else dat = bit.clcBit.dat;
-
-
-    debugger
+  if (bit.clcBit.dat == null) lst = []
+  else dat = bit.clcBit.dat;
 
 
-    if (dat != null) {
+  debugger
 
-        dat.bitList.forEach((a) => {
-            lst = []
-            lst.push((a.idx))
-        })
 
-        lst
-    }
+  if (dat != null) {
 
-    if (bal.slv != null) bal.slv({ vsgBit: { idx: 'list-visage', lst } });
+    dat.bitList.forEach((a) => {
+      lst = []
+      lst.push((a.idx))
+    })
 
-    return cpy;
+    lst
+  }
+
+  if (bal.slv != null) bal.slv({ vsgBit: { idx: 'list-visage', lst } });
+
+  return cpy;
 };
 
 
 export const nestVisage = async (cpy: VisageModel, bal: VisageBit, ste: State) => {
 
-    bit = await ste.hunt(ActVsg.READ_VISAGE, { idx: bal.src })
-    var dat: FrameBit = bit.vsgBit.dat;
+  bit = await ste.hunt(ActVsg.READ_VISAGE, { idx: bal.src })
+  var dat: FrameBit = bit.vsgBit.dat;
 
-    switch (bal.dat.typ) {
+  switch (bal.dat.typ) {
 
-        case SHADE.CONTAINER:
-            dat.canLst.push(bal.dat.idx)
-            break
+    case SHADE.CONTAINER:
+      dat.canLst.push(bal.dat.idx)
+      break
 
-        case SHADE.GRAPHIC:
-            dat.gphLst.push(bal.dat.idx)
-            break
+    case SHADE.GRAPHIC:
+      dat.gphLst.push(bal.dat.idx)
+      break
 
-        case SHADE.SPRITE:
-            dat.sprLst.push(bal.dat.idx)
-            break
+    case SHADE.SPRITE:
+      dat.sprLst.push(bal.dat.idx)
+      break
 
-        case SHADE.TEXT:
-            dat.txtLst.push(bal.dat.idx)
+    case SHADE.TEXT:
+      dat.txtLst.push(bal.dat.idx)
 
-        case SHADE.HEXAGON:
-            dat.hexLst.push(bal.dat.idx)
-            break
+    case SHADE.HEXAGON:
+      dat.hexLst.push(bal.dat.idx)
+      break
 
-        case SHADE.VIDEO:
-            dat.vidLst.push(bal.dat.idx)
-            break
+    case SHADE.VIDEO:
+      dat.vidLst.push(bal.dat.idx)
+      break
 
-        case SHADE.LOOP:
-            dat.lopLst.push(bal.dat.idx)
-            break
-    }
+    case SHADE.LOOP:
+      dat.lopLst.push(bal.dat.idx)
+      break
+  }
 
 
-    bit = await ste.hunt(ActVsg.WRITE_VISAGE, { idx: bal.src, dat })
+  bit = await ste.hunt(ActVsg.WRITE_VISAGE, { idx: bal.src, dat })
 
-    if (bal.slv != null) bal.slv({ vsgBit: { idx: 'nest-visage' } });
+  if (bal.slv != null) bal.slv({ vsgBit: { idx: 'nest-visage' } });
 
-    return cpy;
+  return cpy;
 };
 
 

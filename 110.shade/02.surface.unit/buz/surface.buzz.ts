@@ -19,7 +19,7 @@ export const updateSurface = async (cpy: SurfaceModel, bal: SurfaceBit, ste: Sta
     var app = dat.bit;
 
     if ( app == null ) return bal.slv({ fceBit: { idx: "error-update-surface" } });
-    
+
     app.renderer.resize(dat.width, dat.height);
 
     return cpy;
@@ -156,7 +156,7 @@ export const deleteSurface = async (cpy: SurfaceModel, bal: SurfaceBit, ste: Sta
 
     var app = dat.bit;
     app.destroy()
-    
+
     if (bal.slv != null) return bal.slv({ fceBit: { idx: "delete-surface", dat } });
 
     return cpy;
