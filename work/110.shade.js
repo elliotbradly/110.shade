@@ -2645,6 +2645,8 @@ const updateFocigon = async (cpy, bal, ste) => {
     dat.x = bal.dat.bit.x;
     dat.y = bal.dat.bit.y;
     dat.crns = bal.dat.bit.corners;
+    if (bal.dat.src != null)
+        bal.src = bal.dat.src;
     bit = await ste.hunt(ActGph.READ_GRAPHIC, { idx: bal.src });
     var graphic = bit.gphBit.dat.bit;
     graphic.clear();

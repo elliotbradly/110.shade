@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ModelFocus = exports.MODEL_FOCUS = exports.SelectFocus = exports.SELECT_FOCUS = exports.VisionFocus = exports.VISION_FOCUS = exports.LocateFocus = exports.LOCATE_FOCUS = exports.BondFocus = exports.BOND_FOCUS = exports.CenterFocus = exports.CENTER_FOCUS = exports.BackwardFocus = exports.BACKWARD_FOCUS = exports.ForwardFocus = exports.FORWARD_FOCUS = exports.SpinLeftFocus = exports.SPIN_LEFT_FOCUS = exports.SpinRightFocus = exports.SPIN_RIGHT_FOCUS = exports.ListFocus = exports.LIST_FOCUS = exports.CornerFocus = exports.CORNER_FOCUS = exports.DeleteFocus = exports.DELETE_FOCUS = exports.RemoveFocus = exports.REMOVE_FOCUS = exports.WriteFocus = exports.WRITE_FOCUS = exports.ReadFocus = exports.READ_FOCUS = exports.CreateFocus = exports.CREATE_FOCUS = exports.OpenFocus = exports.OPEN_FOCUS = exports.UpdateFocus = exports.UPDATE_FOCUS = exports.AwakeFocus = exports.AWAKE_FOCUS = exports.InitFocus = exports.INIT_FOCUS = void 0;
+exports.BrownianFocus = exports.BROWNIAN_FOCUS = exports.ModelFocus = exports.MODEL_FOCUS = exports.SelectFocus = exports.SELECT_FOCUS = exports.VisionFocus = exports.VISION_FOCUS = exports.LocateFocus = exports.LOCATE_FOCUS = exports.BondFocus = exports.BOND_FOCUS = exports.CenterFocus = exports.CENTER_FOCUS = exports.BackwardFocus = exports.BACKWARD_FOCUS = exports.ForwardFocus = exports.FORWARD_FOCUS = exports.SpinLeftFocus = exports.SPIN_LEFT_FOCUS = exports.SpinRightFocus = exports.SPIN_RIGHT_FOCUS = exports.ListFocus = exports.LIST_FOCUS = exports.CornerFocus = exports.CORNER_FOCUS = exports.DeleteFocus = exports.DELETE_FOCUS = exports.RemoveFocus = exports.REMOVE_FOCUS = exports.WriteFocus = exports.WRITE_FOCUS = exports.ReadFocus = exports.READ_FOCUS = exports.CreateFocus = exports.CREATE_FOCUS = exports.OpenFocus = exports.OPEN_FOCUS = exports.UpdateFocus = exports.UPDATE_FOCUS = exports.AwakeFocus = exports.AWAKE_FOCUS = exports.InitFocus = exports.INIT_FOCUS = void 0;
 // Focus actions
 exports.INIT_FOCUS = "[Focus action] Init Focus";
 class InitFocus {
@@ -170,4 +170,12 @@ class ModelFocus {
     }
 }
 exports.ModelFocus = ModelFocus;
+exports.BROWNIAN_FOCUS = "[Select action] Brownian Focus";
+class BrownianFocus {
+    constructor(bale) {
+        this.bale = bale;
+        this.type = exports.BROWNIAN_FOCUS;
+    }
+}
+exports.BrownianFocus = BrownianFocus;
 //# sourceMappingURL=focus.action.js.map

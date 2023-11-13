@@ -49,6 +49,8 @@ function reducer(model = new focus_model_1.FocusModel(), act, state) {
             return Buzz.selectFocus(clone(model), act.bale, state);
         case Act.MODEL_FOCUS:
             return Buzz.modelFocus(clone(model), act.bale, state);
+        case Act.BROWNIAN_FOCUS:
+            return Buzz.brownianFocus(clone(model), act.bale, state);
         default:
             return model;
     }

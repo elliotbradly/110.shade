@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.modelFocus = exports.selectFocus = exports.visionFocus = exports.locateFocus = exports.bondFocus = exports.centerFocus = exports.backwardFocus = exports.forwardFocus = exports.spinRightFocus = exports.spinLeftFocus = exports.listFocus = exports.cornerFocus = exports.deleteFocus = exports.removeFocus = exports.writeFocus = exports.readFocus = exports.createFocus = exports.openFocus = exports.updateFocus = exports.awakeFocus = exports.initFocus = void 0;
+exports.brownianFocus = exports.modelFocus = exports.selectFocus = exports.visionFocus = exports.locateFocus = exports.bondFocus = exports.centerFocus = exports.backwardFocus = exports.forwardFocus = exports.spinRightFocus = exports.spinLeftFocus = exports.listFocus = exports.cornerFocus = exports.deleteFocus = exports.removeFocus = exports.writeFocus = exports.readFocus = exports.createFocus = exports.openFocus = exports.updateFocus = exports.awakeFocus = exports.initFocus = void 0;
 var _00_focus_buzz_1 = require("./buz/00.focus.buzz");
 Object.defineProperty(exports, "initFocus", { enumerable: true, get: function () { return _00_focus_buzz_1.initFocus; } });
 var awake_focus_buzz_1 = require("./buz/awake-focus.buzz");
@@ -43,4 +43,6 @@ var _00_focus_buzz_10 = require("./buz/00.focus.buzz");
 Object.defineProperty(exports, "selectFocus", { enumerable: true, get: function () { return _00_focus_buzz_10.selectFocus; } });
 var _00_focus_buzz_11 = require("./buz/00.focus.buzz");
 Object.defineProperty(exports, "modelFocus", { enumerable: true, get: function () { return _00_focus_buzz_11.modelFocus; } });
+var brownian_focus_buzz_1 = require("./buz/brownian-focus.buzz");
+Object.defineProperty(exports, "brownianFocus", { enumerable: true, get: function () { return brownian_focus_buzz_1.brownianFocus; } });
 //# sourceMappingURL=focus.buzzer.js.map

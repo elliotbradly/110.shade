@@ -25,6 +25,8 @@ export const updateFocigon = async (cpy: FocigonModel, bal: FocigonBit, ste: Sta
 
   dat.crns = bal.dat.bit.corners
 
+  if ( bal.dat.src != null ) bal.src = bal.dat.src
+
   bit = await ste.hunt(ActGph.READ_GRAPHIC, { idx: bal.src })
 
   var graphic = bit.gphBit.dat.bit

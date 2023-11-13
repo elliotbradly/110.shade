@@ -27,6 +27,8 @@ const forwardFocus = async (cpy, bal, ste) => {
     bit = await ste.hunt(ActFoc.BOND_FOCUS, { idx: bal.idx, src: face, dat: spot });
     var bonds = bit.focBit.dat;
     spot.bonds = bonds;
+    bit = await ste.hunt(ActFoc.CORNER_FOCUS, { dat: spot });
+    spot.corners = bit.focBit.lst;
     spot;
     bit = await ste.hunt(ActFoc.WRITE_FOCUS, { idx: spot.idx, src: spot.src, dat: { x, y, bonds, face } });
     //debugger

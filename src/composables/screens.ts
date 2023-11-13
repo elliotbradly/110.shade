@@ -12,6 +12,7 @@ import * as ActFcg from '../110.shade/08.focigon.unit/focigon.action'
 export type HelloWorld = string | number
 
 
+
 export const mount = async (value: HelloWorld) => {
   console.log('sampleFunc:: ', value)
 
@@ -26,8 +27,6 @@ export const mount = async (value: HelloWorld) => {
 
 export const update = async (value: HelloWorld) => {
   console.log('sampleFunc:: ', value)
-
-
 
   const instance = getCurrentInstance();
   const SHADE = inject('SHADE')
@@ -65,6 +64,9 @@ export const update = async (value: HelloWorld) => {
   bit = await SHADE['hunt'](ActGph.WRITE_GRAPHIC, { idx: 'gph01', dat: { h: 100, w: 40, x: 40, y: 40 } })
   bit = await SHADE['hunt'](ActCan.ADD_CONTAINER, { idx: "can00", dat: { bit: bit.gphBit.dat.bit } })
 
+  bit = await SHADE['hunt'](ActGph.WRITE_GRAPHIC, { idx: 'gph02', dat: { h: 100, w: 40, x: 40, y: 40 } })
+  bit = await SHADE['hunt'](ActCan.ADD_CONTAINER, { idx: "can00", dat: { bit: bit.gphBit.dat.bit } })
+
   var bit = await window['electronAPI'].openGame()
   console.log(JSON.stringify(bit))
 
@@ -75,25 +77,52 @@ export const update = async (value: HelloWorld) => {
   bit = await SHADE['hunt'](ActHex.WRITE_HEXAGON, { idx: 'hex00', dat: { src: 'gph00', frm: 'hexmap', sze: 111, bit: map } })
 
   var bit = await window['electronAPI'].readFocus('foc00')
-  var toot = JSON.parse(bit)
+    var toot = JSON.parse(bit)
+    var focus = toot.focBit.dat
 
-  toot.focBit.dat.gph = 'gph01'
+  bit = await SHADE['hunt'](ActFcg.WRITE_FOCIGON, { idx: 'foc01', dat: { src: 'gph02', clr:0x0FF000, sze: 111, fce: focus.face, bit: focus } })
 
-  //bit = await SHADE['hunt'](ActFcg.WRITE_FOCIGON, { idx: 'foc00', dat: { sze: 111, bit: toot.focBit.dat } })
 
   setInterval(async () => {
 
-
+    var bit = await window['electronAPI'].spinRightFocus('foc00')
     var bit = await window['electronAPI'].forwardFocus('foc00')
+    var bit = await window['electronAPI'].spinLeftFocus('foc00')
+    var bit = await window['electronAPI'].forwardFocus('foc00')
+
+
     var bit = await window['electronAPI'].readFocus('foc00')
     var toot = JSON.parse(bit)
     var focus = toot.focBit.dat
 
-    console.log("focus " + focus.x + ' ::: ' + focus.y )
+    bit = await SHADE['hunt'](ActFcg.WRITE_FOCIGON, { idx: 'foc00', dat: { src: 'gph01', clr:0x0000FF, sze: 111, fce: focus.face, bit: focus } })
 
-    bit = await SHADE['hunt'](ActFcg.WRITE_FOCIGON, { idx: 'foc00', dat: { src:'gph01', sze: 111, fce:focus.face, bit: focus } })
 
-  }, 3344)
+   console.log("focus " + focus.x + ' ::: ' + focus.y )
+
+
+  }, 3333)
+
+
+
+
+
+  //setInterval(async () => {
+  //  var bit = await window['electronAPI'].spinRightFocus('foc00')
+  //  var bit = await window['electronAPI'].forwardFocus('foc00')
+  //  var bit = await window['electronAPI'].spinLeftFocus('foc00')
+  //  var bit = await window['electronAPI'].forwardFocus('foc00')
+  //  var bit = await window['electronAPI'].readFocus('foc00')
+  //  var toot = JSON.parse(bit)
+  //  var focus = toot.focBit.dat
+
+  //  console.log("focus " + focus.x + ' ::: ' + focus.y )
+
+  //  bit = await SHADE['hunt'](ActFcg.WRITE_FOCIGON, { idx: 'foc00', dat: { src:'gph01', sze: 11, fce:focus.face, bit: focus } })
+
+  //}, 133)
+
+
 
 
 
