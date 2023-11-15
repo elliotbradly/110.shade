@@ -15,9 +15,9 @@ export const updateGraphic = async (cpy: GraphicModel, bal: GraphicBit, ste: Sta
 
   bit = await ste.hunt(ActGph.READ_GRAPHIC, { idx: bal.idx })
   dat = bit.gphBit.dat
-  
+
   var graphic: PIXI.Graphics = dat.bit;
-  graphic.clear();
+  //graphic.clear();
 
   switch (dat.frm) {
     case GRAPHIC.CIRCLE:
@@ -38,9 +38,9 @@ export const updateGraphic = async (cpy: GraphicModel, bal: GraphicBit, ste: Sta
       break;
   }
 
-  
 
-  
+
+
   if (bal.slv != null) return bal.slv({ gphBit: { idx: "update-graphic", dat: dat } });
 
   return cpy;
@@ -56,7 +56,7 @@ export const readGraphic = async (cpy: GraphicModel, bal: GraphicBit, ste: State
 export const writeGraphic = async (cpy: GraphicModel, bal: GraphicBit, ste: State) => {
 
   if (bal.idx == null) bal.idx = "gph00";
-  
+
   bit = await ste.hunt(ActCol.WRITE_COLLECT, { idx: bal.idx, src: bal.src, dat: bal.dat, bit: ActGph.CREATE_GRAPHIC });
   ste.hunt(ActGph.UPDATE_GRAPHIC, { idx: bal.idx })
 
@@ -65,7 +65,7 @@ export const writeGraphic = async (cpy: GraphicModel, bal: GraphicBit, ste: Stat
 };
 
 export const removeGraphic = async (cpy: GraphicModel, bal:GraphicBit, ste: State) => {
-  
+
   bit = await ste.hunt(ActCol.REMOVE_COLLECT, { idx: bal.idx, src: bal.src, dat: bal.dat, bit: ActGph.DELETE_GRAPHIC })
   if (bal.slv != null) bal.slv({ vsgBit: { idx: "remove-graphic", dat: bit.clcBit } });
 
@@ -104,7 +104,7 @@ export const createGraphic = async (cpy: GraphicModel, bal: GraphicBit, ste: Sta
 };
 
 export const deleteGraphic = async (cpy: GraphicModel, bal:GraphicBit, ste: State) => {
- 
+
   if (typeof window != "object") return bal.slv({ fceBit: { idx: "error-delete-graphic", dat: {} } });
 
   bit = await ste.hunt(ActGph.READ_GRAPHIC, { idx: bal.idx })

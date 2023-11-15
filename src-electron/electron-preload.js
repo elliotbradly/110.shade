@@ -10,6 +10,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   spinRightFocus: (idx)=> ipcRenderer.invoke('space:spinRightFocus', idx),
   spinLeftFocus: (idx)=> ipcRenderer.invoke('space:spinLeftFocus', idx),
   forwardFocus: (idx)=> ipcRenderer.invoke('space:forwardFocus', idx),
+  listFocus: (src)=> ipcRenderer.invoke('space:listFocus', src),
 
 
 })

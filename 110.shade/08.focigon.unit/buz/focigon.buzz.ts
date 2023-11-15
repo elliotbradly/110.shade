@@ -31,11 +31,11 @@ export const updateFocigon = async (cpy: FocigonModel, bal: FocigonBit, ste: Sta
 
   var graphic = bit.gphBit.dat.bit
 
-  graphic.clear()
+  //graphic.clear()
 
   if (graphic == null) return console.log("no graphic to draw map upon");
 
-  if (dat.wpe == true) graphic.clear();
+ //if (dat.wpe == true) graphic.clear();
 
   graphic.lineStyle(dat.lne, dat.clr, 1);
   graphic.beginFill(dat.clr);

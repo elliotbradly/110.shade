@@ -76,74 +76,15 @@ export const update = async (value: HelloWorld) => {
   var map = puff.mapBit.dat.grid
   bit = await SHADE['hunt'](ActHex.WRITE_HEXAGON, { idx: 'hex00', dat: { src: 'gph00', frm: 'hexmap', sze: 111, bit: map } })
 
-  var bit = await window['electronAPI'].readFocus('foc00')
-    var toot = JSON.parse(bit)
-    var focus = toot.focBit.dat
+  var bit = await window['electronAPI'].listFocus('avas')
+  var toot = JSON.parse(bit)
+  var list = toot.focBit.lst
 
-  bit = await SHADE['hunt'](ActFcg.WRITE_FOCIGON, { idx: 'foc01', dat: { src: 'gph02', clr:0x0FF000, sze: 111, fce: focus.face, bit: focus } })
-
-
-  setInterval(async () => {
-
-    var bit = await window['electronAPI'].spinRightFocus('foc00')
-    var bit = await window['electronAPI'].forwardFocus('foc00')
-    var bit = await window['electronAPI'].spinLeftFocus('foc00')
-    var bit = await window['electronAPI'].forwardFocus('foc00')
-
-
-    var bit = await window['electronAPI'].readFocus('foc00')
-    var toot = JSON.parse(bit)
-    var focus = toot.focBit.dat
-
-    bit = await SHADE['hunt'](ActFcg.WRITE_FOCIGON, { idx: 'foc00', dat: { src: 'gph01', clr:0x0000FF, sze: 111, fce: focus.face, bit: focus } })
-
-
-   console.log("focus " + focus.x + ' ::: ' + focus.y )
-
-
-  }, 3333)
-
-
-
-
-
-  //setInterval(async () => {
-  //  var bit = await window['electronAPI'].spinRightFocus('foc00')
-  //  var bit = await window['electronAPI'].forwardFocus('foc00')
-  //  var bit = await window['electronAPI'].spinLeftFocus('foc00')
-  //  var bit = await window['electronAPI'].forwardFocus('foc00')
-  //  var bit = await window['electronAPI'].readFocus('foc00')
-  //  var toot = JSON.parse(bit)
-  //  var focus = toot.focBit.dat
-
-  //  console.log("focus " + focus.x + ' ::: ' + focus.y )
-
-  //  bit = await SHADE['hunt'](ActFcg.WRITE_FOCIGON, { idx: 'foc00', dat: { src:'gph01', sze: 11, fce:focus.face, bit: focus } })
-
-  //}, 133)
-
-
-
-
-
-
-  //var focus = toot.focBit.dat
-  //focus.src = 'gph01'
-
-
-
-  //var scute = JSON.parse(bit)
-  //debugger
-
-
-
-
-
-  //var bit = await window['electronAPI'].shapeHexmap()
-  //var map = bit.mapBit.dat.dat.bit
-  //console.log(JSON.stringify(map))
-
-  //bit = await SHADE['hunt']( ActCan.ADD_CONTAINER, { idx: "can00",  dat:{bit:bit.gphBit.dat.bit }})
+  list.forEach( async (a,b)=>{
+    var focus = a;
+    console.log("po " + a.idx )
+     bit = await SHADE['hunt'](ActFcg.WRITE_FOCIGON, { idx: focus.idx, dat: { src: 'gph01', clr:0x0FF000, sze: 111, fce: focus.face, bit: focus } })
+  })
 
   return value
 }
