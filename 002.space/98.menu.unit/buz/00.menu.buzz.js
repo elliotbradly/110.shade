@@ -3,9 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.createMenu = exports.closeMenu = exports.testMenu = exports.updateMenu = exports.initMenu = void 0;
 const ActMnu = require("../menu.action");
 const ActSpc = require("../../00.space.unit/space.action");
-const ActFoc = require("../../01.focus.unit/focus.action");
 const ActPvt = require("../../96.pivot.unit/pivot.action");
-const ActMap = require("../../03.hexmap.unit/hexmap.action");
 const ActTrm = require("../../act/terminal.action");
 const ActChc = require("../../act/choice.action");
 const ActGrd = require("../../act/grid.action");
@@ -40,16 +38,7 @@ const updateMenu = async (cpy, bal, ste) => {
             bit = await ste.hunt(ActMnu.FOCUS_MENU, {});
             break;
         case ActMnu.YIELD_MENU:
-            bit = await ste.hunt(ActMap.SHAPE_HEXMAP, { idx, dat: { frm: SHAPE.RECTANGLE, w: 5, H: 5 } });
-            bit = await ste.hunt(ActMap.WRITE_HEXMAP, { idx: "hexmap00", dat: { bit: { grid: bit.mapBit.dat.dat.bit } } });
-            bit = await ste.bus(ActCns.UPDATE_CONSOLE, { idx: 'cns00', src: JSON.stringify(bit.mapBit.dat) });
-            bit = await ste.hunt(ActFoc.WRITE_FOCUS, { idx: 'foc00', src: 'hexmap00', dat: { typ: FOCUS.AVAS } });
-            var avas = bit.focBit.dat;
-            bit = await ste.bus(ActCns.UPDATE_CONSOLE, { idx: 'cns00', src: JSON.stringify(avas) });
-            //debugger
-            //    bit = await ste.hunt(ActFoc.WRITE_FOCUS, { idx: 'foc01', src:'hexmap00', dat: { typ: FOCUS.AVAS } })
-            //  var avas = bit.focBit.dat
-            //  bit = await ste.bus(ActCns.UPDATE_CONSOLE, { idx: 'cns00', src: JSON.stringify( avas ) })
+            bit = await ste.hunt(ActMnu.YIELD_MENU, {});
             break;
         //   case ActPvt.CLOUD_PIVOT:
         //     bit = await ste.hunt(ActPvt.CLOUD_PIVOT, {})
@@ -116,6 +105,4 @@ exports.createMenu = createMenu;
 var patch = (ste, type, bale) => ste.dispatch({ type, bale });
 const Align = require("../../val/align");
 const Color = require("../../val/console-color");
-const SHAPE = require("../../val/shape");
-const FOCUS = require("../../val/focus");
 //# sourceMappingURL=00.menu.buzz.js.map

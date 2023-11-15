@@ -19,13 +19,10 @@ const fetchCollect = (cpy, bal, ste) => {
         bal.slv({ clcBit: { idx: "fetch-collect-err", src: 'no-bit' } });
     var type = bal.bit.split(' ').slice(-1).pop().toLowerCase();
     var cabBit = cpy.caboodleBitList[cpy.caboodleBits[type]];
-    //if ( type != 'bus') debugger  //11.07.23 issue with listing 
     if (bal.val == 1)
         bit = cabBit.bitList[0];
     else
         bit = cabBit;
-    cabBit;
-    //if ( type != 'bus') debugger  //11.07.23 issue with listing 
     if (bal.slv != null)
         bal.slv({ clcBit: { idx: "fetch-collect", dat: bit } });
     return cpy;
@@ -58,6 +55,7 @@ const writeCollect = async (cpy, bal, ste) => {
     if ((bal.bit == null))
         bal.slv({ rskBit: { idx: "write-collect-err", src: 'no-bit' } });
     var cabBit = cpy.caboodleBitList[cpy.caboodleBits[type]];
+    bal.idx;
     if (cabBit.bits[bal.idx] == null) {
         bit = await ste.hunt(bal.bit, { idx: bal.idx, src: bal.src, dat: bal.dat });
         var objDat = bit[Object.keys(bit)[0]];

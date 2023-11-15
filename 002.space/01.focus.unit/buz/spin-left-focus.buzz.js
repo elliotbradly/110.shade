@@ -34,7 +34,7 @@ const spinLeftFocus = async (cpy, bal, ste) => {
     dat.bonds = bonds;
     bit = await ste.hunt(ActFoc.WRITE_FOCUS, { idx: dat.idx, dat });
     if (bal.slv != null)
-        bal.slv({ focBit: { idx: "spin-left-focus", dat } });
+        bal.slv({ focBit: { idx: "spin-left-focus", bit: dat } });
     return cpy;
 };
 exports.spinLeftFocus = spinLeftFocus;

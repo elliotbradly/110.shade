@@ -15,7 +15,7 @@ const awakeFocus = async (cpy, bal, ste) => {
         bit = await ste.hunt(ActFoc.WRITE_FOCUS, { idx: bal.idx, val: 1 });
     }
     if (bal.slv != null)
-        bal.slv({ focBit: { idx: "backward-focus", dat } });
+        bal.slv({ focBit: { idx: "awake-focus", dat } });
 };
 exports.awakeFocus = awakeFocus;
 //# sourceMappingURL=awake-focus.buzz.js.map

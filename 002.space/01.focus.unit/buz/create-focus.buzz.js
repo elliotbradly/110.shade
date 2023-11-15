@@ -42,7 +42,7 @@ const createFocus = async (cpy, bal, ste) => {
     bit = await ste.hunt(ActFoc.BOND_FOCUS, { idx: bal.idx, src: dat.face, dat });
     var bonds = bit.focBit.dat;
     dat.bonds = bonds;
-    bal.slv({ focBit: { idx: "create-focus", dat: dat } });
+    bal.slv({ focBit: { idx: "create-focus", dat } });
     return cpy;
 };
 exports.createFocus = createFocus;

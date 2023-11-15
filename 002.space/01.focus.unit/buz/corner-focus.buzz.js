@@ -17,7 +17,7 @@ const cornerFocus = async (cpy, bal, ste) => {
     lst = hex.corners().map((corner) => corner.add(point));
     spot.corners = lst;
     if (bal.slv != null)
-        bal.slv({ focBit: { idx: "corner-focus", lst, dat: spot } });
+        bal.slv({ focBit: { idx: "corner-focus", lst, bit: spot } });
     return cpy;
 };
 exports.cornerFocus = cornerFocus;

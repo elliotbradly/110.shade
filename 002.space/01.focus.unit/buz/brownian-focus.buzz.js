@@ -4,7 +4,6 @@ exports.brownianFocus = void 0;
 const ActFoc = require("../focus.action");
 var bit, val, idx, dex, lst, dat;
 const brownianFocus = async (cpy, bal, ste) => {
-    debugger;
     var spot;
     var now = Math.floor(Math.random() * 11);
     switch (now) {

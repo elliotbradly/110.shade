@@ -4,7 +4,7 @@ exports.modelFocus = exports.openFocus = exports.selectFocus = exports.locateFoc
 const ActFoc = require("../focus.action");
 const ActMap = require("../../03.hexmap.unit/hexmap.action");
 const ActCol = require("../../97.collect.unit/collect.action");
-var bit, val, idx, dex, lst, dat;
+var bit, val, idx, dex, lst, dat, src;
 const initFocus = (cpy, bal, ste) => {
     var lst = [ActFoc.OPEN_FOCUS];
     bal.slv({ intBit: { idx: "init-focus", lst } });
@@ -25,11 +25,9 @@ const writeFocus = async (cpy, bal, ste) => {
     //debugger
     if (bal.idx == null)
         bal.idx = "foc00";
-    if (bal.val != 1)
-        ste.hunt(ActFoc.UPDATE_FOCUS, { idx: bal.idx });
+    //if (bal.val != 1) ste.hunt(ActFoc.UPDATE_FOCUS, { idx: bal.idx })
     bit = await ste.hunt(ActCol.WRITE_COLLECT, { idx: bal.idx, src: bal.src, dat: bal.dat, bit: ActFoc.CREATE_FOCUS });
     var spot = bit.clcBit.dat;
-    //debugger
     //debugger
     if (bal.slv != null)
         bal.slv({ focBit: { idx: "write-focus", dat: spot } });
@@ -47,22 +45,29 @@ const deleteFocus = (cpy, bal, ste) => {
 };
 exports.deleteFocus = deleteFocus;
 const listFocus = async (cpy, bal, ste) => {
-    if (bal.src == null)
-        bal.src = FOCUS.AMBT;
     dat = null;
     bit = await ste.hunt(ActCol.FETCH_COLLECT, { val: 0, bit: ActFoc.CREATE_FOCUS });
+    if (bal.src == null)
+        bal.src = FOCUS.AMBT;
+    src = bal.src;
     if (bit.clcBit.dat == null)
         lst = [];
     else
         dat = bit.clcBit.dat;
+    dat;
     if (dat != null) {
         lst = [];
+        var bitList = dat.bitList;
+        var bits = dat.bits;
         dat.bitList.forEach((a) => {
-            if (bal.src != a.typ)
+            src;
+            var itm = bitList[a.dex];
+            if (bal.src.toUpperCase() != itm.typ.toUpperCase())
                 return;
-            lst.push((a.idx));
+            lst.push(itm);
         });
     }
+    lst;
     if (bal.slv != null)
         bal.slv({ focBit: { idx: 'list-focus', lst } });
     return cpy;
@@ -98,34 +103,6 @@ const selectFocus = async (cpy, bal, ste) => {
 };
 exports.selectFocus = selectFocus;
 const openFocus = (cpy, bal, ste) => {
-    //var slv = bal.slv;
-    //bal.slv = null;
-    //var bit: FocusBit = { idx:'idx' , src:'hmm', x:0, y:0, };
-    //if (cpy.focusBits[bit.idx] != null) {
-    //  var dat = cpy.focusBitList[cpy.focusBits[bit.idx]];
-    //  if (bal.slv != null) bal.slv({ focBit: { idx: "open-focus", dat } });
-    //  return cpy;
-    //}
-    //bit.x = Number(bit.x);
-    // bit.y = Number(bit.y);
-    // bit.src = bal.src;
-    //if (bit.src == null) bit.src = "none";
-    //if (isNaN(bit.x)) bit.x = 0;
-    //if (isNaN(bit.y)) bit.y = 0;
-    //if (bit.x == null) bit.x = 0;
-    //if (bit.y == null) bit.y = 0;
-    //if (bit.face == null) bit.face = "E";
-    //if (bit.past == null) bit.past = [];
-    //if (bit.update == null) bit.update = 0;
-    //if (bit.clock == null) bit.clock = 0;
-    //if (bit.updateSpeed == null) bit.updateSpeed = 11;
-    //if (bit.turnSpeed == null) bit.turnSpeed = 11;
-    //if (bit.creation == null) bit.creation = Math.floor(Date.now() / 1000);
-    //if (bit.camX == null) bit.camX = 0.5;
-    //if (bit.camY == null) bit.camY = 0.5;
-    //if (bit.spin == null) bit.spin = true;
-    //cpy.focusBits[bit.idx] = cpy.focusBitList.length;
-    //cpy.focusBitList.push(bit);
     if (bal.slv != null)
         bal.slv({ focBit: { idx: "open-focus", dat: {} } });
     return cpy;

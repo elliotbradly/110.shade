@@ -31,14 +31,8 @@ const forwardFocus = async (cpy, bal, ste) => {
     spot.corners = bit.focBit.lst;
     spot;
     bit = await ste.hunt(ActFoc.WRITE_FOCUS, { idx: spot.idx, src: spot.src, dat: { x, y, bonds, face } });
-    //debugger
-    //bit = await ste.hunt(ActFoc.BOND_FOCUS, { idx: bal.idx, src:face })
-    //var bonds = bit.focBit.dat
-    //spot.bonds = bonds
-    //spot
-    //bit = await ste.hunt(ActFoc.WRITE_FOCUS, { idx: bal.idx, dat: { x, y, bonds, face } })
     if (bal.slv != null)
-        bal.slv({ focBit: { idx: "forward-focus", dat: spot } });
+        bal.slv({ focBit: { idx: "forward-focus", bit: spot } });
 };
 exports.forwardFocus = forwardFocus;
 //# sourceMappingURL=forward-focus.buzz.js.map

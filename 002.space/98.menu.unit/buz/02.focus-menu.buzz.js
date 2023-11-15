@@ -56,9 +56,17 @@ const focusMenu = async (cpy, bal, ste) => {
             bit = await ste.bus(ActGrd.UPDATE_GRID, { x: 0, y: 4, xSpan: 3, ySpan: 12 });
             bit = await ste.bus(ActChc.OPEN_CHOICE, { dat: { clr0: Color.BLACK, clr1: Color.YELLOW }, src: Align.VERTICAL, lst, net: bit.grdBit.dat });
             var typ = bit.chcBit.src;
-            bit = await ste.hunt(ActFoc.LIST_FOCUS, { src: typ });
+            bit = await ste.hunt(ActFoc.LIST_FOCUS, { src: typ.toUpperCase() });
             lst = bit.focBit.lst;
-            bit = await ste.bus(ActGrd.UPDATE_GRID, { x: 0, y: 4, xSpan: 3, ySpan: 12 });
+            if (lst.length == 0) {
+                bit = await ste.bus(ActCns.UPDATE_CONSOLE, { idx: 'cns00', src: 'no focus inside list...' });
+                bit = await ste.hunt(ActMnu.FOCUS_MENU, {});
+                return;
+            }
+            lst.forEach((a, b) => {
+                lst[b] = JSON.stringify(a);
+            });
+            bit = await ste.bus(ActGrd.UPDATE_GRID, { x: 0, y: 4, xSpan: 8, ySpan: 12 });
             bit = await ste.bus(ActChc.OPEN_CHOICE, { dat: { clr0: Color.BLACK, clr1: Color.YELLOW }, src: Align.VERTICAL, lst, net: bit.grdBit.dat });
             var map = bit.chcBit.src;
             break;
