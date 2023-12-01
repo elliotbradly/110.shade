@@ -1,1 +1,1 @@
- node C-L-I.cjs -t pivot
+ node run.cjs -t pivot

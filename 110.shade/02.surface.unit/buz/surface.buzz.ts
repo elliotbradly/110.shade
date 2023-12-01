@@ -175,11 +175,11 @@ export const dimensionSurface = async (cpy: SurfaceModel, bal: SurfaceBit, ste: 
 };
 
 
-
-
-
-
-
+export const extractSurface = (cpy: SurfaceModel, bal:SurfaceBit, ste: State) => {
+ debugger
+ return cpy;
+ };
+ 
 import { SurfaceModel } from "../surface.model";
 import SurfaceBit from "../fce/surface.bit";
 import State from "../../99.core/state";
