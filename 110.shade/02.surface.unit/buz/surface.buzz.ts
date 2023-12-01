@@ -18,7 +18,7 @@ export const updateSurface = async (cpy: SurfaceModel, bal: SurfaceBit, ste: Sta
 
     var app = dat.bit;
 
-    if ( app == null ) return bal.slv({ fceBit: { idx: "error-update-surface" } });
+    if (app == null) return bal.slv({ fceBit: { idx: "error-update-surface" } });
 
     app.renderer.resize(dat.width, dat.height);
 
@@ -168,18 +168,31 @@ export const dimensionSurface = async (cpy: SurfaceModel, bal: SurfaceBit, ste: 
     var idx = bal.idx;
     bit = await ste.hunt(ActFce.READ_SURFACE, { idx: bal.idx })
 
-
     if (bal.slv != null) return bal.slv({ fceBit: { idx: "dimension-surface", dat: bal.dat } });
 
     return cpy;
 };
 
 
-export const extractSurface = (cpy: SurfaceModel, bal:SurfaceBit, ste: State) => {
- debugger
- return cpy;
- };
- 
+export const extractSurface = async (cpy: SurfaceModel, bal: SurfaceBit, ste: State) => {
+
+    var idx = bal.idx;
+    bit = await ste.hunt(ActFce.READ_SURFACE, { idx })
+
+    dat = bit.fceBit.dat
+
+    var app = dat.bit;
+    var canvas = app.renderer.plugins.extract.canvas();
+    const context = canvas.getContext('2d');
+    const imgData = context.getImageData(0, 0, canvas.width, canvas.height);
+    
+    if (bal.slv != null) return bal.slv({ fceBit: { idx: "extract-surface", dat: imgData } });
+
+    return cpy;
+};
+
+
+
 import { SurfaceModel } from "../surface.model";
 import SurfaceBit from "../fce/surface.bit";
 import State from "../../99.core/state";

@@ -47,19 +47,22 @@ export const openShade = async (cpy: ShadeModel, bal: ShadeBit, ste: State) => {
 
     //we need to move a whole directory over
 
-    bit = await ste.bus(ActDsk.COPY_DISK, { src: './vue', idx: '../gillisse/src' })
+    //bit = await ste.bus(ActDsk.COPY_DISK, { src: './vue', idx: '../gillisse/src' })
 
-    bit = await ste.hunt(ActShd.RUN_SHADE, {})
+    //bit = await ste.hunt(ActShd.RUN_SHADE, {})
 
-    const open = require('open')
+    //const open = require('open')
 
-    var loc = './vrt.opn.bat'
-    bit = await open(loc)
+    //var loc = './vrt.opn.bat'
+    //bit = await open(loc)
 
-    setTimeout(() => {
-        if (bal.slv != null) bal.slv({ shdBit: { idx: "open-shade" } });
-    }, 33)
+    const { exec } = require('child_process');
 
+    exec('npx quasar dev -m electron', async (err, stdout, stderr) => {
+  
+      if (bal.slv != null) bal.slv({ shdBit: { idx: "open-shade", dat: {} } });
+  
+    })
 
     return cpy;
 };

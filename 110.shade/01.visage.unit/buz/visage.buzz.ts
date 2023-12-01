@@ -24,7 +24,7 @@ export const updateVisage = async (cpy: VisageModel, bal: VisageBit, ste: State)
   var dat: FrameBit = bit.vsgBit.dat
 
   var fceBit = await ste.hunt(ActFce.WRITE_SURFACE, { idx: dat.idx, dat: { src: dat.src, width: dat.width, height: dat.height } })
-
+  
   if (bal.slv != null) bal.slv({ vsgBit: { idx: "update-visage", dat } });
 
   return cpy;

@@ -1,6 +1,7 @@
 import { ref, onMounted, onUnmounted, onUpdated, inject, getCurrentInstance } from 'vue'
 
 import * as ActVsg from '../110.shade/01.visage.unit/visage.action'
+import * as ActFce from '../110.shade/02.surface.unit/surface.action'
 import * as ActCan from '../110.shade/03.container.unit/container.action'
 import * as ActTxt from '../110.shade/05.text.unit/text.action'
 import * as ActGph from '../110.shade/04.graphic.unit/graphic.action'
@@ -85,6 +86,10 @@ export const update = async (value: HelloWorld) => {
     console.log("po " + a.idx )
      bit = await SHADE['hunt'](ActFcg.WRITE_FOCIGON, { idx: focus.idx, dat: { src: 'gph01', clr:0x0FF000, sze: 111, fce: focus.face, bit: focus } })
   })
+
+  bit = await SHADE['hunt']( ActFce.EXTRACT_SURFACE, { idx:'vsg00'  })
+
+
 
   return value
 }
