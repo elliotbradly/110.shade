@@ -1019,7 +1019,7 @@ const createSurface = async (cpy, bal, ste) => {
         height: dat.height,
         view: surface,
         transparent: false,
-        backgroundColor: parseInt('0xFF00FF', 16),
+        backgroundColor: parseInt('0xFFFFFF', 16),
         //backgroundColor: parseInt(bal.clr, 16),
         forceCanvas: true,
         antialias: true,
