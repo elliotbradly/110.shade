@@ -88,7 +88,7 @@ export const createSurface = async (cpy: SurfaceModel, bal: SurfaceBit, ste: Sta
         view: surface as HTMLCanvasElement,
 
         transparent: false,
-        backgroundColor: parseInt('0xFF00FF', 16),
+        backgroundColor: parseInt('0xFFFFFF', 16),
 
         //backgroundColor: parseInt(bal.clr, 16),
         forceCanvas: true,
@@ -185,7 +185,7 @@ export const extractSurface = async (cpy: SurfaceModel, bal: SurfaceBit, ste: St
     var canvas = app.renderer.plugins.extract.canvas();
     const context = canvas.getContext('2d');
     const imgData = context.getImageData(0, 0, canvas.width, canvas.height);
-    
+
     if (bal.slv != null) return bal.slv({ fceBit: { idx: "extract-surface", dat: imgData } });
 
     return cpy;
