@@ -3563,21 +3563,70 @@ exports.default = FrameUnit;
 },{"../99.core/state":107,"typescript-ioc":723}],80:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateCamera = exports.initCamera = void 0;
+exports.deleteCamera = exports.removeCamera = exports.writeCamera = exports.readCamera = exports.createCamera = exports.updateCamera = exports.initCamera = void 0;
+const ActCol = require("../../97.collect.unit/collect.action");
+const ActCam = require("../../13.camera.unit/camera.action");
+var bit, val, idx, dex, lst, dat;
 const initCamera = (cpy, bal, ste) => {
     debugger;
     return cpy;
 };
 exports.initCamera = initCamera;
-const updateCamera = (cpy, bal, ste) => {
+const updateCamera = async (cpy, bal, ste) => {
+    bit = await ste.hunt(ActCam.READ_CAMERA, { idx: bal.idx });
+    dat = bit.camBit.dat;
+    //var camBit = bit.camBit.dat;
+    //read the surface
+    //bit = await ste.hunt(ActCan.READ_CONTAINER, { idx: bal.src })
+    //var canBit = bit.canBit.bit;
+    //bit = await ste.hunt( ActFce.READ_SURFACE, { idx: bal.src })
+    // var tween = gsap.to(mountains, { y: mountains.y + 50, x: mountains.x + 10, duration: 6, ease: "linear", repeat: 133 });
+    if (bal.slv != null)
+        return bal.slv({ camBit: { idx: "update-camera", dat } });
     return cpy;
 };
 exports.updateCamera = updateCamera;
+const createCamera = (cpy, bal, ste) => {
+    var dat = { idx: bal.idx, src: bal.src, typ: 'core', x: 0, y: 0 };
+    for (var key in bal.dat) {
+        dat[key] = bal.dat[key];
+    }
+    if (bal.slv != null)
+        return bal.slv({ camBit: { idx: "create-camera", dat } });
+    return cpy;
+};
+exports.createCamera = createCamera;
+const readCamera = async (cpy, bal, ste) => {
+    if (bal.idx == null)
+        bal.idx = 'can00';
+    bit = await ste.hunt(ActCol.READ_COLLECT, { idx: bal.idx, bit: ActCam.CREATE_CAMERA });
+    bal.slv({ camBit: { idx: "read-camera", dat: bit.clcBit.dat } });
+    return cpy;
+};
+exports.readCamera = readCamera;
+const writeCamera = async (cpy, bal, ste) => {
+    bit = await ste.hunt(ActCol.WRITE_COLLECT, { idx: bal.idx, src: bal.src, dat: bal.dat, bit: ActCam.CREATE_CAMERA });
+    ste.hunt(ActCam.UPDATE_CAMERA, { idx: bal.idx });
+    if (bal.slv != null)
+        bal.slv({ camBit: { idx: "write-camera", dat: bit.clcBit.dat } });
+    return cpy;
+};
+exports.writeCamera = writeCamera;
+const removeCamera = (cpy, bal, ste) => {
+    debugger;
+    return cpy;
+};
+exports.removeCamera = removeCamera;
+const deleteCamera = (cpy, bal, ste) => {
+    debugger;
+    return cpy;
+};
+exports.deleteCamera = deleteCamera;
 
-},{}],81:[function(require,module,exports){
+},{"../../13.camera.unit/camera.action":81,"../../97.collect.unit/collect.action":87}],81:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UpdateCamera = exports.UPDATE_CAMERA = exports.InitCamera = exports.INIT_CAMERA = void 0;
+exports.CreateCamera = exports.CREATE_CAMERA = exports.DeleteCamera = exports.DELETE_CAMERA = exports.RemoveCamera = exports.REMOVE_CAMERA = exports.WriteCamera = exports.WRITE_CAMERA = exports.ReadCamera = exports.READ_CAMERA = exports.UpdateCamera = exports.UPDATE_CAMERA = exports.InitCamera = exports.INIT_CAMERA = void 0;
 // Camera actions
 exports.INIT_CAMERA = "[Camera action] Init Camera";
 class InitCamera {
@@ -3595,15 +3644,65 @@ class UpdateCamera {
     }
 }
 exports.UpdateCamera = UpdateCamera;
+exports.READ_CAMERA = "[Read action] Read Camera";
+class ReadCamera {
+    constructor(bale) {
+        this.bale = bale;
+        this.type = exports.READ_CAMERA;
+    }
+}
+exports.ReadCamera = ReadCamera;
+exports.WRITE_CAMERA = "[Write action] Write Camera";
+class WriteCamera {
+    constructor(bale) {
+        this.bale = bale;
+        this.type = exports.WRITE_CAMERA;
+    }
+}
+exports.WriteCamera = WriteCamera;
+exports.REMOVE_CAMERA = "[Remove action] Remove Camera";
+class RemoveCamera {
+    constructor(bale) {
+        this.bale = bale;
+        this.type = exports.REMOVE_CAMERA;
+    }
+}
+exports.RemoveCamera = RemoveCamera;
+exports.DELETE_CAMERA = "[Delete action] Delete Camera";
+class DeleteCamera {
+    constructor(bale) {
+        this.bale = bale;
+        this.type = exports.DELETE_CAMERA;
+    }
+}
+exports.DeleteCamera = DeleteCamera;
+exports.CREATE_CAMERA = "[Create action] Create Camera";
+class CreateCamera {
+    constructor(bale) {
+        this.bale = bale;
+        this.type = exports.CREATE_CAMERA;
+    }
+}
+exports.CreateCamera = CreateCamera;
 
 },{}],82:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateCamera = exports.initCamera = void 0;
+exports.createCamera = exports.deleteCamera = exports.removeCamera = exports.writeCamera = exports.readCamera = exports.updateCamera = exports.initCamera = void 0;
 var camera_buzz_1 = require("./buz/camera.buzz");
 Object.defineProperty(exports, "initCamera", { enumerable: true, get: function () { return camera_buzz_1.initCamera; } });
 var camera_buzz_2 = require("./buz/camera.buzz");
 Object.defineProperty(exports, "updateCamera", { enumerable: true, get: function () { return camera_buzz_2.updateCamera; } });
+var camera_buzz_3 = require("./buz/camera.buzz");
+Object.defineProperty(exports, "readCamera", { enumerable: true, get: function () { return camera_buzz_3.readCamera; } });
+var camera_buzz_4 = require("./buz/camera.buzz");
+Object.defineProperty(exports, "writeCamera", { enumerable: true, get: function () { return camera_buzz_4.writeCamera; } });
+var camera_buzz_5 = require("./buz/camera.buzz");
+Object.defineProperty(exports, "removeCamera", { enumerable: true, get: function () { return camera_buzz_5.removeCamera; } });
+var camera_buzz_6 = require("./buz/camera.buzz");
+Object.defineProperty(exports, "deleteCamera", { enumerable: true, get: function () { return camera_buzz_6.deleteCamera; } });
+var camera_buzz_7 = require("./buz/camera.buzz");
+Object.defineProperty(exports, "createCamera", { enumerable: true, get: function () { return camera_buzz_7.createCamera; } });
 
 },{"./buz/camera.buzz":80}],83:[function(require,module,exports){
 "use strict";
@@ -3627,6 +3726,16 @@ function reducer(model = new camera_model_1.CameraModel(), act, state) {
             return Buzz.updateCamera(clone(model), act.bale, state);
         case Act.INIT_CAMERA:
             return Buzz.initCamera(clone(model), act.bale, state);
+        case Act.READ_CAMERA:
+            return Buzz.readCamera(clone(model), act.bale, state);
+        case Act.WRITE_CAMERA:
+            return Buzz.writeCamera(clone(model), act.bale, state);
+        case Act.REMOVE_CAMERA:
+            return Buzz.removeCamera(clone(model), act.bale, state);
+        case Act.DELETE_CAMERA:
+            return Buzz.deleteCamera(clone(model), act.bale, state);
+        case Act.CREATE_CAMERA:
+            return Buzz.createCamera(clone(model), act.bale, state);
         default:
             return model;
     }

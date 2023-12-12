@@ -7,49 +7,79 @@ import * as ActCam from "../../13.camera.unit/camera.action";
 var bit, val, idx, dex, lst, dat;
 
 export const initCamera = (cpy: CameraModel, bal: CameraBit, ste: State) => {
-    debugger
-    return cpy;
+  debugger
+  return cpy;
 };
 
-export const updateCamera = (cpy: CameraModel, bal: CameraBit, ste: State) => {
+export const updateCamera = async (cpy: CameraModel, bal: CameraBit, ste: State) => {
 
- // var tween = gsap.to(mountains, { y: mountains.y + 50, x: mountains.x + 10, duration: 6, ease: "linear", repeat: 133 });
+  bit = await ste.hunt(ActCam.READ_CAMERA, { idx: bal.idx })
 
-    return cpy;
+  dat = bit.camBit.dat;
+
+
+
+  //var camBit = bit.camBit.dat;
+
+
+  //read the surface
+  //bit = await ste.hunt(ActCan.READ_CONTAINER, { idx: bal.src })
+  //var canBit = bit.canBit.bit;
+
+  //bit = await ste.hunt( ActFce.READ_SURFACE, { idx: bal.src })
+
+  // var tween = gsap.to(mountains, { y: mountains.y + 50, x: mountains.x + 10, duration: 6, ease: "linear", repeat: 133 });
+
+  if (bal.slv != null) return bal.slv({ camBit: { idx: "update-camera", dat } });
+
+  return cpy;
 };
+
+export const createCamera = (cpy: CameraModel, bal: CameraBit, ste: State) => {
+
+  var dat: LensBit = { idx: bal.idx, src: bal.src, typ: 'core', x: 0, y: 0 };
+
+  for (var key in bal.dat) {
+    dat[key] = bal.dat[key]
+  }
+
+  if (bal.slv != null) return bal.slv({ camBit: { idx: "create-camera", dat } });
+
+  return cpy;
+};
+
+
 
 export const readCamera = async (cpy: CameraModel, bal: CameraBit, ste: State) => {
 
-    if (bal.idx == null) bal.idx = 'can00';
-    bit = await ste.hunt(ActCol.READ_COLLECT, { idx: bal.idx, bit: ActCam.CREATE_CAMERA })
-    bal.slv({ canBit: { idx: "read-camera", dat: bit.clcBit.dat } });
+  if (bal.idx == null) bal.idx = 'can00';
+  bit = await ste.hunt(ActCol.READ_COLLECT, { idx: bal.idx, bit: ActCam.CREATE_CAMERA })
+  bal.slv({ camBit: { idx: "read-camera", dat: bit.clcBit.dat } });
 
-    return cpy;
+  return cpy;
 };
 
 export const writeCamera = async (cpy: CameraModel, bal: CameraBit, ste: State) => {
 
-    bit = await ste.hunt(ActCol.WRITE_COLLECT, { idx: bal.idx, src: bal.src, dat: bal.dat, bit: ActCam.CREATE_CAMERA })
-    ste.hunt(ActCam.UPDATE_CAMERA, { idx: bal.idx })
+  bit = await ste.hunt(ActCol.WRITE_COLLECT, { idx: bal.idx, src: bal.src, dat: bal.dat, bit: ActCam.CREATE_CAMERA })
+  ste.hunt(ActCam.UPDATE_CAMERA, { idx: bal.idx })
 
-    if (bal.slv != null) bal.slv({ canBit: { idx: "write-camera", dat: bit.clcBit.dat } });
+  if (bal.slv != null) bal.slv({ camBit: { idx: "write-camera", dat: bit.clcBit.dat } });
 
-    return cpy;
+  return cpy;
 };
 export const removeCamera = (cpy: CameraModel, bal: CameraBit, ste: State) => {
-    debugger
-    return cpy;
+  debugger
+  return cpy;
 };
 export const deleteCamera = (cpy: CameraModel, bal: CameraBit, ste: State) => {
-    debugger
-    return cpy;
+  debugger
+  return cpy;
 };
-export const createCamera = (cpy: CameraModel, bal: CameraBit, ste: State) => {
-    debugger
-    return cpy;
-};
+
 
 import { CameraModel } from "../camera.model";
 import CameraBit from "../fce/camera.bit";
 import State from "../../99.core/state";
-import gsap from "gsap";
+import gsap from "gsap"; import LensBit from "../fce/lens.bit";
+

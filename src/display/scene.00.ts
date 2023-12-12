@@ -8,6 +8,7 @@ import * as ActGph from '../110.shade/04.graphic.unit/graphic.action'
 import * as ActSpr from '../110.shade/06.sprite.unit/sprite.action'
 import * as ActHex from '../110.shade/07.hexagon.unit/hexagon.action'
 import * as ActFcg from '../110.shade/08.focigon.unit/focigon.action'
+import * as ActCam from '../110.shade/13.camera.unit/camera.action'
 
 
 export type HelloWorld = string | number
@@ -86,6 +87,8 @@ export const update = async (value: HelloWorld) => {
     console.log("po " + a.idx )
      bit = await SHADE['hunt'](ActFcg.WRITE_FOCIGON, { idx: focus.idx, dat: { src: 'gph01', clr:0x0FF000, sze: 111, fce: focus.face, bit: focus } })
   })
+
+  bit = await SHADE['hunt'](ActCam.WRITE_CAMERA, { idx: 'cam00', dat: { foc: 'here' } })
 
   bit = await SHADE['hunt']( ActFce.EXTRACT_SURFACE, { idx:'vsg00'  })
 

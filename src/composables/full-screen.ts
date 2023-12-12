@@ -10,9 +10,8 @@ import * as ActHex from '../110.shade/07.hexagon.unit/hexagon.action'
 import * as ActFcg from '../110.shade/08.focigon.unit/focigon.action'
 
 
+
 export type HelloWorld = string | number
-
-
 
 export const mount = async (value: HelloWorld) => {
   console.log('sampleFunc:: ', value)
@@ -27,7 +26,9 @@ export const mount = async (value: HelloWorld) => {
 }
 
 export const update = async (value: HelloWorld) => {
-  console.log('sampleFunc:: ', value)
+  console.log('updateFunc:: ', value)
+
+  debugger
 
   const instance = getCurrentInstance();
   const SHADE = inject('SHADE')
@@ -81,13 +82,18 @@ export const update = async (value: HelloWorld) => {
   var toot = JSON.parse(bit)
   var list = toot.focBit.lst
 
-  list.forEach( async (a,b)=>{
+  list.forEach(async (a, b) => {
     var focus = a;
-    console.log("po " + a.idx )
-     bit = await SHADE['hunt'](ActFcg.WRITE_FOCIGON, { idx: focus.idx, dat: { src: 'gph01', clr:0x0FF000, sze: 111, fce: focus.face, bit: focus } })
+    console.log("po " + a.idx)
+    bit = await SHADE['hunt'](ActFcg.WRITE_FOCIGON, { idx: focus.idx, dat: { src: 'gph01', clr: 0x0FF000, sze: 111, fce: focus.face, bit: focus } })
   })
 
-  bit = await SHADE['hunt']( ActFce.EXTRACT_SURFACE, { idx:'vsg00'  })
+
+
+
+
+
+  bit = await SHADE['hunt'](ActFce.EXTRACT_SURFACE, { idx: 'vsg00' })
 
 
 
