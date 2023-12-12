@@ -12,6 +12,9 @@ export const initCamera = (cpy: CameraModel, bal: CameraBit, ste: State) => {
 };
 
 export const updateCamera = (cpy: CameraModel, bal: CameraBit, ste: State) => {
+
+ // var tween = gsap.to(mountains, { y: mountains.y + 50, x: mountains.x + 10, duration: 6, ease: "linear", repeat: 133 });
+
     return cpy;
 };
 
