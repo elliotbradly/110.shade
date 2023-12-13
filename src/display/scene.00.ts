@@ -88,7 +88,9 @@ export const update = async (value: HelloWorld) => {
      bit = await SHADE['hunt'](ActFcg.WRITE_FOCIGON, { idx: focus.idx, dat: { src: 'gph01', clr:0x0FF000, sze: 111, fce: focus.face, bit: focus } })
   })
 
-  bit = await SHADE['hunt'](ActCam.WRITE_CAMERA, { idx: 'cam00', dat: { foc: 'here' } })
+
+
+  bit = await SHADE['hunt'](ActCam.WRITE_CAMERA, { idx: 'cam00', dat: { bit:container  } })
 
   bit = await SHADE['hunt']( ActFce.EXTRACT_SURFACE, { idx:'vsg00'  })
 

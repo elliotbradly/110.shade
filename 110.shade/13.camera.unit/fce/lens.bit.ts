@@ -9,5 +9,6 @@ export default interface LensBit {
 
     val?:number;
     dat?:any;
-    bit?:any
+    bit?:any;
+    twn?:any;
 }
