@@ -1013,13 +1013,13 @@ const createSurface = async (cpy, bal, ste) => {
     if (surface == null)
         throw new Error("surface not present for pixi");
     if (dat.clr == null)
-        dat.clr = "0xFFFFFF";
+        dat.clr = "0xFF00FF";
     var options = {
         width: dat.width,
         height: dat.height,
         view: surface,
         transparent: false,
-        backgroundColor: parseInt('0xFFFFFF', 16),
+        backgroundColor: parseInt('0xFF00FF', 16),
         //backgroundColor: parseInt(bal.clr, 16),
         forceCanvas: true,
         antialias: true,
@@ -2678,8 +2678,13 @@ const updateFocigon = async (cpy, bal, ste) => {
     dat.crns = bal.dat.bit.corners;
     if (bal.dat.src != null)
         bal.src = bal.dat.src;
-    bit = await ste.hunt(ActGph.READ_GRAPHIC, { idx: bal.src });
-    var graphic = bit.gphBit.dat.bit;
+    var graphic;
+    if (dat.bit == null) {
+        bit = await ste.hunt(ActGph.READ_GRAPHIC, { idx: bal.src });
+        graphic = bit.gphBit.dat.bit;
+    }
+    else
+        graphic = dat.bit;
     //graphic.clear()
     if (graphic == null)
         return console.log("no graphic to draw map upon");
@@ -2779,6 +2784,8 @@ const createFocigon = async (cpy, bal, ste) => {
     dat.frm = focus.typ;
     dat.gph = focus.gph;
     dat.crns = focus.corners;
+    var bitGph = await ste.hunt(ActGph.READ_GRAPHIC, { idx: bal.src });
+    dat.bit = bitGph.gphBit.dat.bit;
     if (dat.clr == null)
         dat.clr = 0x0000000;
     if (dat.lne == null)
@@ -3565,6 +3572,7 @@ exports.default = FrameUnit;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteCamera = exports.removeCamera = exports.writeCamera = exports.readCamera = exports.createCamera = exports.updateCamera = exports.initCamera = void 0;
 const ActCol = require("../../97.collect.unit/collect.action");
+const ActVsg = require("../../01.visage.unit/visage.action");
 const ActCam = require("../../13.camera.unit/camera.action");
 var bit, val, idx, dex, lst, dat;
 const initCamera = (cpy, bal, ste) => {
@@ -3575,12 +3583,18 @@ exports.initCamera = initCamera;
 const updateCamera = async (cpy, bal, ste) => {
     bit = await ste.hunt(ActCam.READ_CAMERA, { idx: bal.idx });
     var dat = bit.camBit.dat;
+    var vsgBit = await ste.hunt(ActVsg.READ_VISAGE, { idx: "vsg00" });
+    var canvas = vsgBit.vsgBit.dat.bit;
+    var x = canvas.width * .5 - dat.can.width * .5;
+    var y = canvas.height * .5 - dat.can.height * .5;
+    //canvas.width / 2 - player.x)
     //var camBit = bit.camBit.dat;
     //read the surface
     //bit = await ste.hunt(ActCan.READ_CONTAINER, { idx: bal.src })
     //var canBit = bit.canBit.bit;
     //bit = await ste.hunt( ActFce.READ_SURFACE, { idx: bal.src })
-    dat.twn = gsap_1.default.to(dat.bit, { y: 111, x: 111, duration: 6, ease: "linear" });
+    var auto = dat.can.getGlobalPosition();
+    dat.twn = gsap_1.default.to(dat.bit, { y, x, duration: 1, ease: "linear" });
     if (bal.slv != null)
         return bal.slv({ camBit: { idx: "update-camera", dat } });
     return cpy;
@@ -3624,7 +3638,7 @@ const deleteCamera = (cpy, bal, ste) => {
 exports.deleteCamera = deleteCamera;
 const gsap_1 = require("gsap");
 
-},{"../../13.camera.unit/camera.action":81,"../../97.collect.unit/collect.action":87,"gsap":620}],81:[function(require,module,exports){
+},{"../../01.visage.unit/visage.action":9,"../../13.camera.unit/camera.action":81,"../../97.collect.unit/collect.action":87,"gsap":620}],81:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateCamera = exports.CREATE_CAMERA = exports.DeleteCamera = exports.DELETE_CAMERA = exports.RemoveCamera = exports.REMOVE_CAMERA = exports.WriteCamera = exports.WRITE_CAMERA = exports.ReadCamera = exports.READ_CAMERA = exports.UpdateCamera = exports.UPDATE_CAMERA = exports.InitCamera = exports.INIT_CAMERA = void 0;

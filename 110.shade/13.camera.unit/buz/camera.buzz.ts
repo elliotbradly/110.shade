@@ -13,11 +13,18 @@ export const initCamera = (cpy: CameraModel, bal: CameraBit, ste: State) => {
 
 export const updateCamera = async (cpy: CameraModel, bal: CameraBit, ste: State) => {
 
-
   bit = await ste.hunt(ActCam.READ_CAMERA, { idx: bal.idx })
+  var dat: LensBit = bit.camBit.dat;
 
-  var dat:LensBit = bit.camBit.dat;
+  var vsgBit = await ste.hunt(ActVsg.READ_VISAGE, { idx: "vsg00" })
+  var canvas = vsgBit.vsgBit.dat.bit
+  var x = canvas.width *.5 - dat.can.width * .5;
+  var y = canvas.height *.5 - dat.can.height * .5;
 
+  x -= bit.x;
+  y -= bit.y
+
+  //canvas.width / 2 - player.x)
   //var camBit = bit.camBit.dat;
   //read the surface
   //bit = await ste.hunt(ActCan.READ_CONTAINER, { idx: bal.src })
@@ -25,8 +32,9 @@ export const updateCamera = async (cpy: CameraModel, bal: CameraBit, ste: State)
 
   //bit = await ste.hunt( ActFce.READ_SURFACE, { idx: bal.src })
 
-  dat.twn = gsap.to( dat.bit, { y: 111, x: 111, duration: 6, ease: "linear" });
+  var auto = dat.can.getGlobalPosition()
 
+  dat.twn = gsap.to( dat.bit, { y, x, duration: 1, ease: "linear" });
 
   if (bal.slv != null) return bal.slv({ camBit: { idx: "update-camera", dat } });
 

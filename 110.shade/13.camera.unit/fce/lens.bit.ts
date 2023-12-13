@@ -11,4 +11,5 @@ export default interface LensBit {
     dat?:any;
     bit?:any;
     twn?:any;
+    can?:any
 }

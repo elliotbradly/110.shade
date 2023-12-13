@@ -21,7 +21,7 @@ export const mount = async (value: HelloWorld) => {
   const instance = getCurrentInstance();
   const SHADE = inject('SHADE')
 
-  var bit = await SHADE['hunt'](ActVsg.MOUNT_VISAGE, { idx: "vsg00", src: "indexCanvas", dat: {width:1920, height:1080} });
+  var bit = await SHADE['hunt'](ActVsg.MOUNT_VISAGE, { idx: "vsg00", src: "indexCanvas", dat: { width: 960, height: 960 } });
   instance?.proxy?.$forceUpdate();
 
   return value
@@ -34,7 +34,7 @@ export const update = async (value: HelloWorld) => {
   const SHADE = inject('SHADE')
 
   var bit = await SHADE['hunt'](ActVsg.REMOVE_VISAGE, { idx: "vsg00" })
-  bit = await SHADE['hunt'](ActVsg.MOUNT_VISAGE, { idx: "vsg00", src: "indexCanvas", dat: {width:1920, height:1080} })
+  bit = await SHADE['hunt'](ActVsg.MOUNT_VISAGE, { idx: "vsg00", src: "indexCanvas", dat: { width: 960, height: 960 } })
 
   bit = await SHADE['hunt'](ActVsg.READ_VISAGE, { idx: "vsg00" })
 
@@ -82,19 +82,21 @@ export const update = async (value: HelloWorld) => {
   var toot = JSON.parse(bit)
   var list = toot.focBit.lst
 
-  list.forEach( async (a,b)=>{
+  list.forEach(async (a, b) => {
     var focus = a;
-    console.log("po " + a.idx )
-     bit = await SHADE['hunt'](ActFcg.WRITE_FOCIGON, { idx: focus.idx, dat: { src: 'gph01', clr:0x0FF000, sze: 111, fce: focus.face, bit: focus } })
+    console.log("po " + a.idx)
+    bit = await SHADE['hunt'](ActFcg.WRITE_FOCIGON, { idx: focus.idx, dat: { src: 'gph01', clr: 0x0FF000, sze: 111, fce: focus.face, bit: focus } })
+
+    var graphic = bit.fcgBit.dat.bit
+
+    bit = await SHADE['hunt'](ActCam.WRITE_CAMERA, { idx: 'cam00', src: 'vsg00', dat: { x: focus.x, y: focus.y, can: container, bit: graphic } })
+
+
   })
 
 
 
-  bit = await SHADE['hunt'](ActCam.WRITE_CAMERA, { idx: 'cam00', dat: { bit:container  } })
-
-  bit = await SHADE['hunt']( ActFce.EXTRACT_SURFACE, { idx:'vsg00'  })
-
-
+  bit = await SHADE['hunt'](ActFce.EXTRACT_SURFACE, { idx: 'vsg00' })
 
   return value
 }

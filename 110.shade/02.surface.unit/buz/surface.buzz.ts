@@ -80,7 +80,7 @@ export const createSurface = async (cpy: SurfaceModel, bal: SurfaceBit, ste: Sta
     }
 
     if (surface == null) throw new Error("surface not present for pixi");
-    if (dat.clr == null) dat.clr = "0xFFFFFF";
+    if (dat.clr == null) dat.clr = "0xFF00FF";
 
     var options = {
         width: dat.width,
@@ -88,7 +88,7 @@ export const createSurface = async (cpy: SurfaceModel, bal: SurfaceBit, ste: Sta
         view: surface as HTMLCanvasElement,
 
         transparent: false,
-        backgroundColor: parseInt('0xFFFFFF', 16),
+        backgroundColor: parseInt('0xFF00FF', 16),
 
         //backgroundColor: parseInt(bal.clr, 16),
         forceCanvas: true,

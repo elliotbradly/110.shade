@@ -25,23 +25,28 @@ export const updateFocigon = async (cpy: FocigonModel, bal: FocigonBit, ste: Sta
 
   dat.crns = bal.dat.bit.corners
 
-  if ( bal.dat.src != null ) bal.src = bal.dat.src
+  if (bal.dat.src != null) bal.src = bal.dat.src
 
-  bit = await ste.hunt(ActGph.READ_GRAPHIC, { idx: bal.src })
+  var graphic;
 
-  var graphic = bit.gphBit.dat.bit
+  if (dat.bit == null) {
+    bit = await ste.hunt(ActGph.READ_GRAPHIC, { idx: bal.src })
+    graphic = bit.gphBit.dat.bit
+  }
+  else graphic = dat.bit
+
 
   //graphic.clear()
 
   if (graphic == null) return console.log("no graphic to draw map upon");
 
- //if (dat.wpe == true) graphic.clear();
+  //if (dat.wpe == true) graphic.clear();
 
   graphic.lineStyle(dat.lne, dat.clr, 1);
   graphic.beginFill(dat.clr);
 
 
-  var pct =.33;
+  var pct = .33;
   var scl = dat.sze;
 
 
@@ -52,7 +57,7 @@ export const updateFocigon = async (cpy: FocigonModel, bal: FocigonBit, ste: Sta
 
   const [firstCorner, ...otherCorners] = dat.crns;
   graphic.moveTo(firstCorner.x * scl, firstCorner.y * scl * pct);
-  otherCorners.forEach(({ x, y }) => graphic.lineTo(x * scl, y  * scl * pct));
+  otherCorners.forEach(({ x, y }) => graphic.lineTo(x * scl, y * scl * pct));
   graphic.lineTo(firstCorner.x * scl, firstCorner.y * scl * pct);
 
   graphic.alpha = dat.a;
@@ -64,7 +69,7 @@ export const updateFocigon = async (cpy: FocigonModel, bal: FocigonBit, ste: Sta
   if (dat.fce != null) {
     var corners = dat.crns;
 
-    switch ( dat.fce) {
+    switch (dat.fce) {
       case DIRECTION.NORTH_EAST:
         dat.crn0 = corners[5];
         dat.crn1 = corners[0];
@@ -107,7 +112,7 @@ export const updateFocigon = async (cpy: FocigonModel, bal: FocigonBit, ste: Sta
 
     graphic.lineStyle(5, faceClr, 1);
 
-    graphic.moveTo(dat.crn0.x * scl, dat.crn0.y *  scl * pct);
+    graphic.moveTo(dat.crn0.x * scl, dat.crn0.y * scl * pct);
     graphic.lineTo(dat.crn1.x * scl, dat.crn1.y * scl * pct);
 
   }
@@ -159,12 +164,13 @@ export const createFocigon = async (cpy: FocigonModel, bal: FocigonBit, ste: Sta
 
   var focus = bal.dat.bit;
 
-
   dat.fce = focus.face;
   dat.frm = focus.typ;
   dat.gph = focus.gph;
   dat.crns = focus.corners;
 
+  var bitGph = await ste.hunt(ActGph.READ_GRAPHIC, { idx: bal.src })
+  dat.bit = bitGph.gphBit.dat.bit
 
   if (dat.clr == null) dat.clr = 0x0000000;
   if (dat.lne == null) dat.lne = 2;
