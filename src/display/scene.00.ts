@@ -10,10 +10,7 @@ import * as ActHex from '../110.shade/07.hexagon.unit/hexagon.action'
 import * as ActFcg from '../110.shade/08.focigon.unit/focigon.action'
 import * as ActCam from '../110.shade/13.camera.unit/camera.action'
 
-
 export type HelloWorld = string | number
-
-
 
 export const mount = async (value: HelloWorld) => {
   console.log('sampleFunc:: ', value)
