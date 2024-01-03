@@ -484,8 +484,10 @@ exports.createVisage = createVisage;
 const deleteVisage = async (cpy, bal, ste) => {
     if (typeof window != "object")
         return bal.slv({ fceBit: { idx: "error-size-visage", dat: {} } });
+    debugger;
     bit = await ste.hunt(ActVsg.READ_VISAGE, { idx: bal.idx });
     var dat = bit.vsgBit.dat;
+    debugger;
     //remove each type inside a visage
     dat.canLst.forEach(async (a) => ste.hunt(ActCan.REMOVE_CONTAINER, { idx: a }));
     dat.gphLst.forEach(async (a) => ste.hunt(ActGph.REMOVE_GRAPHIC, { idx: a }));
@@ -1377,6 +1379,9 @@ const addContainer = async (cpy, bal, ste) => {
         return bal.slv({ canBit: { idx: "add-container-error", dat: bal } });
     bit = await ste.hunt(ActCan.READ_CONTAINER, { idx: bal.idx });
     var can = bit.canBit.dat.bit;
+    if (can == null) {
+        return bal.slv({ canBit: { idx: "add-container-error", dat: {} } });
+    }
     can.addChild(content);
     //var graphic = new PIXI.Graphics();
     //graphic.lineStyle(3, 0x00FF00);
@@ -3587,6 +3592,8 @@ const updateCamera = async (cpy, bal, ste) => {
     var canvas = vsgBit.vsgBit.dat.bit;
     var x = canvas.width * .5 - dat.can.width * .5;
     var y = canvas.height * .5 - dat.can.height * .5;
+    x -= bit.x;
+    y -= bit.y;
     //canvas.width / 2 - player.x)
     //var camBit = bit.camBit.dat;
     //read the surface
@@ -3839,7 +3846,6 @@ const writeCollect = async (cpy, bal, ste) => {
     if ((bal.bit == null))
         bal.slv({ rskBit: { idx: "write-collect-err", src: 'no-bit' } });
     var cabBit = cpy.caboodleBitList[cpy.caboodleBits[type]];
-    bal.idx;
     if (cabBit.bits[bal.idx] == null) {
         bit = await ste.hunt(bal.bit, { idx: bal.idx, src: bal.src, dat: bal.dat });
         var objDat = bit[Object.keys(bit)[0]];
@@ -3863,7 +3869,7 @@ const writeCollect = async (cpy, bal, ste) => {
                 cabDat = {};
             cabDat[key] = bal.dat[key];
         }
-        cabBit.bitList[cabBit.bits[bal.idx]] = cabDat;
+        cabBit.bitList[cabBit.bits[bal.idx]] = cabBit;
         dat = cabBit;
         //!!! SUPER IMPORTANT
     }
@@ -4135,7 +4141,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CollectModel = void 0;
 class CollectModel {
     constructor() {
-        this.idx = '23.11.14';
         this.caboodleBitList = [];
         this.caboodleBits = {};
     }

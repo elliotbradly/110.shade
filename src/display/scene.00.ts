@@ -86,14 +86,22 @@ export const update = async (value: HelloWorld) => {
 
     var graphic = bit.fcgBit.dat.bit
 
-    bit = await SHADE['hunt'](ActCam.WRITE_CAMERA, { idx: 'cam00', src: 'vsg00', dat: { x: focus.x, y: focus.y, can: container, bit: graphic } })
+    //bit = await SHADE['hunt'](ActCam.WRITE_CAMERA, { idx: 'cam00', src: 'vsg00', dat: { x: focus.x, y: focus.y, can: container, bit: graphic } })
 
 
   })
 
 
-
   bit = await SHADE['hunt'](ActFce.EXTRACT_SURFACE, { idx: 'vsg00' })
+
+  setTimeout( async ()=>{
+
+    console.log("unmounted..")
+  var bit = await SHADE['hunt'](ActVsg.REMOVE_VISAGE, { idx: "vsg00" })
+  //update()
+
+
+  }, 3333)
 
   return value
 }

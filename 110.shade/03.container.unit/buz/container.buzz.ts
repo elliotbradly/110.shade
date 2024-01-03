@@ -124,6 +124,10 @@ export const addContainer = async (cpy: ContainerModel, bal: ContainerBit, ste: 
     bit = await ste.hunt(ActCan.READ_CONTAINER, { idx: bal.idx })
     var can = bit.canBit.dat.bit;
 
+    if ( can == null ){
+        return bal.slv({ canBit: { idx: "add-container-error", dat: {} } });
+    }
+
     can.addChild(content)
 
     //var graphic = new PIXI.Graphics();
