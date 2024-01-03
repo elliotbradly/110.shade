@@ -145,11 +145,9 @@ export const deleteVisage = async (cpy: VisageModel, bal: VisageBit, ste: State)
 
   if (typeof window != "object") return bal.slv({ fceBit: { idx: "error-size-visage", dat: {} } });
 
-  debugger
-
   bit = await ste.hunt(ActVsg.READ_VISAGE, { idx: bal.idx })
   var dat: FrameBit = bit.vsgBit.dat
-  debugger
+  
 
   //remove each type inside a visage
   dat.canLst.forEach(async (a) => ste.hunt(ActCan.REMOVE_CONTAINER, { idx: a }))

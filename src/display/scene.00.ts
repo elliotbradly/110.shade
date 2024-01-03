@@ -98,7 +98,7 @@ export const update = async (value: HelloWorld) => {
 
     console.log("unmounted..")
   var bit = await SHADE['hunt'](ActVsg.REMOVE_VISAGE, { idx: "vsg00" })
-  //update()
+   
 
 
   }, 3333)

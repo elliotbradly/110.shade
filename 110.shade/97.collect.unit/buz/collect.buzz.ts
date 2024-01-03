@@ -153,10 +153,10 @@ export const removeCollect = async (cpy: CollectModel, bal: CollectBit, ste: Sta
 
       delete cabBit.bits[bal.idx]
       var itm = cabBit.bitList.splice(dex, 1)
-
+      
       cabBit.dex -= 1
 
-      if (bal.slv != null) bal.slv({ clcBit: { idx: "remove-collect", dat: cabBit } });
+      if (bal.slv != null) bal.slv({ clcBit: { idx: "remove-collect", dat: itm[0] } });
 
       return cpy;
 };

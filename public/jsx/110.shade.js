@@ -484,10 +484,8 @@ exports.createVisage = createVisage;
 const deleteVisage = async (cpy, bal, ste) => {
     if (typeof window != "object")
         return bal.slv({ fceBit: { idx: "error-size-visage", dat: {} } });
-    debugger;
     bit = await ste.hunt(ActVsg.READ_VISAGE, { idx: bal.idx });
     var dat = bit.vsgBit.dat;
-    debugger;
     //remove each type inside a visage
     dat.canLst.forEach(async (a) => ste.hunt(ActCan.REMOVE_CONTAINER, { idx: a }));
     dat.gphLst.forEach(async (a) => ste.hunt(ActGph.REMOVE_GRAPHIC, { idx: a }));
@@ -3846,6 +3844,7 @@ const writeCollect = async (cpy, bal, ste) => {
     if ((bal.bit == null))
         bal.slv({ rskBit: { idx: "write-collect-err", src: 'no-bit' } });
     var cabBit = cpy.caboodleBitList[cpy.caboodleBits[type]];
+    bal.idx;
     if (cabBit.bits[bal.idx] == null) {
         bit = await ste.hunt(bal.bit, { idx: bal.idx, src: bal.src, dat: bal.dat });
         var objDat = bit[Object.keys(bit)[0]];
@@ -3869,7 +3868,7 @@ const writeCollect = async (cpy, bal, ste) => {
                 cabDat = {};
             cabDat[key] = bal.dat[key];
         }
-        cabBit.bitList[cabBit.bits[bal.idx]] = cabBit;
+        cabBit.bitList[cabBit.bits[bal.idx]] = cabDat;
         dat = cabBit;
         //!!! SUPER IMPORTANT
     }
@@ -3912,7 +3911,7 @@ const removeCollect = async (cpy, bal, ste) => {
     var itm = cabBit.bitList.splice(dex, 1);
     cabBit.dex -= 1;
     if (bal.slv != null)
-        bal.slv({ clcBit: { idx: "remove-collect", dat: cabBit } });
+        bal.slv({ clcBit: { idx: "remove-collect", dat: itm[0] } });
     return cpy;
 };
 exports.removeCollect = removeCollect;
@@ -4141,6 +4140,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CollectModel = void 0;
 class CollectModel {
     constructor() {
+        this.idx = '23.11.14';
         this.caboodleBitList = [];
         this.caboodleBits = {};
     }
