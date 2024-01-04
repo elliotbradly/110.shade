@@ -1,33 +1,7 @@
 <template>
 
   <div class="full-height row wrap justify-start items-start content-start">
-
-    <div class="q-pa-md">
-    <q-btn-dropdown color="primary" label="Dropdown Button" style="max-width: 300px">
-      <q-list>
-        <q-item clickable v-close-popup @click="onItemClick">
-          <q-item-section>
-            <q-item-label>Photos</q-item-label>
-          </q-item-section>
-        </q-item>
-
-        <q-item clickable v-close-popup @click="onItemClick">
-          <q-item-section>
-            <q-item-label>Videos</q-item-label>
-          </q-item-section>
-        </q-item>
-
-        <q-item clickable v-close-popup @click="onItemClick">
-          <q-item-section>
-            <q-item-label>Articles</q-item-label>
-          </q-item-section>
-        </q-item>
-      </q-list>
-    </q-btn-dropdown>
-  </div>
-
     <canvas id="indexCanvas"> </canvas>
-
   </div>
 
 </template>
@@ -40,7 +14,7 @@ import * as ActShd from '../110.shade/00.shade.unit/shade.action'
 import * as ActVsg from '../110.shade/01.visage.unit/visage.action'
 import * as ActCan from '../110.shade/03.container.unit/container.action'
 
-import {mount, update, unmount } from "../display/scene.00"
+import {mount, update, unmount } from "../display/grid"
 //import {mount, update, unmount } from "../composables/tiny-screen"
 
 const router = useRouter()
@@ -50,10 +24,6 @@ const instance = getCurrentInstance();
 const SHADE = inject('SHADE')
 
 onMounted(async () => {
-
-  //change the locaton
-
-  //window.location.replace("./grid");
 
   mount('on')
 
@@ -82,6 +52,6 @@ onUnmounted(async () => {
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'GamePlay'
+  name: 'TheGrid'
 })
 </script>

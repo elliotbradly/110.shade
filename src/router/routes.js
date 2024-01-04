@@ -4,7 +4,15 @@ const routes = [
     path: '/',
     component: () => import('layouts/SimpleLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/000.index.vue') }
+      { path: '', component: () => import('pages/001.the-grid.vue') }
+    ]
+  },
+
+  {
+    path: '/grid',
+    component: () => import('layouts/SimpleLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/001.the-grid.vue') }
     ]
   },
 
