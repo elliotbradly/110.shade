@@ -14,6 +14,7 @@ import ToonUnit from "./10.toon.unit/toon.unit";
 import VideoUnit from "./11.video.unit/video.unit";
 import FrameUnit from "./12.frame.unit/frame.unit";
 import CameraUnit from "./13.camera.unit/camera.unit";
+import ChromeUnit from "./24.chrome.unit/chrome.unit";
 import CollectUnit from "./97.collect.unit/collect.unit";
 import MenuUnit from "./98.menu.unit/menu.unit";
 import BusUnit from "./99.bus.unit/bus.unit";
@@ -47,6 +48,8 @@ import Frame from "./12.frame.unit/fce/frame.interface";
 import { FrameModel } from "./12.frame.unit/frame.model";
 import Camera from "./13.camera.unit/fce/camera.interface";
 import { CameraModel } from "./13.camera.unit/camera.model";
+import Chrome from "./24.chrome.unit/fce/chrome.interface";
+import { ChromeModel } from "./24.chrome.unit/chrome.model";
 import Collect from "./97.collect.unit/fce/collect.interface";
 import { CollectModel } from "./97.collect.unit/collect.model";
 import Menu from "./98.menu.unit/fce/menu.interface";
@@ -55,7 +58,7 @@ import Bus from "./99.bus.unit/fce/bus.interface";
 import { BusModel } from "./99.bus.unit/bus.model";
 
 
-export const list: Array<any> = [ShadeUnit,VisageUnit,SurfaceUnit,ContainerUnit,GraphicUnit,TextUnit,SpriteUnit,HexagonUnit,FocigonUnit,LoopUnit,ToonUnit,VideoUnit,FrameUnit,CameraUnit,CollectUnit,MenuUnit,BusUnit];
+export const list: Array<any> = [ShadeUnit,VisageUnit,SurfaceUnit,ContainerUnit,GraphicUnit,TextUnit,SpriteUnit,HexagonUnit,FocigonUnit,LoopUnit,ToonUnit,VideoUnit,FrameUnit,CameraUnit,ChromeUnit,CollectUnit,MenuUnit,BusUnit];
 
 import * as reduceFromShade from "./00.shade.unit/shade.reduce";
 import * as reduceFromVisage from "./01.visage.unit/visage.reduce";
@@ -71,6 +74,7 @@ import * as reduceFromToon from "./10.toon.unit/toon.reduce";
 import * as reduceFromVideo from "./11.video.unit/video.reduce";
 import * as reduceFromFrame from "./12.frame.unit/frame.reduce";
 import * as reduceFromCamera from "./13.camera.unit/camera.reduce";
+import * as reduceFromChrome from "./24.chrome.unit/chrome.reduce";
 import * as reduceFromCollect from "./97.collect.unit/collect.reduce";
 import * as reduceFromMenu from "./98.menu.unit/menu.reduce";
 import * as reduceFromBus from "./99.bus.unit/bus.reduce";
@@ -91,6 +95,7 @@ toon : reduceFromToon.reducer,
 video : reduceFromVideo.reducer, 
 frame : reduceFromFrame.reducer, 
 camera : reduceFromCamera.reducer, 
+chrome : reduceFromChrome.reducer, 
 collect : reduceFromCollect.reducer, 
 menu : reduceFromMenu.reducer, 
 bus : reduceFromBus.reducer, 
@@ -113,6 +118,7 @@ toon : Toon = new ToonModel();
 video : Video = new VideoModel();
 frame : Frame = new FrameModel();
 camera : Camera = new CameraModel();
+chrome : Chrome = new ChromeModel();
 collect : Collect = new CollectModel();
 menu : Menu = new MenuModel();
 bus : Bus = new BusModel();
