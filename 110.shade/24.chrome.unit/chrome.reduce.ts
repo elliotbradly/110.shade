@@ -13,6 +13,21 @@ export function reducer(model: ChromeModel = new ChromeModel(), act: Act.Actions
  case Act.INIT_CHROME:
  return Buzz.initChrome(clone(model), act.bale, state);
 
+case Act.READ_CHROME:
+ return Buzz.readChrome(clone(model), act.bale, state);
+ 
+case Act.WRITE_CHROME:
+ return Buzz.writeChrome(clone(model), act.bale, state);
+ 
+case Act.REMOVE_CHROME:
+ return Buzz.removeChrome(clone(model), act.bale, state);
+ 
+case Act.DELETE_CHROME:
+ return Buzz.deleteChrome(clone(model), act.bale, state);
+ 
+case Act.CREATE_CHROME:
+ return Buzz.createChrome(clone(model), act.bale, state);
+ 
  default:
  return model;
  }
