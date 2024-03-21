@@ -21,15 +21,15 @@ import * as ActDsk from "../../act/disk.action";
 var SHADE = global.SHADE
 var SPACE = global.SPACE
 
-var bit, val, idx, dex, lst, dat;
+var bit, val, idx, dex, lst, dat, src;
 
 var once = false
 
 export const initShade = async (cpy: ShadeModel, bal: ShadeBit, ste: State) => {
 
-  if (once == true) return
+    if (once == true) return
 
-  once = true
+    once = true
 
 
     if (bal.dat != null) bit = await ste.hunt(ActBus.INIT_BUS, { idx: cpy.idx, lst: [ActShd, ActVsg, ActSrf, ActCan, ActGph, ActTxt, ActSpr, ActHex, ActVid, ActTun], dat: bal.dat, src: bal.src })
@@ -59,9 +59,9 @@ export const openShade = async (cpy: ShadeModel, bal: ShadeBit, ste: State) => {
     const { exec } = require('child_process');
 
     exec('npx quasar dev -m electron', async (err, stdout, stderr) => {
-  
-      if (bal.slv != null) bal.slv({ shdBit: { idx: "open-shade", dat: {} } });
-  
+
+        if (bal.slv != null) bal.slv({ shdBit: { idx: "open-shade", dat: {} } });
+
     })
 
     return cpy;
@@ -114,6 +114,10 @@ export const updateShade = async (cpy: ShadeModel, bal: ShadeBit, ste: State) =>
         var shade = bit.dskBit.dat;
 
         bit = await ste.bus(ActDsk.WRITE_DISK, { src: './public/jsx/110.shade.js', dat: shade })
+
+        src = "../111.control/rpgmaker/app/js/plugins/110.shade.js"
+        bit = await ste.bus(ActDsk.WRITE_DISK, { src, dat: shade });
+
 
         //bit = await ste.bus(ActDsk.READ_DISK, { src: './index.html' })
         //var html = bit.dskBit.dat;
@@ -182,9 +186,9 @@ export const patchShade = async (cpy: ShadeModel, bal: ShadeBit, ste: State) => 
 };
 
 
-export const testShade = async (cpy: ShadeModel, bal:ShadeBit, ste: State) => {
+export const testShade = async (cpy: ShadeModel, bal: ShadeBit, ste: State) => {
 
-   const { exec } = require('child_process');
+    const { exec } = require('child_process');
 
     exec('quasar dev -m electron', async (err, stdout, stderr) => {
 
@@ -194,42 +198,42 @@ export const testShade = async (cpy: ShadeModel, bal:ShadeBit, ste: State) => {
     });
 
 
-  //bit = await ste.hunt( ActCan.ADD_CONTAINER, { idx: 'fce-can-00', dat: bit.fmeBit.dat });
-  //bit = await ste.hunt( ActGph.WRITE_GRAPHIC, { idx: 'gph00', src: 'vsg00' });
-  //bit = await ste.hunt( ActCan.ADD_CONTAINER, { idx: 'fce-can-00', dat: bit.gphBit.dat });
-  //bit = await ste.hunt( ActGph.WRITE_GRAPHIC, { idx: 'gph01', src: 'vsg00' });
-  //bit = await ste.hunt( ActCan.ADD_CONTAINER, { idx: 'fce-can-00', dat: bit.gphBit.dat });
+    //bit = await ste.hunt( ActCan.ADD_CONTAINER, { idx: 'fce-can-00', dat: bit.fmeBit.dat });
+    //bit = await ste.hunt( ActGph.WRITE_GRAPHIC, { idx: 'gph00', src: 'vsg00' });
+    //bit = await ste.hunt( ActCan.ADD_CONTAINER, { idx: 'fce-can-00', dat: bit.gphBit.dat });
+    //bit = await ste.hunt( ActGph.WRITE_GRAPHIC, { idx: 'gph01', src: 'vsg00' });
+    //bit = await ste.hunt( ActCan.ADD_CONTAINER, { idx: 'fce-can-00', dat: bit.gphBit.dat });
 
-  //const response = await fetch("./dat/hexmap/000.json");
-  //const jsonData = await response.json();
+    //const response = await fetch("./dat/hexmap/000.json");
+    //const jsonData = await response.json();
 
-  //bit = await ste.hunt( ActHex.WRITE_HEXAGON, { idx: 'hex00', src: 'vsg00', dat: {map: jsonData }   });
-
-
-
-  //bit = await SHADE.hunt(SHADE.ActTxt.WRITE_TEXT, { idx: 'txt00', src: 'vsg00', dat: { txt: "feel the love", y: 100 } });
-  //bit = await SHADE.hunt(SHADE.ActCan.ADD_CONTAINER, { idx: 'fce-can-00', dat: bit.txtBit.dat });
-
-  //bit = await SHADE.hunt(SHADE.ActTxt.WRITE_TEXT, { idx: 'txt01', src: 'vsg00', dat: { txt: "thank you", y: 110 } });
-  //bit = await SHADE.hunt(SHADE.ActCan.ADD_CONTAINER, { idx: 'fce-can-00', dat: bit.txtBit.dat });
-
-  //bit = await SHADE.hunt(SHADE.ActTxt.WRITE_TEXT, { idx: 'txt02', src: 'vsg00', dat: { txt: "looks really nice", y: 120 } });
-  //bit = await SHADE.hunt(SHADE.ActCan.ADD_CONTAINER, { idx: 'fce-can-00', dat: bit.txtBit.dat });
-
-  //bit = await SHADE.hunt(SHADE.ActSpr.WRITE_SPRITE, { idx: 'spr00', src: 'vsg00', dat: { src: "./img/000.png", y: 130 } });
-  //bit = await SHADE.hunt(SHADE.ActCan.ADD_CONTAINER, { idx: 'fce-can-00', dat: bit.sprBit.dat });
-
-  //bit = await SPACE.hunt(SPACE.ActMap.WRITE_HEXMAP, { idx: 'map00', dat: { gph: 'gph00' } });
-  //var hexmap = bit.mapBit.dat;
+    //bit = await ste.hunt( ActHex.WRITE_HEXAGON, { idx: 'hex00', src: 'vsg00', dat: {map: jsonData }   });
 
 
-  //bit = await SPACE.hunt(SPACE.ActFoc.WRITE_FOCUS, { idx: 'foc00', dat: { gph: 'gph01' } });
-  //bit = await ste.hunt( ActFcg.WRITE_FOCIGON, { idx: 'fcg01', src: 'vsg00', dat: {dat:bit.focBit.dat}   });
 
- // if (bal.slv != null) bal.slv({ symBit: { idx: "test-shade", dat: {} } });
+    //bit = await SHADE.hunt(SHADE.ActTxt.WRITE_TEXT, { idx: 'txt00', src: 'vsg00', dat: { txt: "feel the love", y: 100 } });
+    //bit = await SHADE.hunt(SHADE.ActCan.ADD_CONTAINER, { idx: 'fce-can-00', dat: bit.txtBit.dat });
 
- return cpy;
- };
+    //bit = await SHADE.hunt(SHADE.ActTxt.WRITE_TEXT, { idx: 'txt01', src: 'vsg00', dat: { txt: "thank you", y: 110 } });
+    //bit = await SHADE.hunt(SHADE.ActCan.ADD_CONTAINER, { idx: 'fce-can-00', dat: bit.txtBit.dat });
+
+    //bit = await SHADE.hunt(SHADE.ActTxt.WRITE_TEXT, { idx: 'txt02', src: 'vsg00', dat: { txt: "looks really nice", y: 120 } });
+    //bit = await SHADE.hunt(SHADE.ActCan.ADD_CONTAINER, { idx: 'fce-can-00', dat: bit.txtBit.dat });
+
+    //bit = await SHADE.hunt(SHADE.ActSpr.WRITE_SPRITE, { idx: 'spr00', src: 'vsg00', dat: { src: "./img/000.png", y: 130 } });
+    //bit = await SHADE.hunt(SHADE.ActCan.ADD_CONTAINER, { idx: 'fce-can-00', dat: bit.sprBit.dat });
+
+    //bit = await SPACE.hunt(SPACE.ActMap.WRITE_HEXMAP, { idx: 'map00', dat: { gph: 'gph00' } });
+    //var hexmap = bit.mapBit.dat;
+
+
+    //bit = await SPACE.hunt(SPACE.ActFoc.WRITE_FOCUS, { idx: 'foc00', dat: { gph: 'gph01' } });
+    //bit = await ste.hunt( ActFcg.WRITE_FOCIGON, { idx: 'fcg01', src: 'vsg00', dat: {dat:bit.focBit.dat}   });
+
+    // if (bal.slv != null) bal.slv({ symBit: { idx: "test-shade", dat: {} } });
+
+    return cpy;
+};
 
 
 var patch = (ste, type, bale) => ste.dispatch({ type, bale });

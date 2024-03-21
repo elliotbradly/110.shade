@@ -25,7 +25,7 @@ export const updateMenu = async (cpy: MenuModel, bal: MenuBit, ste: State) => {
   bit = await ste.bus(ActTrm.WRITE_TERMINAL, { src: "SHADE PIVOT V1.1", bit: 'local' })
   bit = await ste.bus(ActTrm.WRITE_TERMINAL, { src: "-----------", bit: "local" })
 
-  var lst = [  ActShd.OPEN_SHADE, ActShd.UPDATE_SHADE,  ActShd.TEST_SHADE, 
+  var lst = [ActShd.UPDATE_SHADE, ActShd.OPEN_SHADE, ActShd.TEST_SHADE,
   ActShd.RUN_SHADE, ActShd.EDIT_SHADE, ActMnu.CONTAINER_MENU,
   ActMnu.TEXT_MENU, ActMnu.VISAGE_MENU]
 
