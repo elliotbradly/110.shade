@@ -79,6 +79,7 @@ export const createText = async (cpy: TextModel, bal: TextBit, ste: State) => {
   if (dat.wrp == null) dat.wrp = 300;
   if (dat.a == null) dat.a = 1;
   if (dat.clr == null) dat.clr = 0x000000;
+  if (dat.aln == null) dat.aln = "right";
 
   try {
     dat.bit = new PIXI.Text(dat.txt);
@@ -88,7 +89,7 @@ export const createText = async (cpy: TextModel, bal: TextBit, ste: State) => {
       wordWrap: true,
       wordWrapWidth: dat.wrp,
       fill: dat.clr,
-      align: "right",
+      align: dat.aln as TextStyleAlign,
     });
   } catch (e) {
     dat.dat = {};
@@ -131,4 +132,5 @@ import * as PIXI from "pixi.js-legacy";
 import LineBit from "../fce/line.bit";
 
 import * as SHADE from "../../val/shade"
+import { TextStyleAlign } from "pixi.js-legacy";
 

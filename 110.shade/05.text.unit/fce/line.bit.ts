@@ -12,6 +12,7 @@ export default interface LineBit {
     fnt?:string;
     wrp?:number;
     sze?:number;
+    aln?:any;
     
     w?:number;
     h?:number;
