@@ -47,28 +47,28 @@ export const writeText = async (cpy: TextModel, bal: TextBit, ste: State) => {
 
   if (bal.idx == null) bal.idx = "txt00";
 
-  bit = await ste.hunt(ActCol.WRITE_COLLECT, { idx: bal.idx, src:bal.src, dat: bal.dat, bit: ActTxt.CREATE_TEXT })
+  bit = await ste.hunt(ActCol.WRITE_COLLECT, { idx: bal.idx, src: bal.src, dat: bal.dat, bit: ActTxt.CREATE_TEXT })
   ste.hunt(ActTxt.UPDATE_TEXT, { idx: bal.idx })
 
   var output = bit.clcBit.dat
 
-  if (bal.slv != null) bal.slv({ txtBit: { idx: "write-text", dat: output  } });
+  if (bal.slv != null) bal.slv({ txtBit: { idx: "write-text", dat: output } });
   return cpy;
 };
 
-export const removeText = async (cpy: TextModel, bal:TextBit, ste: State) => {
+export const removeText = async (cpy: TextModel, bal: TextBit, ste: State) => {
 
   bit = await ste.hunt(ActCol.REMOVE_COLLECT, { idx: bal.idx, src: bal.src, dat: bal.dat, bit: ActTxt.DELETE_TEXT })
   if (bal.slv != null) bal.slv({ vsgBit: { idx: "remove-text", dat: bit.clcBit } });
 
   return cpy;
-  };
+};
 
 export const createText = async (cpy: TextModel, bal: TextBit, ste: State) => {
 
-  var dat: LineBit = { idx: bal.idx, src:bal.src, typ: SHADE.TEXT };
+  var dat: LineBit = { idx: bal.idx, src: bal.src, typ: SHADE.TEXT };
 
-  for ( var key in bal.dat ){
+  for (var key in bal.dat) {
     dat[key] = bal.dat[key]
   }
 
@@ -102,7 +102,7 @@ export const createText = async (cpy: TextModel, bal: TextBit, ste: State) => {
   return cpy;
 };
 
-export const deleteText = async (cpy: TextModel, bal:TextBit, ste: State) => {
+export const deleteText = async (cpy: TextModel, bal: TextBit, ste: State) => {
 
   if (typeof window != "object") return bal.slv({ fceBit: { idx: "error-delete-text", dat: {} } });
 
@@ -115,13 +115,13 @@ export const deleteText = async (cpy: TextModel, bal:TextBit, ste: State) => {
 
   if (bal.slv != null) return bal.slv({ vsgBit: { idx: "delete-text", dat } });
 
- return cpy;
- };
+  return cpy;
+};
 
- export const listText = (cpy: TextModel, bal:TextBit, ste: State) => {
+export const listText = (cpy: TextModel, bal: TextBit, ste: State) => {
   debugger
   return cpy;
-  };
+};
 
 
 import { SurfaceModel } from "../../02.surface.unit/surface.model";
