@@ -110,7 +110,9 @@ export const deleteText = async (cpy: TextModel, bal: TextBit, ste: State) => {
   var dat: LineBit = bit.txtBit.dat
 
   var text = dat.bit;
-  text.destroy()
+  
+
+  //text.destroy()
   dat.bit = null
 
   if (bal.slv != null) return bal.slv({ vsgBit: { idx: "delete-text", dat } });
