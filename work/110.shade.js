@@ -4013,7 +4013,7 @@ exports.default = ChromeUnit;
 },{"../99.core/state":113,"typescript-ioc":730}],92:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.listCollect = exports.formatCollect = exports.dotCollect = exports.emptyCollect = exports.deleteCollect = exports.modelCollect = exports.getCollect = exports.putCollect = exports.removeCollect = exports.createCollect = exports.writeCollect = exports.readCollect = exports.fetchCollect = exports.updateCollect = exports.initCollect = void 0;
+exports.hashCollect = exports.listCollect = exports.formatCollect = exports.dotCollect = exports.emptyCollect = exports.deleteCollect = exports.modelCollect = exports.getCollect = exports.putCollect = exports.removeCollect = exports.createCollect = exports.writeCollect = exports.readCollect = exports.fetchCollect = exports.updateCollect = exports.initCollect = void 0;
 const ActCol = require("../../97.collect.unit/collect.action");
 var bit, lst, dat, idx, val, src, dex;
 const initCollect = (cpy, bal, ste) => {
@@ -4073,6 +4073,7 @@ const writeCollect = async (cpy, bal, ste) => {
         bal.slv({ rskBit: { idx: 'write-collect-err', src: 'no-bit' } });
     var cabBit = cpy.caboodleBitList[cpy.caboodleBits[type]];
     bal.idx;
+    val = 0;
     if (cabBit.bits[bal.idx] == null) {
         bit = await ste.hunt(bal.bit, { idx: bal.idx, src: bal.src, dat: bal.dat });
         var objDat = bit[Object.keys(bit)[0]];
@@ -4091,19 +4092,20 @@ const writeCollect = async (cpy, bal, ste) => {
     else {
         var cabDat = cabBit.bitList[cabBit.bits[bal.idx]];
         bal.dat;
+        val = 1;
         for (var key in bal.dat) {
             if (cabDat == null)
                 cabDat = {};
             cabDat[key] = bal.dat[key];
         }
         cabBit.bitList[cabBit.bits[bal.idx]] = cabDat;
-        dat = cabBit;
+        dat = cabDat;
         //!!! SUPER IMPORTANT
     }
     if (dat == null && bal.slv != null)
         bal.slv({ rskBit: { idx: 'write-collect-err', src: 'no-dat' } });
     if (bal.slv != null)
-        bal.slv({ clcBit: { idx: 'write-collect', dat } });
+        bal.slv({ clcBit: { idx: 'write-collect', val, dat } });
     return cpy;
 };
 exports.writeCollect = writeCollect;
@@ -4215,19 +4217,44 @@ const listCollect = (cpy, bal, ste) => {
     var cabBit = cpy.caboodleBitList[cpy.caboodleBits[type]];
     lst = [];
     cabBit.bitList.forEach((a) => {
-        lst.push(a.idx);
+        if (a.idx != null)
+            lst.push(a.idx);
+        if (a.id != null)
+            lst.push(a.id);
     });
     bal.slv({ clcBit: { idx: 'list-collect', lst } });
     return cpy;
 };
 exports.listCollect = listCollect;
+const hashCollect = (cpy, bal, ste) => {
+    if (bal.src == null)
+        bal.src = '';
+    lst = bal.src.split('\n');
+    dat = {};
+    lst.forEach((a) => {
+        a = S(a).collapseWhitespace().s;
+        if (a.length < 3)
+            return;
+        var hold = a.split(':');
+        var dom = hold[0];
+        var sub = hold[1];
+        var now = sub.split(',');
+        now.forEach((b, c) => {
+            now[c] = S(b).collapseWhitespace().s;
+        });
+        dat[dom] = now;
+    });
+    bal.slv({ clcBit: { idx: 'hash-collect', dat } });
+    return cpy;
+};
+exports.hashCollect = hashCollect;
 const S = require("string");
 const doT = require("dot");
 
 },{"../../97.collect.unit/collect.action":93,"dot":540,"string":710}],93:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ListCollect = exports.LIST_COLLECT = exports.DotCollect = exports.DOT_COLLECT = exports.FormatCollect = exports.FORMAT_COLLECT = exports.GetCollect = exports.GET_COLLECT = exports.PutCollect = exports.PUT_COLLECT = exports.ModelCollect = exports.MODEL_COLLECT = exports.EmptyCollect = exports.EMPTY_COLLECT = exports.DeleteCollect = exports.DELETE_COLLECT = exports.RemoveCollect = exports.REMOVE_COLLECT = exports.CreateCollect = exports.CREATE_COLLECT = exports.WriteCollect = exports.WRITE_COLLECT = exports.ReadCollect = exports.READ_COLLECT = exports.FetchCollect = exports.FETCH_COLLECT = exports.UpdateCollect = exports.UPDATE_COLLECT = exports.InitCollect = exports.INIT_COLLECT = void 0;
+exports.HashCollect = exports.HASH_COLLECT = exports.ListCollect = exports.LIST_COLLECT = exports.DotCollect = exports.DOT_COLLECT = exports.FormatCollect = exports.FORMAT_COLLECT = exports.GetCollect = exports.GET_COLLECT = exports.PutCollect = exports.PUT_COLLECT = exports.ModelCollect = exports.MODEL_COLLECT = exports.EmptyCollect = exports.EMPTY_COLLECT = exports.DeleteCollect = exports.DELETE_COLLECT = exports.RemoveCollect = exports.REMOVE_COLLECT = exports.CreateCollect = exports.CREATE_COLLECT = exports.WriteCollect = exports.WRITE_COLLECT = exports.ReadCollect = exports.READ_COLLECT = exports.FetchCollect = exports.FETCH_COLLECT = exports.UpdateCollect = exports.UPDATE_COLLECT = exports.InitCollect = exports.INIT_COLLECT = void 0;
 // Collect actions
 exports.INIT_COLLECT = "[Collect action] Init Collect";
 class InitCollect {
@@ -4349,11 +4376,19 @@ class ListCollect {
     }
 }
 exports.ListCollect = ListCollect;
+exports.HASH_COLLECT = "[Hash action] Hash Collect";
+class HashCollect {
+    constructor(bale) {
+        this.bale = bale;
+        this.type = exports.HASH_COLLECT;
+    }
+}
+exports.HashCollect = HashCollect;
 
 },{}],94:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.listCollect = exports.dotCollect = exports.formatCollect = exports.getCollect = exports.putCollect = exports.modelCollect = exports.removeCollect = exports.deleteCollect = exports.fetchCollect = exports.emptyCollect = exports.createCollect = exports.writeCollect = exports.readCollect = exports.updateCollect = exports.initCollect = void 0;
+exports.hashCollect = exports.listCollect = exports.dotCollect = exports.formatCollect = exports.getCollect = exports.putCollect = exports.modelCollect = exports.removeCollect = exports.deleteCollect = exports.fetchCollect = exports.emptyCollect = exports.createCollect = exports.writeCollect = exports.readCollect = exports.updateCollect = exports.initCollect = void 0;
 var collect_buzz_1 = require("./buz/collect.buzz");
 Object.defineProperty(exports, "initCollect", { enumerable: true, get: function () { return collect_buzz_1.initCollect; } });
 var collect_buzz_2 = require("./buz/collect.buzz");
@@ -4384,6 +4419,8 @@ var collect_buzz_14 = require("./buz/collect.buzz");
 Object.defineProperty(exports, "dotCollect", { enumerable: true, get: function () { return collect_buzz_14.dotCollect; } });
 var collect_buzz_15 = require("./buz/collect.buzz");
 Object.defineProperty(exports, "listCollect", { enumerable: true, get: function () { return collect_buzz_15.listCollect; } });
+var collect_buzz_16 = require("./buz/collect.buzz");
+Object.defineProperty(exports, "hashCollect", { enumerable: true, get: function () { return collect_buzz_16.hashCollect; } });
 
 },{"./buz/collect.buzz":92}],95:[function(require,module,exports){
 "use strict";
@@ -4438,6 +4475,8 @@ function reducer(model = new collect_model_1.CollectModel(), act, state) {
             return Buzz.dotCollect(clone(model), act.bale, state);
         case Act.LIST_COLLECT:
             return Buzz.listCollect(clone(model), act.bale, state);
+        case Act.HASH_COLLECT:
+            return Buzz.hashCollect(clone(model), act.bale, state);
         default:
             return model;
     }
